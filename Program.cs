@@ -179,11 +179,12 @@ HaHa",()=> { });
             var FightGrid7 = new UIContainerGridContent("DiE", () => { });
 
             var StaticEnemy = new UIContainerGridContent("HP = 485", () => { });
-            var StaticPlayer = new UIContainerGridContent(ref player.Hp, () => { });
+            var StaticPlayer = new UIContainerGridContent(player.Hp, () => { });
 
+            //Debug Hp Display In UI
             Task task = new Task(() => {
-                player.Hp = player.Hp + 1;
-                Thread.Sleep(500);
+            player.Hp = player.Hp + 1;
+                Thread.Sleep(00);
             });
 
             MainUiContainer.AddNewUI(FightScene);
