@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleGameProject.Inventory
 {
-    internal class Weapon
+    internal class ItemWeapon
     {
     }
 }

@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleGameProject.Inventory
+namespace ConsoleGameProject
 {
-    internal class Item
+    public class Item
     {
+        public string Name;
+        public string Description;
+        public 
     }
 }

@@ -249,6 +249,7 @@ namespace ConsoleGameProject
                 FightSceneUi.AddNewUI(StaticEnemy);
                 FightButton1.AddOnClick(() =>
                 {
+                    //Todo Make ondead dropitem
                     player.Attack(enemy);
 
                     RenderManager.RenderUIContainer(MainFightUi);

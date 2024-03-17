@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleGameProject.Inventory
 {
-    internal class Class1
+    public class ItemConsumable
     {
     }
 }
