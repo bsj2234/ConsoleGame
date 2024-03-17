@@ -5,7 +5,7 @@ namespace ConsoleGameProject
     {
         protected List<UI> ContentUIList = new List<UI>();
 
-        public UIContainer(bool isMain = false) :base(isMain)
+        public UIContainer(string name, bool isMain = false) :base(name, isMain)
         { }
 
         abstract public int GetRowIndex(int index);

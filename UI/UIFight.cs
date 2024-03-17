@@ -8,7 +8,7 @@ namespace ConsoleGameProject
 {
     internal class UIFight : UIContainerGrid
     {
-        public UIFight(string content, Action action, int rowCount = 1, int columnCount = 1, bool isMain = false) : base(rowCount, columnCount, isMain)
+        public UIFight(string name, string content, Action action, int rowCount = 1, int columnCount = 1, bool isMain = false) : base(name, rowCount, columnCount, isMain)
         {
 
         }

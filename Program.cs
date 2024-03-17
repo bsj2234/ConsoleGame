@@ -2,6 +2,8 @@
 using MyData;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+using ConsoleExtender;
+using System;
 
 namespace ConsoleGameProject
 {
@@ -45,15 +47,6 @@ namespace ConsoleGameProject
             bool bInheritHandle;
         }
 
-        [DllImport("kernel32.dll")]
-        public extern static int CreateConsoleScreenBuffer(int dwDesiredAccess, int dwShareMode, _SECURITY_ATTRIBUTES[] lpSecurityAttributes, int dwFlags, IntPtr[] lpScreenBufferData);
-
-        [DllImport("kernel32.dll")]
-        public extern static bool SetCurrentConsoleFontEx(int hConsoleOutput, bool bMaximumWindow, _COORD dwFontSize, uint FontFamily,uint FontWeight, char[] FaceName);
-
-        [DllImport("kernel32.dll")]
-        public extern static bool GetCurrentConsoleFontEx(int hConsoleOutput,bool bMaximumWindow,_CONSOLE_FONT_INFOEX lpConsoleCurrentFontEx);
-
 
         //static UIContainerGrid FightUIContainer = new UIContainerGrid(0,30);
         public static bool Blink = false;
@@ -84,54 +77,56 @@ namespace ConsoleGameProject
             Task musicAsync = Task.Run(() => {
                 while (true)
                 {
-                    Console.Beep(369, 200);
-                    Console.Beep(369, 200);
-                    Console.Beep(369, 200);
-                    Console.Beep(293, 200);
-                    Console.Beep(246, 200);
-                    Console.Beep(329, 200);
-                    Console.Beep(329, 200);
-                    Console.Beep(329, 200);
-                    Console.Beep(415, 200);
-                    Console.Beep(415, 200);
-                    Console.Beep(440, 200);
-                    Console.Beep(493, 200);
-                    Console.Beep(440, 200);
-                    Console.Beep(440, 200);
-                    Console.Beep(440, 200);
-                    Console.Beep(329, 200);
-                    Console.Beep(293, 200);
-                    Console.Beep(369, 200);
-                    Console.Beep(369, 200);
-                    Console.Beep(369, 200);
-                    Console.Beep(329, 200);
-                    Console.Beep(329, 200);
-                    Console.Beep(369, 200);
-                    Console.Beep(329, 200);
-                    Console.Beep(369, 200);
-                    Console.Beep(369, 200);
-                    Console.Beep(369, 200);
-                    Console.Beep(293, 200);
-                    Console.Beep(246, 200);
-                    Console.Beep(329, 200);
-                    Console.Beep(329, 200);
-                    Console.Beep(329, 200);
-                    Console.Beep(415, 200);
-                    Console.Beep(415, 200);
-                    Console.Beep(440, 200);
-                    Console.Beep(493, 200);
-                    Console.Beep(440, 200);
-                    Console.Beep(440, 200);
-                    Console.Beep(440, 200);
-                    Console.Beep(329, 200);
-                    Console.Beep(293, 200);
-                    Console.Beep(369, 200);
-                    Console.Beep(369, 200);
-                    Console.Beep(369, 200);
-                    Console.Beep(329, 200);
-                    Console.Beep(329, 200);
-                    Console.Beep(369, 200);
-                    Console.Beep(329, 200);
+                    //Console.Beep(659, 125); Console.Beep(659, 125); Thread.Sleep(125); Console.Beep(659, 125); Thread.Sleep(167); Console.Beep(523, 125); Console.Beep(659, 125); Thread.Sleep(125); Console.Beep(784, 125); Thread.Sleep(375); Console.Beep(392, 125); Thread.Sleep(375); Console.Beep(523, 125); Thread.Sleep(250); Console.Beep(392, 125); Thread.Sleep(250); Console.Beep(330, 125); Thread.Sleep(250); Console.Beep(440, 125); Thread.Sleep(125); Console.Beep(494, 125); Thread.Sleep(125); Console.Beep(466, 125); Thread.Sleep(42); Console.Beep(440, 125); Thread.Sleep(125); Console.Beep(392, 125); Thread.Sleep(125); Console.Beep(659, 125); Thread.Sleep(125); Console.Beep(784, 125); Thread.Sleep(125); Console.Beep(880, 125); Thread.Sleep(125); Console.Beep(698, 125); Console.Beep(784, 125); Thread.Sleep(125); Console.Beep(659, 125); Thread.Sleep(125); Console.Beep(523, 125); Thread.Sleep(125); Console.Beep(587, 125); Console.Beep(494, 125); Thread.Sleep(125); Console.Beep(523, 125); Thread.Sleep(250); Console.Beep(392, 125); Thread.Sleep(250); Console.Beep(330, 125); Thread.Sleep(250); Console.Beep(440, 125); Thread.Sleep(125); Console.Beep(494, 125); Thread.Sleep(125); Console.Beep(466, 125); Thread.Sleep(42); Console.Beep(440, 125); Thread.Sleep(125); Console.Beep(392, 125); Thread.Sleep(125); Console.Beep(659, 125); Thread.Sleep(125); Console.Beep(784, 125); Thread.Sleep(125); Console.Beep(880, 125); Thread.Sleep(125); Console.Beep(698, 125); Console.Beep(784, 125); Thread.Sleep(125); Console.Beep(659, 125); Thread.Sleep(125); Console.Beep(523, 125); Thread.Sleep(125); Console.Beep(587, 125); Console.Beep(494, 125); Thread.Sleep(375); Console.Beep(784, 125); Console.Beep(740, 125); Console.Beep(698, 125); Thread.Sleep(42); Console.Beep(622, 125); Thread.Sleep(125); Console.Beep(659, 125); Thread.Sleep(167); Console.Beep(415, 125); Console.Beep(440, 125); Console.Beep(523, 125); Thread.Sleep(125); Console.Beep(440, 125); Console.Beep(523, 125); Console.Beep(587, 125); Thread.Sleep(250); Console.Beep(784, 125); Console.Beep(740, 125); Console.Beep(698, 125); Thread.Sleep(42); Console.Beep(622, 125); Thread.Sleep(125); Console.Beep(659, 125); Thread.Sleep(167); Console.Beep(698, 125); Thread.Sleep(125); Console.Beep(698, 125); Console.Beep(698, 125); Thread.Sleep(625); Console.Beep(784, 125); Console.Beep(740, 125); Console.Beep(698, 125); Thread.Sleep(42); Console.Beep(622, 125); Thread.Sleep(125); Console.Beep(659, 125); Thread.Sleep(167); Console.Beep(415, 125); Console.Beep(440, 125); Console.Beep(523, 125); Thread.Sleep(125); Console.Beep(440, 125); Console.Beep(523, 125); Console.Beep(587, 125); Thread.Sleep(250); Console.Beep(622, 125); Thread.Sleep(250); Console.Beep(587, 125); Thread.Sleep(250); Console.Beep(523, 125); Thread.Sleep(1125); Console.Beep(784, 125); Console.Beep(740, 125); Console.Beep(698, 125); Thread.Sleep(42); Console.Beep(622, 125); Thread.Sleep(125); Console.Beep(659, 125); Thread.Sleep(167); Console.Beep(415, 125); Console.Beep(440, 125); Console.Beep(523, 125); Thread.Sleep(125); Console.Beep(440, 125); Console.Beep(523, 125); Console.Beep(587, 125); Thread.Sleep(250); Console.Beep(784, 125); Console.Beep(740, 125); Console.Beep(698, 125); Thread.Sleep(42); Console.Beep(622, 125); Thread.Sleep(125); Console.Beep(659, 125); Thread.Sleep(167); Console.Beep(698, 125); Thread.Sleep(125); Console.Beep(698, 125); Console.Beep(698, 125); Thread.Sleep(625); Console.Beep(784, 125); Console.Beep(740, 125); Console.Beep(698, 125); Thread.Sleep(42); Console.Beep(622, 125); Thread.Sleep(125); Console.Beep(659, 125); Thread.Sleep(167); Console.Beep(415, 125); Console.Beep(440, 125); Console.Beep(523, 125); Thread.Sleep(125); Console.Beep(440, 125); Console.Beep(523, 125); Console.Beep(587, 125); Thread.Sleep(250); Console.Beep(622, 125); Thread.Sleep(250); Console.Beep(587, 125); Thread.Sleep(250); Console.Beep(523, 125);
+
+                    //Console.Beep(369, 200);
+                    //Console.Beep(369, 200);
+                    //Console.Beep(369, 200);
+                    //Console.Beep(293, 200);
+                    //Console.Beep(246, 200);
+                    //Console.Beep(329, 200);
+                    //Console.Beep(329, 200);
+                    //Console.Beep(329, 200);
+                    //Console.Beep(415, 200);
+                    //Console.Beep(415, 200);
+                    //Console.Beep(440, 200);
+                    //Console.Beep(493, 200);
+                    //Console.Beep(440, 200);
+                    //Console.Beep(440, 200);
+                    //Console.Beep(440, 200);
+                    //Console.Beep(329, 200);
+                    //Console.Beep(293, 200);
+                    //Console.Beep(369, 200);
+                    //Console.Beep(369, 200);
+                    //Console.Beep(369, 200);
+                    //Console.Beep(329, 200);
+                    //Console.Beep(329, 200);
+                    //Console.Beep(369, 200);
+                    //Console.Beep(329, 200);
+                    //Console.Beep(369, 200);
+                    //Console.Beep(369, 200);
+                    //Console.Beep(369, 200);
+                    //Console.Beep(293, 200);
+                    //Console.Beep(246, 200);
+                    //Console.Beep(329, 200);
+                    //Console.Beep(329, 200);
+                    //Console.Beep(329, 200);
+                    //Console.Beep(415, 200);
+                    //Console.Beep(415, 200);
+                    //Console.Beep(440, 200);
+                    //Console.Beep(493, 200);
+                    //Console.Beep(440, 200);
+                    //Console.Beep(440, 200);
+                    //Console.Beep(440, 200);
+                    //Console.Beep(329, 200);
+                    //Console.Beep(293, 200);
+                    //Console.Beep(369, 200);
+                    //Console.Beep(369, 200);
+                    //Console.Beep(369, 200);
+                    //Console.Beep(329, 200);
+                    //Console.Beep(329, 200);
+                    //Console.Beep(369, 200);
+                    //Console.Beep(329, 200);
                 }
             });
 
@@ -139,69 +134,9 @@ namespace ConsoleGameProject
             //Wall wall1 = new Wall("wall", new Vec2(20, 20), new Vec2(10, 2), false);
             HuntArea huntarea = new HuntArea("huntarea", new Vec2(100, 33), new Vec2(10, 2));
 
-            /////////////RenderManager.ConsoleBufferInit(MapSize);
-            //CreateConsoleScreenBuffer(1<<8| 1<<7, 0, null, 1, null);
-            //잠깐만 이거 한번만 실행되어야 하는데
-            //UICursor UICursor = new UICursor(FightUIContainer);
-
-
-
-            UIContainerGrid MainUiContainer = new UIContainerGrid(2, 1, true);
-            //MainUiContainer.AddNewUI(null);
-
-            var FightScene = new UIContainerGridContent( """
-                 ...                                             .*(,, */#.       .(/,*,*#.         
-              /**// (##(&      ****/,                           *///**((%%*     *////**/*/((@        
-                  ((((#   (,(##((%/(@                         (//////(#*      */////////(&          
-                 *% ((&  /##((((#&@                           (///////(#*      /*///////(#*          
-               % (**,,,/*/(((&                                #///////((#      (////////(%           
-     .((.   .(/(//*,,#@&///(*                                 #///////(#.     (///////(#            
-     #**///(////////////////(/                                 #////((#(*/,,,*(//////((@            
-       #(((/ .//////////////(@                                 .#(((*///,/*,/*(/////((@             
-          . //// ,/   /////##@                                  ///**/////////////((((#((           
-          ////// ,*///, *#/*,,//#@     *///(                   .////////////////////((((#,          
-          ,.     (, *((///(((%(###%%   (*,//((#                .(////////////////////(((((&          
-           ,/, ...,///##,,*/&#(* *(    ,#(((#*                /#////////////////////(((((((&         
-               ((*//##@@@     ##  @@ #%              /*,*////(@(//////////  /*///((((///%#@         
-                   #(((((                          (/.  .*////(#, ///////    /((((&((///*///#%%#    
-                   %@@                             #////,,////(##((,.,,,,#(((,,,,,((@(((/////////((#
-""",
-                () => { },3,3
-                );
-            var FightGrid = new UIContainerGrid(1, 3);
-            var FightGrid2 = new UIContainerGrid(3, 1);
-            var FightGrid3 = new UIContainerGrid(3, 1);
-            var FightGrid4 = new UIContainerGrid(3, 1);
-            var FightGrid5 = new UIContainerGridContent(@"DiE
-Ha
-HaHa",()=> { });
-            var FightGrid6 = new UIContainerGridContent("DiE", () => { });
-            var FightGrid7 = new UIContainerGridContent("DiE", () => { });
-
-            var StaticEnemy = new UIContainerGridContent("HP = 485", () => { });
-            var StaticPlayer = new UIContainerGridContent(player.Hp, () => { });
-
-            //Debug Hp Display In UI
-            Task task = new Task(() => {
-            player.Hp = player.Hp + 1;
-                Thread.Sleep(00);
-            });
-
-            MainUiContainer.AddNewUI(FightScene);
-            MainUiContainer.AddNewUI(FightGrid);
-            FightGrid.AddNewUI(FightGrid2);
-            FightGrid.AddNewUI(FightGrid3);
-            FightGrid.AddNewUI(FightGrid4);
-            FightGrid4.AddNewUI(FightGrid5);
-            FightGrid4.AddNewUI(FightGrid6);
-            FightGrid4.AddNewUI(FightGrid7);
-            FightScene.AddNewUI(StaticEnemy);
-            FightScene.AddNewUI(StaticPlayer);
-            UICursor.InitialCursor(MainUiContainer);
 
 
             PositionConsoleWindowDemo.SetWindowSize();
-            //ConsoleExtender.ConsoleHelper.SetCurrentFont("Consolas", 15);
 
             //game loop
             while (true)
@@ -264,9 +199,75 @@ HaHa",()=> { });
 
             void Fight()
             {
-                FightInput();
-                RenderManager.RenderUIContainer(MainUiContainer);
-                //UI[,] allUI = FightUIContainer.GetAll();
+                Enemy enemy = new Enemy("KKong", 84);
+                UIContainerGrid MainFightUi = new UIContainerGrid("MainFightUi",2, 1, true);
+                var FightSceneUi = new UIContainerGridContent("FightSceneUi", """
+                 ...                                             .*(,, */#.       .(/,*,*#.         
+              /**// (##(&      ****/,                           *///**((%%*     *////**/*/((@        
+                  ((((#   (,(##((%/(@                         (//////(#*      */////////(&          
+                 *% ((&  /##((((#&@                           (///////(#*      /*///////(#*          
+               % (**,,,/*/(((&                                #///////((#      (////////(%           
+     .((.   .(/(//*,,#@&///(*                                 #///////(#.     (///////(#            
+     #**///(////////////////(/                                 #////((#(*/,,,*(//////((@            
+       #(((/ .//////////////(@                                 .#(((*///,/*,/*(/////((@             
+          . //// ,/   /////##@                                  ///**/////////////((((#((           
+          ////// ,*///, *#/*,,//#@     *///(                   .////////////////////((((#,          
+          ,.     (, *((///(((%(###%%   (*,//((#                .(////////////////////(((((&          
+           ,/, ...,///##,,*/&#(* *(    ,#(((#*                /#////////////////////(((((((&         
+               ((*//##@@@     ##  @@ #%              /*,*////(@(//////////  /*///((((///%#@         
+                   #(((((                          (/.  .*////(#, ///////    /((((&((///*///#%%#    
+                   %@@                             #////,,////(##((,.,,,,#(((,,,,,((@(((/////////((#
+""",
+                    () => { }, 3, 3
+                    );
+                var FightBottomUi = new UIContainerGrid("FightSelectsUi", 1, 3);
+
+                var SelectUi = new UIContainerGrid("Select", 2, 2);
+                var FightBottom2 = new UIContainerGrid("FightBottom2", 3, 1);
+                var FightLog = new UIContainerGridContent("FightLog", UIFightLogManager.GetContent ,null , 3, 1);
+                var FightButton1 = new UIContainerGridContent("AttackButton", "Attack", null);
+                var FightButton2 = new UIContainerGridContent("SkillButton", "Skillz", null);
+                var FightButton3 = new UIContainerGridContent("ItemsButton", "Items", null);
+                var FightButton4 = new UIContainerGridContent("Run", "Run", null);
+                var StaticPlayer = new UIContainerGridContent("PlayerStatic", () => 
+                { return $"{player.GetHp()}"; }
+                , null);
+                string.Format("str{0}",new object[5] {1,2,3,4,5});
+
+                MainFightUi.AddNewUI(FightSceneUi);
+                MainFightUi.AddNewUI(FightBottomUi);
+                FightBottomUi.AddNewUI(SelectUi);
+                FightBottomUi.AddNewUI(FightBottom2);
+                FightBottomUi.AddNewUI(FightLog);
+                SelectUi.AddNewUI(FightButton1);
+                SelectUi.AddNewUI(FightButton2);
+                SelectUi.AddNewUI(FightButton3);
+                SelectUi.AddNewUI(FightButton4);
+                FightSceneUi.AddNewUI(StaticPlayer);
+
+                var StaticEnemy = new UIContainerGridContent("EnemyStatic", () => { return $"{enemy.GetHp()}"; }, null);
+                FightSceneUi.AddNewUI(StaticEnemy);
+                FightButton1.AddOnClick(() =>
+                {
+                    player.Attack(enemy);
+
+                    RenderManager.RenderUIContainer(MainFightUi);
+                    RenderManager.Show();
+                    Thread.Sleep(1000);
+                    UIFightLogManager.Clear();
+                });
+                Task debugHp = Task.Run(() => { player.Damaged(10); });
+                UICursor.InitialCursor(MainFightUi);
+
+
+
+                while (true)
+                {
+                    FightInput();
+                    RenderManager.RenderUIContainer(MainFightUi);
+                    RenderManager.Show();
+                    UIFightLogManager.Clear();
+                }
 
 
             }
@@ -307,188 +308,5 @@ HaHa",()=> { });
                     PositionConsoleWindowDemo.ShakeWindow(3, 20, 50);
             });
         }
-
-        
-    }
-    public static class PositionConsoleWindowDemo
-    {
-        //https://stackoverflow.com/questions/27715004/position-a-small-console-window-to-the-bottom-left-of-the-screen
-        // P/Invoke declarations.
-
-        [DllImport("kernel32.dll")]
-        static extern IntPtr GetConsoleWindow();
-
-        [DllImport("user32.dll")]
-        static extern IntPtr MonitorFromWindow(IntPtr hwnd, uint dwFlags);
-
-        const int MONITOR_DEFAULTTOPRIMARY = 1;
-
-        [DllImport("user32.dll")]
-        static extern bool GetMonitorInfo(IntPtr hMonitor, ref MONITORINFO lpmi);
-
-        [StructLayout(LayoutKind.Sequential)]
-        struct MONITORINFO
-        {
-            public uint cbSize;
-            public RECT rcMonitor;
-            public RECT rcWork;
-            public uint dwFlags;
-            public static MONITORINFO Default
-            {
-                get { var inst = new MONITORINFO(); inst.cbSize = (uint)Marshal.SizeOf(inst); return inst; }
-            }
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        struct RECT
-        {
-            public int Left, Top, Right, Bottom;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        struct POINT
-        {
-            public int x, y;
-        }
-
-        [DllImport("user32.dll", SetLastError = true)]
-        static extern bool GetWindowPlacement(IntPtr hWnd, ref WINDOWPLACEMENT lpwndpl);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        static extern bool SetWindowPlacement(IntPtr hWnd, [In] ref WINDOWPLACEMENT lpwndpl);
-
-        const uint SW_RESTORE = 9;
-
-        [StructLayout(LayoutKind.Sequential)]
-        struct WINDOWPLACEMENT
-        {
-            public uint Length;
-            public uint Flags;
-            public uint ShowCmd;
-            public POINT MinPosition;
-            public POINT MaxPosition;
-            public RECT NormalPosition;
-            public static WINDOWPLACEMENT Default
-            {
-                get
-                {
-                    var instance = new WINDOWPLACEMENT();
-                    instance.Length = (uint)Marshal.SizeOf(instance);
-                    return instance;
-                }
-            }
-        }
-
-
-        public static void SetWindowSize()
-        {
-            // Get this console window's hWnd (window handle).
-            IntPtr hWnd = GetConsoleWindow();
-
-            // Get information about the monitor (display) that the window is (mostly) displayed on.
-            // The .rcWork field contains the monitor's work area, i.e., the usable space excluding
-            // the taskbar (and "application desktop toolbars" - see https://msdn.microsoft.com/en-us/library/windows/desktop/ms724947(v=vs.85).aspx)
-            var mi = MONITORINFO.Default;
-            GetMonitorInfo(MonitorFromWindow(hWnd, MONITOR_DEFAULTTOPRIMARY), ref mi);
-
-            // Get information about this window's current placement.
-            var wp = WINDOWPLACEMENT.Default;
-            GetWindowPlacement(hWnd, ref wp);
-            var newRect = new Rect();
-            GetWindowRect(hWnd, ref newRect);
-            // Calculate the window's new position: lower left corner.
-            // !! Inexplicably, on W10, work-area coordinates (0,0) appear to be (7,7) pixels 
-            // !! away from the true edge of the screen / taskbar.
-            int fudgeOffset = 7;
-            /*wp.NormalPosition = new RECT()
-            {
-                Left = -fudgeOffset,
-                Top = mi.rcWork.Bottom - (wp.NormalPosition.Bottom - wp.NormalPosition.Top),
-                Right = (wp.NormalPosition.Right - wp.NormalPosition.Left),
-                Bottom = fudgeOffset + mi.rcWork.Bottom
-            };
-            
-            // Place the window at the new position.
-            SetWindowPlacement(hWnd, ref wp);*/
-
-            SetInitailWindowSize();
-            SetWindowPos(hWnd, IntPtr.Zero,-fudgeOffset, -fudgeOffset, InitialWindowSize.Right - InitialWindowSize.Left, InitialWindowSize.Bottom - InitialWindowSize.Top, SWP_NOZORDER | SWP_NOACTIVATE);
-            SetInitailWindowSize();
-
-        }
-
-        const int SWP_NOZORDER = 0x4;
-        const int SWP_NOACTIVATE = 0x10;
-
-
-        [DllImport("user32")]
-        static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter,
-            int x, int y, int cx, int cy, int flags);
-
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        public static extern IntPtr FindWindow(string strClassName, string strWindowName);
-
-        [DllImport("user32.dll")]
-        public static extern bool GetWindowRect(IntPtr hwnd, ref Rect rectangle);
-
-
-        public struct Rect
-        {
-            public int Left { get; set; }
-            public int Top { get; set; }
-            public int Right { get; set; }
-            public int Bottom { get; set; }
-        }
-        /// <summary>
-        /// Sets the console window location and size in pixels
-        /// </summary>
-        /// 
-
-        [DllImport("user32.dll")]
-        public static extern bool AdjustWindowRect(ref Rect lpRect,int dwStyle,bool bMenu);
-        public static void SetWindowPosition(int offset)
-        {
-            IntPtr handle = GetConsoleWindow();
-
-            Rect windowSize = new Rect();
-
-            GetWindowRect(handle, ref windowSize);
-            //SetWindowPos(handle, IntPtr.Zero, windowSize.Left, windowSize.Right, windowSize.Top, windowSize.Bottom, SWP_NOZORDER | SWP_NOACTIVATE);
-            SetWindowPos(handle, IntPtr.Zero, windowSize.Left + offset, windowSize.Top + offset, windowSize.Right - windowSize.Left , windowSize.Bottom - windowSize.Top, SWP_NOZORDER | SWP_NOACTIVATE);
-        }
-
-        private static Rect InitialWindowSize;
-        public static void SetInitailWindowSize()
-        {
-            IntPtr handle = GetConsoleWindow();
-            GetWindowRect(handle, ref InitialWindowSize);
-        }
-        static bool shake = false;
-        public static void ShakeWindow(int count, int offset, int time)
-        {
-            IntPtr handle = GetConsoleWindow();
-            for (int i = 0; i < count*2; i++)
-            {
-                if (shake)
-                {
-                    SetWindowPos(handle, IntPtr.Zero, InitialWindowSize.Left + offset, InitialWindowSize.Top - offset, InitialWindowSize.Right - InitialWindowSize.Left, InitialWindowSize.Bottom - InitialWindowSize.Top, SWP_NOZORDER | SWP_NOACTIVATE);
-                }
-                else
-                {
-                    SetWindowPos(handle, IntPtr.Zero, InitialWindowSize.Left, InitialWindowSize.Top, InitialWindowSize.Right - InitialWindowSize.Left, InitialWindowSize.Bottom - InitialWindowSize.Top, SWP_NOZORDER | SWP_NOACTIVATE);
-                }
-                shake = !shake;
-                Thread.Sleep(time);
-            }
-            ResetWindow();
-        }
-        public static void ResetWindow()
-        {
-            int offset = 10;
-            IntPtr handle = GetConsoleWindow();
-            SetWindowPos(handle, IntPtr.Zero, InitialWindowSize.Left, InitialWindowSize.Top, InitialWindowSize.Right - InitialWindowSize.Left, InitialWindowSize.Bottom - InitialWindowSize.Top, SWP_NOZORDER | SWP_NOACTIVATE);
-        }
-
     }
 }

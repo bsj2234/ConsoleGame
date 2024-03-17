@@ -44,7 +44,7 @@ namespace ConsoleGameProject
         protected List<double> colRatio = new List<double>();
 
 
-        public UIContainerGrid(int rowCount, int columnCount, bool isMain = false) : base(isMain)
+        public UIContainerGrid(string name,int rowCount, int columnCount, bool isMain = false) : base(name, isMain)
         {
             this.columnCount = columnCount;
             this.rowCount = rowCount;

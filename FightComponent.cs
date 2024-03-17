@@ -12,7 +12,11 @@ namespace ConsoleGameProject
         private int maxHp;
         private int maxMp;
         private int maxSp;
-        public int Hp { get; private set; }
+        protected int hp;
+        public int GetHp()
+        {
+            return hp;
+        }
         public int Mp { get; private set; }
         public int Sp { get; private set; }
         public bool Dead { get; private set; }
@@ -24,7 +28,7 @@ namespace ConsoleGameProject
         public FightComponent(Actor owner, int maxHp, int maxMp, int maxSp) 
         {
             this.owner = owner;
-            this.Hp = maxHp;
+            this.hp = maxHp;
             this.Mp = maxMp;
             this.Sp = maxSp;
             Dead = false;
@@ -32,8 +36,8 @@ namespace ConsoleGameProject
 
         public void Damaged(int damage)
         {
-            Hp -= damage;
-            if(Hp <= 0)
+            hp -= damage;
+            if(hp <= 0)
             {
                 if(OnDead != null)
                 {

@@ -35,5 +35,10 @@ namespace ConsoleGameProject
         {
             this.Fight = true;
         }
+
+        public void Damaged(int v)
+        {
+            fightComponent.Damaged(v);
+        }
     }
 }

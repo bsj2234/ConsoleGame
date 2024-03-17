@@ -12,19 +12,22 @@ namespace ConsoleGameProject
     public abstract class UI
     {
         protected UI? owner;
+        protected string name;
         protected Vec2 UISize;
         protected Vec2 UIPosAbsolute;
         protected int index;
         protected bool focus;
-        public UI(bool isMain = false)
+        public UI(string name ,bool isMain = false)
         {
             if(isMain)
                 UISize = new Vec2(Console.WindowWidth, Console.WindowHeight-1);
+            this.name = name;
         }
-        public UI(Vec2 pos, Vec2 size):this()
+        public UI(string name, Vec2 pos, Vec2 size):this(name)
         {
             this.UIPosAbsolute = pos;
             this.UISize = size;
+            this.name = name;
         }
 
 

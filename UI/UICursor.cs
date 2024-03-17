@@ -9,7 +9,7 @@ namespace ConsoleGameProject
 {
     public static class UICursor
     {
-        private static UIContainer currentContainer { get; set; }
+        private static UIContainer? currentContainer { get; set; }
         public static int CurrentIndex = 0;
         //첫음 커서 필요한곳에서 onfocust호출해야할지도
         //커런트 컨테이너도 세팅해야함

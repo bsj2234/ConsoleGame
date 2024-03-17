@@ -11,7 +11,9 @@ namespace ConsoleGameProject
     {
         public Enemy(string name, int hp, Vec2 position, Vec2 size, bool overlap):base(name, hp, position, size, overlap) 
         {
-            
+        }
+        public Enemy(string name, int hp):base(name, hp, new Vec2(0, 0), new Vec2(0, 0), true) 
+        {
         }
     }
 }

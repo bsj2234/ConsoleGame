@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleGameProject
+namespace ConsoleGameProject.Inventory
 {
-    public class Item
+    internal class Weapon
     {
     }
 }

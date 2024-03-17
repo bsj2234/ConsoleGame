@@ -24,7 +24,6 @@ namespace ConsoleGameProject
 
         public string Name { get; protected set; }
         public bool Overlap { get; protected set; }
-        //ref형식으로 주고싶은ㄷ데 더 좋은방법없나 .으로 접근하고 싶다
         public Vec2 Size { get; protected set; }
 
         public Actor(string name, Vec2 position, Vec2 size, bool overlap) {

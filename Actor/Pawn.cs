@@ -11,10 +11,10 @@ namespace ConsoleGameProject
 {
     internal class Pawn:Actor
     {
-        public int Hp {  get; set; }
+        private FightComponent fightComponent;
         public Pawn(string name, int hp, Vec2 position, Vec2 size, bool overlap):base(name, position, size, overlap)
         {
-            this.Hp = hp;
+            fightComponent = new FightComponent(this, hp, 100, 100);
         }
         public bool Move(Direction direction)
         {
@@ -43,6 +43,18 @@ namespace ConsoleGameProject
                 return false;
             }
             return true;
+        }
+        public int GetHp()
+        {
+            return fightComponent.GetHp();
+        }
+        public void Attack(Pawn other)
+        {
+            int damage = 10;
+            fightComponent.Attack(other.fightComponent, damage);
+            UIFightLogManager.Append($"{Name} Attacked {other.Name}!!! Damaged {damage}\n");
+
+
         }
     }
 }
