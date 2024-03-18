@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleGameProject
 {
-    internal class Component
+    public class Component
     {
 
     }

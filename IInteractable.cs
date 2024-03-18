@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace ConsoleGameProject
 {
-    public abstract class GameObject
+    public interface IInteractable
     {
-        public GameObject() { }
+        public void Interact();
     }
 }

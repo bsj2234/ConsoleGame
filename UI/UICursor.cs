@@ -46,7 +46,7 @@ namespace ConsoleGameProject
             currentContainer.GetContent(CurrentIndex).OnFocus();
         }
 
-        public static void Move(Direction dir)
+        public static void Move(EDirection dir)
         {
             if(currentContainer == null) return;
             currentContainer.GetContent(CurrentIndex).OnLoseFocus();

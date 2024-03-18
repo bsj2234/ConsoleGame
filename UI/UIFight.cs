@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleGameProject
 {
-    internal class UIFight : UIContainerGrid
+    internal class UIFight : UiContainerGrid
     {
         public UIFight(string name, string content, Action action, int rowCount = 1, int columnCount = 1, bool isMain = false) : base(name, rowCount, columnCount, isMain)
         {

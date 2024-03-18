@@ -8,20 +8,20 @@ using MyData;
 
 namespace ConsoleGameProject
 {
-    public class Actor : GameObject,IRenderable
+    public class Actor : IRenderable
     {
         private Vec2 mPosition;
+        protected List<Actor> ignoreCollision = new List<Actor>();
+        protected event Action<Actor> OnCollision;
+        protected event Action<Actor> OnOverlap;
         public ref Vec2 GetPosition()
         {
             return ref mPosition;
         }
-        private void SetPosition(Vec2 value)
+        public void SetPosition(Vec2 value)
         {
             mPosition = value;
         }
-        protected event Action<Actor> OnCollision;
-        protected event Action<Actor> OnOverlap;
-
         public string Name { get; protected set; }
         public bool Overlap { get; protected set; }
         public Vec2 Size { get; protected set; }
@@ -31,33 +31,14 @@ namespace ConsoleGameProject
             this.SetPosition(position);
             this.Size = size;
             this.Overlap = overlap;
-            Program.AllActors.Add(this);
+            GameManager.AllActors.Add(this);
         }
-        public bool CheckCollision(Actor other)
+        public virtual bool CheckCollision(Actor other)
         {
-            if (this.Overlap)
-                return false;
-            int startX = this.GetPosition().X;
-            int startY = this.GetPosition().Y;
-            int endX = startX + this.Size.X;
-            int endY = startY + this.Size.Y;
-            int otherStartX = other.GetPosition().X;
-            int otherStartY = other.GetPosition().Y;
-            int otherEndX = other.GetPosition().X + other.Size.X;
-            int otherEndY = other.GetPosition().Y + other.Size.Y;
-            //if collision
-            if (startX < otherEndX && endX > otherStartX
-                && startY < otherEndY && endY > otherStartY)
-            {
-                return true;
-            }
-            else
+            if (ignoreCollision.Contains(other))
             {
                 return false;
             }
-        }
-        public bool CheckOverlap(Actor other)
-        {
             int startX = this.GetPosition().X;
             int startY = this.GetPosition().Y;
             int endX = startX + this.Size.X;
@@ -80,35 +61,35 @@ namespace ConsoleGameProject
         public bool CheckCollisionAllOtherActor()
         {
             bool collion = false;
-            foreach (Actor actor in Program.AllActors)
+            foreach (Actor otherActor in GameManager.AllActors)
             {
-                if (actor == this)
+                if (otherActor == this)
                 {
                     continue;
                 }
-                if(CheckCollision(actor))
+                if(CheckCollision(otherActor))
                 {
                     //overlap처리
-                    if (actor.Overlap == true || this.Overlap == true)
+                    if (otherActor.Overlap == true || this.Overlap == true)
                     {
                         if (this.OnOverlap != null)
                         {
-                            this.OnOverlap(actor);
+                            this.OnOverlap(otherActor);
                         }
-                        if (actor.OnOverlap != null)
+                        if (otherActor.OnOverlap != null)
                         {
-                            actor.OnOverlap(actor);
+                            otherActor.OnOverlap(otherActor);
                         }
                         continue;
                     }
                     //collision처리
-                    if (actor.OnCollision != null)
+                    if (otherActor.OnCollision != null)
                     {
-                        actor.OnCollision(this);
+                        otherActor.OnCollision(this);
                     }
                     if (this.OnCollision != null)
                     {
-                        this.OnCollision(actor);
+                        this.OnCollision(otherActor);
                     }
                     collion = true;
                 }
@@ -122,35 +103,14 @@ namespace ConsoleGameProject
             return false;
             }
         }
-
-
-        public virtual char GetRenderChar(int x, int y)
+        public virtual char? GetRenderChar(int x, int y)
         {
             return 'd';
         }
 
-        //public bool CheckCollision(Vec2 otherPos)
-        //{
-
-        //    int startX = this.GetPosition().X;
-        //    int startY = this.GetPosition().Y;
-        //    int endX = startX + this.Size.X;
-        //    int endY = startY + this.Size.Y;
-
-
-
-        //    //if collision
-        //    if (startX < otherPos.X && endX > otherPos.X
-        //        && startY < otherPos.Y && endY > otherPos.Y)
-        //    {
-        //        return false;
-        //    }
-        //    else
-        //    {
-        //        return true;
-        //    }
-        //}
-
-
+        public void AddIgnoreCollision(Actor actor)
+        {
+            ignoreCollision.Add(actor);
+        }
     }
 }

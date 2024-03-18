@@ -9,28 +9,31 @@ using System.Diagnostics;
 
 namespace ConsoleGameProject
 {
-    internal class Pawn:Actor
+    public class Pawn:Actor
     {
-        private FightComponent fightComponent;
+        protected FightComponent fightComponent;
+        protected event Action OnDead;
+        protected InventoryComponent inventoryComponent;
         public Pawn(string name, int hp, Vec2 position, Vec2 size, bool overlap):base(name, position, size, overlap)
         {
             fightComponent = new FightComponent(this, hp, 100, 100);
+            inventoryComponent = new InventoryComponent();
         }
-        public bool Move(Direction direction)
+        public virtual bool Move(EDirection direction)
         {
             Vec2 tempPos = base.GetPosition();
             switch (direction)
             {
-                case Direction.UP:
+                case EDirection.UP:
                     base.GetPosition().Y--;
                     break;
-                case Direction.DOWN:
+                case EDirection.DOWN:
                     base.GetPosition().Y++;
                     break;
-                case Direction.LEFT:
+                case EDirection.LEFT:
                     base.GetPosition().X--;
                     break;
-                case Direction.RIGHT:
+                case EDirection.RIGHT:
                     base.GetPosition().X++;
                     break;
                 default: 
@@ -53,8 +56,25 @@ namespace ConsoleGameProject
             int damage = 10;
             fightComponent.Attack(other.fightComponent, damage);
             UIFightLogManager.Append($"{Name} Attacked {other.Name}!!! Damaged {damage}\n");
+        }
+        public bool IsDead()
+        {
+            return this.fightComponent.IsDead();
+        }
 
+        public void AddItem(Item item)
+        {
+            inventoryComponent.Add(item);
+        }
 
+        public void SetOpponent(Player player)
+        {
+            fightComponent.SetOpponent(player);
+        }
+
+        public InventoryComponent GetInventory()
+        {
+            return inventoryComponent;
         }
     }
 }

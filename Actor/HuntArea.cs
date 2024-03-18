@@ -14,11 +14,11 @@ namespace ConsoleGameProject
 
         }
 
-        public override char GetRenderChar(int x, int y)
+        public override char? GetRenderChar(int x, int y)
         {
             //return checker
             if ((x + y) % 2 == 0)
-                return ' ';
+                return null;
             else
                 return 'a';
         }

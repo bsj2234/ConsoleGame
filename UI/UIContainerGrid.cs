@@ -32,7 +32,7 @@ namespace ConsoleGameProject
     //스크롤기능을 지원해야 한다면
     //가변크기일 필요가 있을수 있음
 
-    public class UIContainerGrid: UIContainer
+    public class UiContainerGrid: UIContainer
     {
         //내가 무엇을 가지고 있느냐에 따라 행동이 달라진다
         //컨테이너라면 보더를 그려야 할것이다
@@ -44,7 +44,7 @@ namespace ConsoleGameProject
         protected List<double> colRatio = new List<double>();
 
 
-        public UIContainerGrid(string name,int rowCount, int columnCount, bool isMain = false) : base(name, isMain)
+        public UiContainerGrid(string name,int rowCount, int columnCount, bool isMain = false) : base(name, isMain)
         {
             this.columnCount = columnCount;
             this.rowCount = rowCount;
@@ -97,21 +97,21 @@ namespace ConsoleGameProject
         {
             return ContentUIList[index];
         }
-        public UI GetRelativeDirectionUI(Direction d, int index)
+        public UI GetRelativeDirectionUI(EDirection d, int index)
         {
             int temp = index;
             switch (d)
             {
-                case Direction.UP:
+                case EDirection.UP:
                     temp -= columnCount;
                     break;
-                case Direction.DOWN:
+                case EDirection.DOWN:
                     temp += columnCount;
                     break;
-                case Direction.LEFT:
+                case EDirection.LEFT:
                     temp -= 1;
                     break;
-                case Direction.RIGHT:
+                case EDirection.RIGHT:
                     temp += 1;
                     break;
                 default:
@@ -127,7 +127,7 @@ namespace ConsoleGameProject
         //SO i Need Owner
         private void DrawUIBorderLine()
         {
-            if(focus == true && Program.Blink == true) 
+            if(focus == true && GameManager.UiFocusedBlink == true) 
             {
                 return;
             }
@@ -221,23 +221,23 @@ namespace ConsoleGameProject
         }
 
 
-        override public int GetMovedIndex(int cur, Direction direction)
+        override public int GetMovedIndex(int cur, EDirection direction)
         {
             int temp = cur;
             int x = cur % columnCount;
             int y = cur / columnCount;
             switch (direction)
             {
-                case Direction.UP:
+                case EDirection.UP:
                     y --;
                     break;
-                case Direction.DOWN:
+                case EDirection.DOWN:
                     y ++;
                     break;
-                case Direction.LEFT:
+                case EDirection.LEFT:
                     x --;
                     break;
-                case Direction.RIGHT:
+                case EDirection.RIGHT:
                     x ++;
                     break;
                 default:
@@ -257,6 +257,11 @@ namespace ConsoleGameProject
                 return temp; 
             }
             return x + y * columnCount;
+        }
+
+        internal void Clear()
+        {
+            ContentUIList.Clear();
         }
     }
 }

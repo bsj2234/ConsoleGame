@@ -8,7 +8,7 @@ using MyData;
 
 namespace ConsoleGameProject
 {
-    public class UIContainerGridContent: UIContainerGrid
+    public class UIContainerGridContent: UiContainerGrid
     {
         public object? Content {get; set;}
         private object? focusedContent;
@@ -77,7 +77,8 @@ namespace ConsoleGameProject
             {
                 content = onContent().ToString().Replace("\r\n", "\n");
             }
-            Vec2 ContextPos = UISize * .5 + UIPosAbsolute;
+            Vec2 ContextPos = new Vec2((int)(UISize.X * .5 + UIPosAbsolute.X), (int)(UISize.Y * .1 + UIPosAbsolute.Y));
+            //줄의 최대길이를 계산해서 너비계산
             //잠시만 이거 취소 이유 버그발생 사라지는버그
             //int maxLineLenght = 0;
             //int curLineLength = 0;

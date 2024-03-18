@@ -4,15 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleGameProject.Inventory
+namespace ConsoleGameProject
 {
-    public class Inventory
+    public class InventoryComponent
     {
         public List<Item> Items;
-        private int yieldGetIndex;
-        public Inventory() 
+        public InventoryComponent() 
         {
-            
+            Items = new List<Item>();
         }
 
         public void Add(Item item)
@@ -35,8 +34,10 @@ namespace ConsoleGameProject.Inventory
             return Items.Contains(item);
         }
 
-        public Item YieldGetItem() { yield return Items[yieldGetIndex++]; }
-        public void YieldGetItemInit() { yieldGetIndex = 0; }
+        public List<Item> GetList() 
+        {
+            return Items;
+        }
 
 
     }

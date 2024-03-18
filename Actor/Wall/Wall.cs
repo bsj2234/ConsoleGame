@@ -12,9 +12,9 @@ namespace ConsoleGameProject
 
         }
 
-        public override char GetRenderChar(int x, int y)
+        public override char? GetRenderChar(int x, int y)
         {
-            return 'ㅇ';
+            return 'W';
         }
     }
 }

@@ -8,136 +8,6 @@ using System.Drawing;
 //https://stackoverflow.com/questions/6554536/is-it-possible-to-get-set-the-console-font-size
 namespace ConsoleExtender
 {
-    [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    public struct ConsoleFont
-    {
-        public uint Index;
-        public short SizeX, SizeY;
-    }
-
-    public static class ConsoleHelper
-    {
-        [DllImport("kernel32")]
-        public static extern bool SetConsoleIcon(IntPtr hIcon);
-
-        [DllImport("kernel32")]
-        private extern static bool SetConsoleFont(IntPtr hOutput, uint index);
-
-        private enum StdHandle
-        {
-            OutputHandle = -11
-        }
-
-        [DllImport("kernel32")]
-        private static extern IntPtr GetStdHandle(StdHandle index);
-
-        public static bool SetConsoleFont(uint index)
-        {
-            return SetConsoleFont(GetStdHandle(StdHandle.OutputHandle), index);
-        }
-
-        [DllImport("kernel32")]
-        private static extern bool GetConsoleFontInfo(IntPtr hOutput, [MarshalAs(UnmanagedType.Bool)] bool bMaximize,
-            uint count, [MarshalAs(UnmanagedType.LPArray), Out] ConsoleFont[] fonts);
-
-        [DllImport("kernel32")]
-        private static extern uint GetNumberOfConsoleFonts();
-
-        public static uint ConsoleFontsCount
-        {
-            get
-            {
-                return GetNumberOfConsoleFonts();
-            }
-        }
-
-        public static ConsoleFont[] ConsoleFonts
-        {
-            get
-            {
-                ConsoleFont[] fonts = new ConsoleFont[GetNumberOfConsoleFonts()];
-                if (fonts.Length > 0)
-                    GetConsoleFontInfo(GetStdHandle(StdHandle.OutputHandle), false, (uint)fonts.Length, fonts);
-                return fonts;
-            }
-        }
-        private const int FixedWidthTrueType = 54;
-        private const int StandardOutputHandle = -11;
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        internal static extern IntPtr GetStdHandle(int nStdHandle);
-
-        [return: MarshalAs(UnmanagedType.Bool)]
-        [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
-        internal static extern bool SetCurrentConsoleFontEx(IntPtr hConsoleOutput, bool MaximumWindow, ref FontInfo ConsoleCurrentFontEx);
-
-        [return: MarshalAs(UnmanagedType.Bool)]
-        [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
-        internal static extern bool GetCurrentConsoleFontEx(IntPtr hConsoleOutput, bool MaximumWindow, ref FontInfo ConsoleCurrentFontEx);
-
-
-        private static readonly IntPtr ConsoleOutputHandle = GetStdHandle(StandardOutputHandle);
-
-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-        public struct FontInfo
-        {
-            internal int cbSize;
-            internal int FontIndex;
-            internal short FontWidth;
-            public short FontSize;
-            public int FontFamily;
-            public int FontWeight;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
-            //[MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.wc, SizeConst = 32)]
-            public string FontName;
-        }
-
-        public static FontInfo[] SetCurrentFont(string font, short fontSize = 0)
-        {
-            Console.WriteLine("Set Current Font: " + font);
-
-            FontInfo before = new FontInfo
-            {
-                cbSize = Marshal.SizeOf<FontInfo>()
-            };
-
-            if (GetCurrentConsoleFontEx(ConsoleOutputHandle, false, ref before))
-            {
-
-                FontInfo set = new FontInfo
-                {
-                    cbSize = Marshal.SizeOf<FontInfo>(),
-                    FontIndex = 0,
-                    FontFamily = FixedWidthTrueType,
-                    FontName = font,
-                    FontWeight = 400,
-                    FontSize = fontSize > 0 ? fontSize : before.FontSize
-                };
-
-                // Get some settings from current font.
-                if (!SetCurrentConsoleFontEx(ConsoleOutputHandle, false, ref set))
-                {
-                    var ex = Marshal.GetLastWin32Error();
-                    Console.WriteLine("Set error " + ex);
-                    throw new System.ComponentModel.Win32Exception(ex);
-                }
-
-                FontInfo after = new FontInfo
-                {
-                    cbSize = Marshal.SizeOf<FontInfo>()
-                };
-                GetCurrentConsoleFontEx(ConsoleOutputHandle, false, ref after);
-
-                return new[] { before, set, after };
-            }
-            else
-            {
-                var er = Marshal.GetLastWin32Error();
-                Console.WriteLine("Get error " + er);
-                throw new System.ComponentModel.Win32Exception(er);
-            }
-        }
-    }
     public static class PositionConsoleWindowDemo
     {
         //https://stackoverflow.com/questions/27715004/position-a-small-console-window-to-the-bottom-left-of-the-screen
@@ -273,8 +143,6 @@ namespace ConsoleExtender
         /// </summary>
         /// 
 
-        [DllImport("user32.dll")]
-        public static extern bool AdjustWindowRect(ref Rect lpRect, int dwStyle, bool bMenu);
         public static void SetWindowPosition(int offset)
         {
             IntPtr handle = GetConsoleWindow();
@@ -282,7 +150,6 @@ namespace ConsoleExtender
             Rect windowSize = new Rect();
 
             GetWindowRect(handle, ref windowSize);
-            //SetWindowPos(handle, IntPtr.Zero, windowSize.Left, windowSize.Right, windowSize.Top, windowSize.Bottom, SWP_NOZORDER | SWP_NOACTIVATE);
             SetWindowPos(handle, IntPtr.Zero, windowSize.Left + offset, windowSize.Top + offset, windowSize.Right - windowSize.Left, windowSize.Bottom - windowSize.Top, SWP_NOZORDER | SWP_NOACTIVATE);
         }
 
@@ -313,9 +180,14 @@ namespace ConsoleExtender
         }
         public static void ResetWindow()
         {
-            int offset = 10;
             IntPtr handle = GetConsoleWindow();
             SetWindowPos(handle, IntPtr.Zero, InitialWindowSize.Left, InitialWindowSize.Top, InitialWindowSize.Right - InitialWindowSize.Left, InitialWindowSize.Bottom - InitialWindowSize.Top, SWP_NOZORDER | SWP_NOACTIVATE);
+        }
+        public static void ShakeScreen(int count)
+        {
+            Task ShakeAsync = Task.Run(() => {
+                PositionConsoleWindowDemo.ShakeWindow(3, 20, 50);
+            });
         }
 
     }

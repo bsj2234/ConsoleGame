@@ -8,8 +8,18 @@ namespace ConsoleGameProject
 {
     public class Item
     {
-        public string Name;
-        public string Description;
-        public 
+        protected string name;
+        protected string description;
+        protected int value;
+
+        public virtual string GetItemUiString()
+        {
+            return $"{name}";
+        }
+        public int GetValue()
+        {
+            return value;
+        }
+
     }
 }

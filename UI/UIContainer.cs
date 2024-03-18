@@ -16,7 +16,7 @@ namespace ConsoleGameProject
         abstract public Vec2 GetAbsoluteUiPositionOfIndex(int index);
         abstract public UI GetContent(int index);
 
-        abstract public int GetMovedIndex(int cur, Direction direction);
+        abstract public int GetMovedIndex(int cur, EDirection direction);
 
         public virtual void OnClick()
         {
