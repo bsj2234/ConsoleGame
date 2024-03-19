@@ -17,7 +17,7 @@ namespace ConsoleGameProject
         protected InventoryComponent inventoryComponent;
         public Pawn(string name, int hp, Vec2 position, Vec2 size, bool overlap):base(name, position, size, overlap)
         {
-            fightComponent = new FightComponent(this, hp, 100, 100);
+            fightComponent = new FightComponent(this, hp, 0);
             inventoryComponent = new InventoryComponent(this);
 
 
@@ -93,6 +93,11 @@ namespace ConsoleGameProject
         private Item RemoveItem(Item item)
         {
             return inventoryComponent.Remove(item);
+        }
+
+        public FightComponent GetFightComponent()
+        {
+            return fightComponent;
         }
     }
 }

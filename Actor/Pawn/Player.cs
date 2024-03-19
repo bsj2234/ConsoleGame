@@ -18,7 +18,7 @@ namespace ConsoleGameProject
         public bool Fight { get; set; }
         public Player(string name, int hp, Vec2 position, Vec2 size, bool overlap):base(name, hp, position, size, overlap)
         {
-            fightComponent = new FightComponent(this, hp, 100, 100);
+            fightComponent = new FightComponent(this, hp, 100);
             //사이즈는 앞뒤 양옆 한줄씩 크게 하기 위해서
             Vec2 interactSize = size + new Vec2(2, 2);
             Vec2 interactCenter = position - interactSize * .5;

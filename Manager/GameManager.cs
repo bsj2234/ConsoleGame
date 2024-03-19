@@ -106,10 +106,7 @@ namespace ConsoleGameProject
             FightTopUi.SetColRatio(new double[] { 1, 2 });
 
             var FightStaticUi = new UiContainerGrid("FightStaticUi", 2, 1);
-
-            var StaticPlayer = new UIContainerGridContent("PlayerStatic", () => { return $"{player.GetHp()}"; }, null);
-            var StaticEnemy = new UIContainerGridContent("EnemyStatic", () => { return $"{enemy.GetHp()}"; }, null);
-            var FightSceneUi = new UIContainerGridContent("FightSceneUi", """ 
+            var FightSceneUi = new UiContainerGridContent("FightSceneUi", """ 
                                                                       ...                             
                                                                    /**// (##(&      ****/,            
                                                                        ((((#   (,(##((%/(@            
@@ -146,11 +143,11 @@ namespace ConsoleGameProject
             var FightBottomUi = new UiContainerGrid("FightSelectsUi", 1, 3);
             var SelectUi = new UiContainerGrid("Select", 2, 2);
             var FightBottom2 = new UiContainerGrid("FightBottom2", 3, 1);
-            var FightLog = new UIContainerGridContent("FightLog", UIFightLogManager.GetContent, null, 3, 1);
-            var FightButton1 = new UIContainerGridContent("AttackButton", "Attack", null);
-            var FightButton2 = new UIContainerGridContent("SkillButton", "Skillz", null);
-            var FightButton3 = new UIContainerGridContent("ItemsButton", "Items", null);
-            var FightButton4 = new UIContainerGridContent("Run", "Run", null);
+            var FightLog = new UiContainerGridContent("FightLog", UIFightLogManager.GetContent, null, 3, 1);
+            var FightButton1 = new UiContainerGridContent("AttackButton", "Attack", null);
+            var FightButton2 = new UiContainerGridContent("SkillButton", "Skillz", null);
+            var FightButton3 = new UiContainerGridContent("ItemsButton", "Items", null);
+            var FightButton4 = new UiContainerGridContent("Run", "Run", null);
 
             MainFightUi.AddNewUI(FightTopUi, 0);
             MainFightUi.AddNewUI(FightBottomUi, 0);
@@ -158,8 +155,8 @@ namespace ConsoleGameProject
             FightTopUi.AddNewUI(FightStaticUi, 0);
             FightTopUi.AddNewUI(FightSceneUi, 1);
 
-            FightStaticUi.AddNewUI(StaticPlayer, 0);
-            FightStaticUi.AddNewUI(StaticEnemy, 1);
+            FightStaticUi.AddNewUI(new UIPawnStatus("PlayerStatic", player.GetFightComponent().GetUiStatus, null), 0);
+            FightStaticUi.AddNewUI(new UIPawnStatus("EnemyStatus", enemy.GetFightComponent().GetUiStatus, null), 1);
 
             FightBottomUi.AddNewUI(SelectUi, 0);
             FightBottomUi.AddNewUI(FightBottom2, 1);
@@ -191,7 +188,7 @@ namespace ConsoleGameProject
         static void Win()
         {
             UiContainerGrid MainWinUi = new UiContainerGrid("MainWinUi", 1, 1, true);
-            var UiItemGrid = new UIContainerGridContent("WinUi", "You Win!!!", null);
+            var UiItemGrid = new UiContainerGridContent("WinUi", "You Win!!!", null);
             MainWinUi.AddNewUI(UiItemGrid, 0);
             UICursor.InitialCursor(MainWinUi);
             while (true)
@@ -208,9 +205,23 @@ namespace ConsoleGameProject
         }
         static void Pause()
         {
-            UiContainerGrid MainPauseUi = new UiContainerGrid("MainPauseUi", 1, 2, true);
+            UiContainerGrid MainPauseUi = new UiContainerGrid("MainPauseUi", 1, 3, true);
+            MainPauseUi.SetColRatio(new double[] { .3, .7 , .3});
+
+            var UiLeftSideBar = new UiContainerGrid("UiLeftSideBar", 2, 1);
+            UiLeftSideBar.SetColRatio(new double[] { .3, .7 });
+            MainPauseUi.AddNewUI(UiLeftSideBar, 0);
+
+            UiLeftSideBar.AddNewUI(new UIPawnStatus("PlayerStatic", player.GetFightComponent().GetUiStatus, null), 0);
+
+
+            var SelectsUi = new UiContainerGrid("SelectsUi", 2, 1);
+            UiLeftSideBar.AddNewUI(SelectsUi, 1);
+
             var UiItemGrid = new UiContainerGrid("UiItemGrid", 10, 6);
-            MainPauseUi.AddNewUI(UiItemGrid, 0);
+            MainPauseUi.AddNewUI(UiItemGrid, 1);
+
+            //Todo EquipmentUi
 
             UICursor.InitialCursor(MainPauseUi);
             RenderManager.RenderUIContainer(MainPauseUi);
@@ -253,7 +264,7 @@ namespace ConsoleGameProject
         }
         private static void Shop()
         {
-            UIContainerGridContent MainShopUi = InitShopUi();
+            UiContainerGrid MainShopUi = InitShopUi();
             while (true)
             {
                 UIInput();
@@ -409,11 +420,23 @@ namespace ConsoleGameProject
 
 
         //DrawUi
-        private static UIContainerGridContent InitShopUi()
+        private static UiContainerGrid InitShopUi()
         {
-            UIContainerGridContent MainShopUi = new UIContainerGridContent("MainShop", "Welcom to shop what do you need?", null, 1, 1, true);
-            UIContainerGridContent SlectUi = new UIContainerGridContent("MainShop", "Welcom to shop what do you need?", null, 2, 1, true);
-            MainShopUi.AddNewUI(SlectUi, 0);
+            UiContainerGrid MainShopUi = new UiContainerGrid("MainShop", 2, 1, true);
+            MainShopUi.SetRowRatio(new double[] { .1, 1.5 });
+            MainShopUi.AddNewUI(new UiContainerGridContent("Header", "Welcom to shop what do you need?", null), 0);
+
+            UiContainerGrid TransferUi = new UiContainerGrid("TransferUi", 2, 2);
+            TransferUi.SetRowRatio(new double[] { .1, 1.5 });
+            MainShopUi.AddNewUI(TransferUi, 1);
+
+            TransferUi.AddNewUI(new UiContainerGridContent("BuyHeader", "Buy", null),0);
+            TransferUi.AddNewUI(new UiContainerGridContent("SellHeader", "Sell", null),1);
+
+            UiContainerGrid BuyItems = new UiContainerGrid("BuyItems", 6, 6);
+            TransferUi.AddNewUI(BuyItems, 2);
+            UiContainerGrid SellItems = new UiContainerGrid("SellItems", 6, 6);
+            TransferUi.AddNewUI(SellItems, 2);
             UICursor.InitialCursor(MainShopUi);
             return MainShopUi;
         }

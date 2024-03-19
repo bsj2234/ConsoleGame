@@ -17,7 +17,7 @@ namespace ConsoleGameProject
 
         public static void Click()
         {
-            if(currentContainer.GetContent(CurrentIndex) is UIContainerGridContent current)
+            if(currentContainer.GetContent(CurrentIndex) is UiContainerGridContent current)
             {
 
                 current.OnClick() ;

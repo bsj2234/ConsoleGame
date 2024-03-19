@@ -8,13 +8,13 @@ using MyData;
 
 namespace ConsoleGameProject
 {
-    public class UIContainerGridContent: UiContainerGrid
+    public class UiContainerGridContent: UiContainerGrid
     {
         public object? Content {get; set;}
 
 
         private event Action? onClick;
-        private event Func<object>? onContent;
+        private event Func<string>? onContent;
         private event Action? onFocus;
 
         //진짜 생각해보자
@@ -24,17 +24,17 @@ namespace ConsoleGameProject
         //모두위로 올라가서
         //(위치+크기)/전체인덱스 * 현재 인덱스
         //내위치 계산법 계속 부모의 크기를 알아야한다
-        public UIContainerGridContent(string name, string content, Action? action, int rowCount = 1, int columnCount = 1, bool isMain = false) 
-            : base(name, rowCount, columnCount, isMain)
-        {
-            Content = content;
-            onClick += action;
-            focus = false;
-        }
-        public UIContainerGridContent(string name, Func<object> content, Action? action, int rowCount = 1, int columnCount = 1, bool isMain = false) 
+        public UiContainerGridContent(string name, Func<string> content, Action? action, int rowCount = 1, int columnCount = 1, bool isMain = false)
             : base(name, rowCount, columnCount, isMain)
         {
             onContent = content;
+            onClick += action;
+            focus = false;
+        }
+        public UiContainerGridContent(string name, string content, Action? action, int rowCount = 1, int columnCount = 1, bool isMain = false) 
+            : base(name, rowCount, columnCount, isMain)
+        {
+            Content = content;
             onClick += action;
             focus = false;
         }

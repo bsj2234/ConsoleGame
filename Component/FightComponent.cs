@@ -14,8 +14,8 @@ namespace ConsoleGameProject
         public Pawn opponentForItem;
         private int maxHp;
         private int maxMp;
-        private int maxSp;
         protected int hp;
+        protected int mp;
         private List<Item> dropItems;
         private int dropGold;
 
@@ -31,15 +31,13 @@ namespace ConsoleGameProject
         private event Action? OnAttacked;
         private event Action? OnAttack;
 
-        public FightComponent(Pawn owner, int maxHp, int maxMp, int maxSp)
+        public FightComponent(Pawn owner, int maxHp, int maxMp)
         {
             this.owner = owner;
             this.hp = maxHp;
             this.maxHp = maxHp;
             this.Mp = maxMp;
-            this.maxSp = maxSp;
-            this.Sp = maxSp;
-            this.maxSp = maxSp;
+            this.maxMp = maxMp;
             Dead = false;
 
         }
@@ -87,6 +85,11 @@ namespace ConsoleGameProject
             {
                 hp = maxHp;
             }
+        }
+
+        public string GetUiStatus()
+        {
+            return $"Name: {owner.Name} \nHP: {hp} / {maxHp} \nMP: {mp} / {maxMp} \n";
         }
     }
 }
