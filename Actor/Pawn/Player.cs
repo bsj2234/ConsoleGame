@@ -14,18 +14,23 @@ namespace ConsoleGameProject
     {
         public static Random random = new Random();
         private FightComponent fightComponent;
-        private AreaPlayerInteract InteractArea;
+        private PlayerInteractArea InteractArea;
         public bool Fight { get; set; }
         public Player(string name, int hp, Vec2 position, Vec2 size, bool overlap):base(name, hp, position, size, overlap)
         {
-            OnOverlap += OverlapWithHuntArae;
             fightComponent = new FightComponent(this, 100, 100, 100);
             //사이즈는 앞뒤 양옆 한줄씩 크게 하기 위해서
             Vec2 interactSize = size + new Vec2(2, 2);
             Vec2 interactCenter = position - interactSize * .5;
-            InteractArea = new AreaPlayerInteract(this, "InteractArea", interactCenter, interactSize);
+            InteractArea = new PlayerInteractArea(this, "InteractArea", interactCenter, interactSize);
             InteractArea.AddIgnoreCollision(this);
             this.AddIgnoreCollision(InteractArea);
+
+            OnOverlap += OverlapWithHuntArae;
+
+            InteractArea.OnOverlap += OverlapWithInteractable;
+
+            RenderPriority = 1;
         }
 
         private void OverlapWithHuntArae(Actor actor)
@@ -38,11 +43,14 @@ namespace ConsoleGameProject
                 }
             }
         }
-        private void OverlapWithHuntArae(Actor actor)
+        private void OverlapWithInteractable(Actor actor)
         {
-            if (actor is IInteractable)
+            if (actor is HuntArea)
             {
-                IInteractable interactActor = actor as IInteractable;
+                if (Player.random.Next(100) < 20)
+                {
+                    GameManager.StartFight();
+                }
             }
         }
         public void StartFight()
@@ -58,9 +66,8 @@ namespace ConsoleGameProject
         public override bool Move(EDirection direction)
         {
             bool moved = base.Move(direction);
-            Vec2 interactCenter = GetPosition() - InteractArea.Size * .5;
-            InteractArea.SetPosition(interactCenter);
-            Thread.Sleep(5);
+            InteractArea.UpdateInteractableOverlap(GetPosition());
+            Thread.Sleep(20);
             return moved;
         }
 

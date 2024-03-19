@@ -13,7 +13,8 @@ namespace ConsoleGameProject
         private Vec2 mPosition;
         protected List<Actor> ignoreCollision = new List<Actor>();
         protected event Action<Actor> OnCollision;
-        protected event Action<Actor> OnOverlap;
+        public event Action<Actor> OnOverlap;
+        public int RenderPriority = 0;
         public ref Vec2 GetPosition()
         {
             return ref mPosition;
@@ -32,6 +33,20 @@ namespace ConsoleGameProject
             this.Size = size;
             this.Overlap = overlap;
             GameManager.AllActors.Add(this);
+            GameManager.AllActors.Sort((left, right) =>
+            {
+                if (left != null && right != null)
+                {
+                    if (left.RenderPriority > right.RenderPriority)
+                    { return 1; }
+                    else if (left.RenderPriority < right.RenderPriority)
+                    { return -1; }
+                    else
+                    { return 0; }
+                }
+                else 
+                { return 0; }
+            });
         }
         public virtual bool CheckCollision(Actor other)
         {

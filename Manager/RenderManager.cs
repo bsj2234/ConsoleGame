@@ -24,11 +24,49 @@ namespace MyBuffer
     }
     public static class RenderManager
     {
-            private static int width;
+        private static int width;
         private static int height;
         private static char[,] backBuffer;
         private static char[,] frontBuffer;
-        static void ConsoleBufferInit(int inWidth, int inHeight)
+
+
+
+
+
+
+        public static void ScreenInit(int X, int Y)
+        {
+            ConsoleBufferInit(X, Y);
+        }
+        public static void RenderUIContainer(UiContainerGrid mainUiContainer)
+        {
+            mainUiContainer.Draw();
+            Show();
+        }
+
+        public static void RenderAllActorRelative(List<Actor> AllActors, Vec2 origin)
+        {
+            foreach (Actor actor in AllActors)
+            {
+                RenderManager.DrawRelative(actor, origin);
+            }
+            Show();
+        }
+        public static void RenderAllActorRelativeOffset(List<Actor> AllActors, Vec2 origin, Vec2 offset)
+        {
+            foreach (Actor actor in AllActors)
+            {
+                RenderManager.DrawRelative(actor, origin, offset);
+            }
+            Show();
+        }
+
+
+
+
+
+
+        private static void ConsoleBufferInit(int inWidth, int inHeight)
         {
 
             ScreenClear();
@@ -39,10 +77,6 @@ namespace MyBuffer
             Console.SetWindowSize(width, height + 1);//콘솔에 출력된 물자들이 밀리는 현상 방지를 위해 height + 1 왜 발생할까
             PositionConsoleWindowDemo.SetWindowSize();
             Console.CursorVisible = false;
-        }
-        public static void ScreenInit(int X, int Y)
-        {
-            ConsoleBufferInit(X, Y);
         }
         private static bool IsRangeOut(int inX, int inY)
         {
@@ -55,20 +89,15 @@ namespace MyBuffer
             }
             return false;
         }
-
-
-        //문자를 백버퍼에 쓰는 메서드, Vec2오버로딩
-        public static void Draw(char inChar, int inX, int inY)
+        private static void Draw(char inChar, int inX, int inY)
         {
             if (!IsRangeOut(inX, inY))
                 backBuffer[inY, inX] = inChar;
         }
-        public static void Draw(char inChar, Vec2 v)
+        private static void Draw(char inChar, Vec2 v)
         {
             Draw(inChar, v.X, v.Y);
         }
-
-
         //string을 문자배열로 만들어 해당 위치에 인덱스마다 쓰는 메서드, Vec2오버로딩
         //(석진:문자열 받아서 지정한 x,y부터 y만 옆으로 이동
         public static void Draw(string inStr, int inX, int inY)
@@ -92,7 +121,7 @@ namespace MyBuffer
         }
 
         //string 좌에서 우로 그리고 디음줄로 이어지게
-        public static void DrawContinue(string inStr, int inX, int inY)
+        private static void DrawContinue(string inStr, int inX, int inY)
         {
             char[] temp = inStr.ToCharArray();
             for (int i = 0; i < temp.Length; i++)
@@ -105,7 +134,7 @@ namespace MyBuffer
                 }
             }
         }
-        public static void DrawContinue(string inStr, Vec2 pos)
+        private static void DrawContinue(string inStr, Vec2 pos)
         {
             DrawContinue(inStr, pos.X, pos.Y);
         }
@@ -129,7 +158,7 @@ namespace MyBuffer
                 }
             }
         }
-        public static void DrawRelative(Actor actor, Vec2 origin)
+        private static void DrawRelative(Actor actor, Vec2 origin)
         {
             for (int i = 0; i < actor.Size.X; i++)
             {
@@ -148,7 +177,7 @@ namespace MyBuffer
                 }
             }
         }
-        public static void DrawRelative(Actor actor, Vec2 origin, Vec2 offset)
+        private static void DrawRelative(Actor actor, Vec2 origin, Vec2 offset)
         {
             for (int i = 0; i < actor.Size.X; i++)
             {
@@ -172,12 +201,12 @@ namespace MyBuffer
             Array.Copy(backBuffer, frontBuffer, width * height);
         }
         //백버퍼를 비우는 메서드.
-        public static void ScreenClear()
+        private static void ScreenClear()
         {
             FillBuffer(' ');  
         }
         //백버퍼를 채우는 메서드
-        public static void FillBuffer(char c)
+        private static void FillBuffer(char c)
         {
             //그냥 2차원 초기화 
             for (int y = 0; y < height; y++)
@@ -199,31 +228,12 @@ namespace MyBuffer
             }
             Console.Write(result.ToString());
         }
-        public static void Show()
+        private static void Show()
         {
             BufferExtraction();
             Console.SetCursorPosition(0, 0);
             Print();
             ScreenClear();
-        }
-        public static void RenderUIContainer(UiContainerGrid mainUiContainer)
-        {
-            mainUiContainer.Draw();
-        }
-
-        internal static void DrawAllActorRelative(List<Actor> AllActors, Vec2 origin)
-        {
-            foreach (Actor actor in AllActors)
-            {
-                RenderManager.DrawRelative(actor, origin);
-            }
-        }
-        internal static void DrawAllActorRelative(List<Actor> AllActors, Vec2 origin, Vec2 offset)
-        {
-            foreach (Actor actor in AllActors)
-            {
-                RenderManager.DrawRelative(actor, origin, offset);
-            }
         }
     }
 }

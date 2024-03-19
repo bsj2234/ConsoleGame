@@ -63,7 +63,16 @@ namespace ConsoleGameProject
 
         private static void Shop()
         {
-            throw new NotImplementedException();
+            UIContainerGridContent MainShopUi = new UIContainerGridContent("MainShop", "Welcom to shop what do you need?", null, 1, 1, true);
+            while (true)
+            {
+                RenderManager.RenderUIContainer(MainShopUi);
+                if (InputManager.IsKeyReleased(EInput.ESCAPE))
+                {
+                    gameState = GameState.ADVENTURE;
+                    break;
+                }
+            }
         }
 
         public static void StartFight()
@@ -73,15 +82,15 @@ namespace ConsoleGameProject
 
         static void Adventure()
         {
-            RenderManager.DrawAllActorRelative(AllActors, player.GetPosition(), Program.SCREEN_CENTER_OFFSET);
-            RenderManager.Show();
-            RenderManager.DrawAllActorRelative(AllActors, player.GetPosition(), Program.SCREEN_CENTER_OFFSET);
-            RenderManager.Show();
+            RenderManager.RenderAllActorRelativeOffset(AllActors, player.GetPosition(), Program.SCREEN_CENTER_OFFSET);
             while (true)
             {
-                InputManager.CharacterInput(player);
-                RenderManager.DrawAllActorRelative(AllActors, player.GetPosition(), Program.SCREEN_CENTER_OFFSET);
-                RenderManager.Show();
+                CharacterInput(player);
+                RenderManager.RenderAllActorRelativeOffset(AllActors, player.GetPosition(), Program.SCREEN_CENTER_OFFSET);
+                if(gameState != GameState.ADVENTURE)
+                {
+                    break;
+                }
             }
         }
         static void Fight()
@@ -157,11 +166,9 @@ namespace ConsoleGameProject
                 //Todo make function for render UI currently it's hard to read
                 player.Attack(enemy);
                 RenderManager.RenderUIContainer(MainFightUi);
-                RenderManager.Show();
                 Thread.Sleep(1000);
                 enemy.Attack(player);
                 RenderManager.RenderUIContainer(MainFightUi);
-                RenderManager.Show();
                 Thread.Sleep(1000);
             });
             Task debugHp = Task.Run(() => { player.Damaged(10); });
@@ -171,13 +178,11 @@ namespace ConsoleGameProject
 
             while (true)
             {
-                InputManager.UIInput();
+                UIInput();
                 RenderManager.RenderUIContainer(MainFightUi);
-                RenderManager.Show();
                 if (enemy.IsDead())
                 {
                     RenderManager.RenderUIContainer(MainFightUi);
-                    RenderManager.Show();
                     Thread.Sleep(2000);
                     gameState = GameState.ADVENTURE;
                     KillCount++;
@@ -194,7 +199,10 @@ namespace ConsoleGameProject
             var UiItemGrid = new UIContainerGridContent("WinUi","You Win!!!",null);
             MainWinUi.AddNewUI(UiItemGrid);
             RenderManager.RenderUIContainer(MainWinUi);
-            RenderManager.Show();
+            if(InputManager.IsKeyReleased(EInput.ESCAPE))
+            {
+                gameState = GameState.ADVENTURE;
+            }
         }
         static void Pause()
         {
@@ -202,6 +210,8 @@ namespace ConsoleGameProject
             var UiItemGrid = new UiContainerGrid("UiItemGrid", 10, 6);
             MainPauseUi.AddNewUI(UiItemGrid);
 
+            UICursor.InitialCursor(MainPauseUi);
+            RenderManager.RenderUIContainer(MainPauseUi);
 
             while (true)
             {
@@ -215,19 +225,14 @@ namespace ConsoleGameProject
                     UiItemGrid.AddNewUI(new UiItem(inventoryComponent.Items[i].GetItemUiString(), inventoryComponent.Items[i].GetItemUiString(),null));
                 }
                 RenderManager.RenderUIContainer(MainPauseUi);
-                RenderManager.Show();
                 UiItemGrid.Clear();
-            }
 
-            UICursor.InitialCursor(MainPauseUi);
-
-
-
-            while (true)
-            {
-                InputManager.UIInput();
-                RenderManager.RenderUIContainer(MainPauseUi);
-                RenderManager.Show();
+                //UIInput();
+                if (InputManager.IsKeyReleased(EInput.ENTER))
+                {
+                    gameState = GameState.ADVENTURE;
+                    break;
+                }
             }
         }
 
@@ -305,6 +310,60 @@ namespace ConsoleGameProject
                 //Console.Beep(329, 200);
                 //Console.Beep(369, 200);
                 //Console.Beep(329, 200);
+            }
+        }
+
+
+        public static void UIInput()
+        {
+            //input
+            EInput input = InputManager.GetReleasedInput();
+            switch (input)
+            {
+                case EInput.UP:
+                    UICursor.Move(EDirection.UP);
+                    break;
+                case EInput.DOWN:
+                    UICursor.Move(EDirection.DOWN);
+                    break;
+                case EInput.LEFT:
+                    UICursor.Move(EDirection.LEFT);
+                    break;
+                case EInput.RIGHT:
+                    UICursor.Move(EDirection.RIGHT);
+                    break;
+                case EInput.ENTER:
+                    UICursor.Click();
+                    break;
+                case EInput.ESCAPE:
+                    UICursor.Escape();
+                    break;
+            }
+        }
+        public static void CharacterInput(Player player)
+        {
+            //input
+            EInput input = InputManager.GetPushedInput();
+            switch (input)
+            {
+                case EInput.UP:
+                    player.Move(EDirection.UP);
+                    break;
+                case EInput.DOWN:
+                    player.Move(EDirection.DOWN);
+                    break;
+                case EInput.LEFT:
+                    player.Move(EDirection.LEFT);
+                    break;
+                case EInput.RIGHT:
+                    player.Move(EDirection.RIGHT);
+                    break;
+                case EInput.ENTER:
+                    player.Interact();
+                    break;
+                case EInput.ESCAPE:
+                    GameManager.gameState = GameState.PAUSE;
+                    break;
             }
         }
     }

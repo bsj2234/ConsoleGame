@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace ConsoleGameProject
 {
-    public class AreaPlayerInteract : Area
+    public class PlayerInteractArea : Area
     {
         public List<IInteractable> Interactables = new List<IInteractable>();
-        public AreaPlayerInteract(Player player, string name, Vec2 position, Vec2 size, bool overlap = true) : base(name, position, size, overlap)
+        public PlayerInteractArea(Player player, string name, Vec2 position, Vec2 size, bool overlap = true) : base(name, position, size, overlap)
         {
             
         }
@@ -36,7 +36,15 @@ namespace ConsoleGameProject
 
         public override char? GetRenderChar(int x, int y)
         {
-            return null;
+            return 'n';
+        }
+
+        public void UpdateInteractableOverlap(Vec2 playerPos)
+        {
+            Interactables.Clear();
+            Vec2 interactCenter = playerPos - Size * .5;
+            SetPosition(interactCenter);
+            CheckCollisionAllOtherActor();
         }
     }
 }

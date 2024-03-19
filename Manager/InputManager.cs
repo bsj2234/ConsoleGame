@@ -32,7 +32,7 @@ namespace ConsoleGameProject
         public extern static ushort GetAsyncKeyState(int virtualKey);
 
         static Stack<ConsoleKey> consoleInputBuffer = new Stack<ConsoleKey>();
-        private static EInput GetPushedInput()
+        public static EInput GetPushedInput()
         {
             //input
             ushort pressed = (ushort)0x8000;
@@ -50,7 +50,7 @@ namespace ConsoleGameProject
                 return EInput.ESCAPE;
             return EInput.NONE;
         }
-        private static EInput GetReleasedInput()
+        public static EInput GetReleasedInput()
         {
             //input
             ushort pressed = (ushort)0x0001;
@@ -68,60 +68,26 @@ namespace ConsoleGameProject
                 return EInput.ESCAPE;
             return EInput.NONE;
         }
-
-        public static void UIInput()
+        public static bool IsKeyReleased(EInput key)
         {
             //input
-            while (consoleInputBuffer.Count != 0)
-            {
-                EInput input = GetReleasedInput();
-                switch (input)
-                {
-                    case EInput.UP:
-                        UICursor.Move(EDirection.UP);
-                        break;
-                    case EInput.DOWN:
-                        UICursor.Move(EDirection.DOWN);
-                        break;
-                    case EInput.LEFT:
-                        UICursor.Move(EDirection.LEFT);
-                        break;
-                    case EInput.RIGHT:
-                        UICursor.Move(EDirection.RIGHT);
-                        break;
-                    case EInput.ENTER:
-                        UICursor.Click();
-                        break;
-                    case EInput.ESCAPE:
-                        UICursor.Escape();
-                        break;
-                }
-            }
-        }
-        public static void CharacterInput(Player player)
-        {
-            //input
-            EInput input = GetPushedInput();
-            switch (input)
+            ushort released = (ushort)0x0001;
+            switch(key)
             {
                 case EInput.UP:
-                    player.Move(EDirection.UP);
-                    break;
+                    return (GetAsyncKeyState((int)VKeys.UP) & released) > 0;
                 case EInput.DOWN:
-                    player.Move(EDirection.DOWN);
-                    break;
+                    return (GetAsyncKeyState((int)VKeys.DOWN) & released) > 0;
                 case EInput.LEFT:
-                    player.Move(EDirection.LEFT);
-                    break;
+                    return (GetAsyncKeyState((int)VKeys.LEFT) & released) > 0;
                 case EInput.RIGHT:
-                    player.Move(EDirection.RIGHT);
-                    break;
-                case EInput.ENTER:
-                    player.Interact();
-                    break;
+                    return (GetAsyncKeyState((int)VKeys.RIGHT) & released) > 0;
                 case EInput.ESCAPE:
-                    GameManager.gameState = GameState.PAUSE;
-                    break;
+                    return (GetAsyncKeyState((int)VKeys.ESCAPE) & released) > 0;
+                case EInput.ENTER:
+                    return (GetAsyncKeyState((int)VKeys.RETURN) & released) > 0;
+                default:
+                    return false;
             }
         }
         public static void ClearInputBuffer() 
