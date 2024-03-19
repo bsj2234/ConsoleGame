@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace ConsoleGameProject
 {
-    public class DropItemGeneratorComponent
+    public class RandomItemGeneratorComponent
     {
         protected Pawn owner;
         protected List<Item> dropTable;
-        public DropItemGeneratorComponent( Pawn owner )
+        public RandomItemGeneratorComponent( Pawn owner )
         { 
             this.owner = owner;
             dropTable = new List<Item>();

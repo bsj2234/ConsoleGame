@@ -9,10 +9,10 @@ namespace ConsoleGameProject
 {
     public class Enemy : Pawn
     {
-        DropItemGeneratorComponent dropItemGeneratorComponent;
+        RandomItemGeneratorComponent dropItemGeneratorComponent;
         public Enemy(string name, int hp, Vec2 position, Vec2 size, bool overlap):base(name, hp, position, size, overlap)
         {
-            dropItemGeneratorComponent = new DropItemGeneratorComponent(this);
+            dropItemGeneratorComponent = new RandomItemGeneratorComponent(this);
             dropItemGeneratorComponent.AddItemDropTable(new ItemConsumable(inventoryComponent ,"Apple"));
 
             foreach (var item in dropItemGeneratorComponent.GetRandomItems(5))

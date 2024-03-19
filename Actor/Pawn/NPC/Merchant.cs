@@ -9,9 +9,9 @@ namespace ConsoleGameProject
 {
     public class Merchant:Actor, IInteractable
     {
+        InventoryComponent inventoryComponent;
         public Merchant(string name, Vec2 position, Vec2 size, bool overlap) : base(name, position, size, overlap)
         {
-
         }
         public void Interact()
         {
