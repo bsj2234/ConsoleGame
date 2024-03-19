@@ -44,7 +44,8 @@ namespace ConsoleGameProject
         }
         public override void OnClick()
         {
-            onClick.Invoke();
+            if(onClick != null)
+                onClick.Invoke();
         }
 
         public override void OnFocus() 
@@ -83,10 +84,6 @@ namespace ConsoleGameProject
             //ContextPos.SetX(ContextPos.X - maxLineLenght);
 
             RenderManager.Draw(content, ContextPos.X, ContextPos.Y);
-        }
-        override public UI GetContent(int index)
-        {
-            return ContentUIList[index];
         }
     }
 }

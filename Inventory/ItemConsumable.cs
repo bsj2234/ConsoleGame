@@ -8,10 +8,16 @@ namespace ConsoleGameProject
 {
     public class ItemConsumable:Item
     {
-        private int quantity;
-        public ItemConsumable(string name)
+        protected int healAmount = 10;
+        protected int quantity;
+        public ItemConsumable(InventoryComponent ownedInventory, string name) : base(ownedInventory, name)
         {
-            this.name = name;
+        }
+        public void Consume()
+        {
+            ownedInventory.Remove(this);
+            ownedInventory.Owner.Heal(healAmount);
+
         }
     }
 }

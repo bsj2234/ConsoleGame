@@ -17,20 +17,16 @@ namespace ConsoleGameProject
 
         public static void Click()
         {
-            if(currentContainer.GetContent(CurrentIndex) is UIContainerGridContent)
+            if(currentContainer.GetContent(CurrentIndex) is UIContainerGridContent current)
             {
 
-                (currentContainer.GetContent(CurrentIndex)as UIContainerGridContent).OnClick() ;
+                current.OnClick() ;
             }
             else
             {
-                if (currentContainer.GetContent(CurrentIndex) is UIContainer)
+                if (currentContainer.GetContent(CurrentIndex) is UIContainer currentCon)
                 {
-                    currentContainer = currentContainer.GetContent(CurrentIndex) as UIContainer;
-                    currentContainer.OnLoseFocus();
-                    currentContainer.OnClick();
-                    CurrentIndex = 0;
-                    currentContainer.GetContent(CurrentIndex).OnFocus();
+                    ToInner();
                 }
                 else
                 {
@@ -38,6 +34,27 @@ namespace ConsoleGameProject
                 }
             }
         }
+
+        private static void ToInner()
+        {
+            currentContainer = currentContainer.GetContent(CurrentIndex) as UIContainer;
+            currentContainer.OnLoseFocus();
+            currentContainer.OnClick();
+            CurrentIndex = 0;
+            currentContainer.GetContent(CurrentIndex).OnFocus();
+        }
+        private static void ToOuter()
+        {
+            UIContainer? focused = currentContainer.GetContent(CurrentIndex) as UIContainer;
+            if (focused != null)
+            {
+                currentContainer.OnLoseFocus();
+            }
+            currentContainer = currentContainer.GetOwner() as UIContainer;
+            CurrentIndex = 0;
+            currentContainer.GetContent(CurrentIndex).OnFocus();
+        }
+
         public static void Escape()
         {
             if (currentContainer == mainContatiner)
@@ -66,6 +83,28 @@ namespace ConsoleGameProject
             mainContatiner = uIContainer;
             currentContainer = uIContainer;
             uIContainer.GetContent(0).OnFocus();
+        }
+
+        public static void ReFocus()
+        {
+            while(true)
+            {
+                if (currentContainer.GetContent(CurrentIndex) == null)
+                {
+                    CurrentIndex--;
+                }
+                if(CurrentIndex < 0)
+                {
+                    currentContainer = mainContatiner;
+                    CurrentIndex = 0;
+                    break;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            currentContainer.GetContent(CurrentIndex).OnFocus();
         }
     }
 }

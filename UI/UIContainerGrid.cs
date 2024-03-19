@@ -113,9 +113,16 @@ namespace ConsoleGameProject
         {
             return GetContent(v.X, v.Y);
         }
-        override public UI GetContent(int index)
+        override public UI? GetContent(int index)
         {
-            return ContentUIList[index];
+            if(index < 0 || index >= ContentUIList.Count)
+            {
+                return null;
+            }
+            else
+            {
+                return ContentUIList[index];
+            }
         }
         public UI GetRelativeDirectionUI(EDirection d, int index)
         {

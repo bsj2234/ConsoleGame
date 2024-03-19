@@ -8,10 +8,12 @@ namespace ConsoleGameProject
 {
     public class InventoryComponent
     {
+        public Pawn Owner;
         public List<Item> Items;
-        public InventoryComponent() 
+        public InventoryComponent(Pawn owner) 
         {
             Items = new List<Item>();
+            Owner = owner;
         }
 
         public void Add(Item item)
@@ -19,9 +21,10 @@ namespace ConsoleGameProject
             Items.Add(item);
         }
 
-        public void Remove(Item item)
+        public Item Remove(Item item)
         {
             Items.Remove(item);
+            return item;
         }
 
         public void Clear()

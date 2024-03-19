@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MyData;
 using System.Diagnostics;
+using System.Transactions;
 
 namespace ConsoleGameProject
 {
@@ -17,7 +18,9 @@ namespace ConsoleGameProject
         public Pawn(string name, int hp, Vec2 position, Vec2 size, bool overlap):base(name, position, size, overlap)
         {
             fightComponent = new FightComponent(this, hp, 100, 100);
-            inventoryComponent = new InventoryComponent();
+            inventoryComponent = new InventoryComponent(this);
+
+
         }
         public virtual bool Move(EDirection direction)
         {
@@ -75,6 +78,21 @@ namespace ConsoleGameProject
         public InventoryComponent GetInventory()
         {
             return inventoryComponent;
+        }
+
+        public void Heal(int healAmount)
+        {
+            fightComponent.Heal(healAmount);
+        }
+
+        public void TakeItem(Pawn other, Item item)
+        {
+            inventoryComponent.Add(other.RemoveItem(item));
+        }
+
+        private Item RemoveItem(Item item)
+        {
+            return inventoryComponent.Remove(item);
         }
     }
 }

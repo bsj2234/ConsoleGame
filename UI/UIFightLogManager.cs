@@ -17,7 +17,7 @@ namespace ConsoleGameProject
 
         public static void Clear()
         {
-            content = string.Empty;
+            content = "";
         }
 
         public static string GetContent() { return content; }

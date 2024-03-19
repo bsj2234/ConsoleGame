@@ -105,5 +105,6 @@ namespace ConsoleGameProject
                 PrevPressedKeys[key] = false;
             }
         }
+
     }
 }

@@ -1,12 +1,5 @@
 ﻿using MyBuffer;
 using MyData;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleGameProject
 {
@@ -26,8 +19,10 @@ namespace ConsoleGameProject
         {
             RunAsyncs();
 
-            player = new Player("siko", 20, Program.SCREEN_CENTER_OFFSET, new Vec2(1, 1), false);
-
+            player = new Player("siko", 30, Program.SCREEN_CENTER_OFFSET, new Vec2(1, 1), false);
+            player.GetInventory().Add(new ItemConsumable(player.GetInventory(), "Ap1"));
+            player.GetInventory().Add(new ItemConsumable(player.GetInventory(), "Ap2"));
+            player.GetInventory().Add(new ItemConsumable(player.GetInventory(), "Ap3"));
 
             //game loop
             while (true)
@@ -91,10 +86,12 @@ namespace ConsoleGameProject
                     Thread.Sleep(2000);
                     gameState = GameState.ADVENTURE;
                     KillCount++;
+                    UIFightLogManager.Clear();
                     break;
                 }
                 if (gameState != GameState.FIGHT)
                 {
+                    UIFightLogManager.Clear();
                     break;
                 }
             }
@@ -103,7 +100,7 @@ namespace ConsoleGameProject
         private static UiContainerGrid InitFightUi(Enemy enemy)
         {
             UiContainerGrid MainFightUi = new UiContainerGrid("MainFightUi", 2, 1, true);
-            MainFightUi.SetRowRatio(new double[]{ 2,1});
+            MainFightUi.SetRowRatio(new double[] { 2, 1 });
 
             var FightTopUi = new UiContainerGrid("FightTopUi", 1, 2);
             FightTopUi.SetColRatio(new double[] { 1, 2 });
@@ -112,7 +109,7 @@ namespace ConsoleGameProject
 
             var StaticPlayer = new UIContainerGridContent("PlayerStatic", () => { return $"{player.GetHp()}"; }, null);
             var StaticEnemy = new UIContainerGridContent("EnemyStatic", () => { return $"{enemy.GetHp()}"; }, null);
-            var FightSceneUi = new UIContainerGridContent("FightSceneUi", """
+            var FightSceneUi = new UIContainerGridContent("FightSceneUi", """ 
                                                                       ...                             
                                                                    /**// (##(&      ****/,            
                                                                        ((((#   (,(##((%/(@            
@@ -181,6 +178,8 @@ namespace ConsoleGameProject
                 player.Attack(enemy);
                 RenderManager.RenderUIContainer(MainFightUi);
                 Thread.Sleep(1000);
+                //if (enemy.IsDead())
+                //return;
                 enemy.Attack(player);
                 RenderManager.RenderUIContainer(MainFightUi);
                 Thread.Sleep(1000);
@@ -202,6 +201,7 @@ namespace ConsoleGameProject
                 InputManager.UpdateKeys();
                 if (gameState != GameState.WIN)
                 {
+                    KillCount = 0;
                     break;
                 }
             }
@@ -215,19 +215,34 @@ namespace ConsoleGameProject
             UICursor.InitialCursor(MainPauseUi);
             RenderManager.RenderUIContainer(MainPauseUi);
 
+            InventoryComponent inventoryComponent = player.GetInventory();
+            for (int i = 0; i < 6; i++)
+            {
+                if (inventoryComponent.Items.Count <= i)
+                {
+                    break;
+                }
+                Item item = inventoryComponent.Items[i];
+                UiItemGrid.AddNewUI(new UiItem(item.GetItemUiString(), item.GetItemUiString(), (item is ItemConsumable) ? (item as ItemConsumable).Consume : null), i);
+            }
+            //UiItemGrid.Clear();
             while (true)
             {
-                InventoryComponent inventoryComponent = player.GetInventory();
-                for (int i = 0; i < 6; i++)
+                if(UIInput())
                 {
-                    if (inventoryComponent.Items.Count <= i)
+                    UiItemGrid.Clear();
+                    for (int i = 0; i < 6; i++)
                     {
-                        break;
+                        if (inventoryComponent.Items.Count <= i)
+                        {
+                            break;
+                        }
+                        Item item = inventoryComponent.Items[i];
+                        UiItemGrid.AddNewUI(new UiItem(item.GetItemUiString(), item.GetItemUiString(), (item is ItemConsumable) ? (item as ItemConsumable).Consume : null), i);
                     }
-                    UiItemGrid.AddNewUI(new UiItem(inventoryComponent.Items[i].GetItemUiString(), inventoryComponent.Items[i].GetItemUiString(), null), 1);
+                    UICursor.ReFocus();
                 }
-                UIInput();
-                UiItemGrid.Clear();
+
                 RenderManager.RenderUIContainer(MainPauseUi);
                 InputManager.UpdateKeys();
                 if (gameState != GameState.PAUSE)
@@ -267,21 +282,41 @@ namespace ConsoleGameProject
 
 
         //input funcs
-        public static void UIInput()
+        public static bool UIInput()
         {
+            bool pressed = false;
             //input
             if (InputManager.IsKeyReleased(EInput.UP))
+            {
                 UICursor.Move(EDirection.UP);
+                pressed = true;
+            }
             if (InputManager.IsKeyReleased(EInput.DOWN))
+            {
                 UICursor.Move(EDirection.DOWN);
+                pressed = true;
+            }
             if (InputManager.IsKeyReleased(EInput.LEFT))
+            {
                 UICursor.Move(EDirection.LEFT);
+                pressed = true;
+            }
             if (InputManager.IsKeyReleased(EInput.RIGHT))
+            {
                 UICursor.Move(EDirection.RIGHT);
+                pressed = true;
+            }
             if (InputManager.IsKeyReleased(EInput.ENTER))
+            {
                 UICursor.Click();
+                pressed = true;
+            }
             if (InputManager.IsKeyReleased(EInput.ESCAPE))
+            {
                 UICursor.Escape();
+                pressed = true;
+            }
+            return pressed;
         }
         public static void CharacterAdventureInput(Player player)
         {
