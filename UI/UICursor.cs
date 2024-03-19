@@ -10,6 +10,7 @@ namespace ConsoleGameProject
     public static class UICursor
     {
         private static UIContainer? currentContainer { get; set; }
+        private static UIContainer? mainContatiner { get; set; }
         public static int CurrentIndex = 0;
         //첫음 커서 필요한곳에서 onfocust호출해야할지도
         //커런트 컨테이너도 세팅해야함
@@ -39,11 +40,16 @@ namespace ConsoleGameProject
         }
         public static void Escape()
         {
+            if (currentContainer == mainContatiner)
+            {
+                GameManager.gameState = GameState.ADVENTURE;
+                return;
+            }
             currentContainer.GetContent(CurrentIndex).OnLoseFocus();
             currentContainer = currentContainer.GetOwner() as UIContainer;
-            currentContainer.OnClick();
             CurrentIndex = 0;
             currentContainer.GetContent(CurrentIndex).OnFocus();
+            
         }
 
         public static void Move(EDirection dir)
@@ -57,6 +63,7 @@ namespace ConsoleGameProject
 
         public static void InitialCursor(UIContainer uIContainer)
         {
+            mainContatiner = uIContainer;
             currentContainer = uIContainer;
             uIContainer.GetContent(0).OnFocus();
         }

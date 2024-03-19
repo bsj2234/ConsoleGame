@@ -28,22 +28,10 @@ namespace ConsoleGameProject
 
             OnOverlap += OverlapWithHuntArae;
 
-            InteractArea.OnOverlap += OverlapWithInteractable;
-
             RenderPriority = 1;
         }
 
         private void OverlapWithHuntArae(Actor actor)
-        {
-            if (actor is HuntArea)
-            {
-                if (Player.random.Next(100) < 20)
-                {
-                    GameManager.StartFight();
-                }
-            }
-        }
-        private void OverlapWithInteractable(Actor actor)
         {
             if (actor is HuntArea)
             {

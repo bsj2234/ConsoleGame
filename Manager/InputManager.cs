@@ -31,68 +31,79 @@ namespace ConsoleGameProject
         [DllImport("User32.dll")]
         public extern static ushort GetAsyncKeyState(int virtualKey);
 
-        static Stack<ConsoleKey> consoleInputBuffer = new Stack<ConsoleKey>();
-        public static EInput GetPushedInput()
+
+        private static Dictionary<EInput, bool> PrevPressedKeys = new Dictionary<EInput, bool>();
+        private static Dictionary<EInput, bool> ReleasedKeys = new Dictionary<EInput, bool>();
+        private static int EInputSize = Enum.GetValues<EInput>().Length;
+
+        public static void Init()
         {
-            //input
-            ushort pressed = (ushort)0x8000;
-            if ((GetAsyncKeyState((int)VKeys.UP) & pressed) > 0)
-                return EInput.UP;
-            if ((GetAsyncKeyState((int)VKeys.DOWN) & pressed) > 0)
-                return EInput.DOWN;
-            if ((GetAsyncKeyState((int)VKeys.LEFT) & pressed) > 0)
-                return EInput.LEFT;
-            if ((GetAsyncKeyState((int)VKeys.RIGHT) & pressed) > 0)
-                return EInput.RIGHT;
-            if ((GetAsyncKeyState((int)VKeys.RETURN) & pressed) > 0)
-                return EInput.ENTER;
-            if ((GetAsyncKeyState((int)VKeys.ESCAPE) & pressed) > 0)
-                return EInput.ESCAPE;
-            return EInput.NONE;
+            ResetKeyBuffer(PrevPressedKeys);
+            ResetKeyBuffer(ReleasedKeys);
         }
-        public static EInput GetReleasedInput()
+        public static bool IsKeyPressed(EInput key)
         {
-            //input
-            ushort pressed = (ushort)0x0001;
-            if ((GetAsyncKeyState((int)VKeys.UP) & pressed) > 0)
-                return EInput.UP;
-            if ((GetAsyncKeyState((int)VKeys.DOWN) & pressed) > 0)
-                return EInput.DOWN;
-            if ((GetAsyncKeyState((int)VKeys.LEFT) & pressed) > 0)
-                return EInput.LEFT;
-            if ((GetAsyncKeyState((int)VKeys.RIGHT) & pressed) > 0)
-                return EInput.RIGHT;
-            if ((GetAsyncKeyState((int)VKeys.RETURN) & pressed) > 0)
-                return EInput.ENTER;
-            if ((GetAsyncKeyState((int)VKeys.ESCAPE) & pressed) > 0)
-                return EInput.ESCAPE;
-            return EInput.NONE;
+            return GetPressedVirtualKey(key);
         }
         public static bool IsKeyReleased(EInput key)
         {
-            //input
-            ushort released = (ushort)0x0001;
+            return ReleasedKeys[key];
+        }
+
+        //should called every end of loop
+        public static void UpdateKeys()
+        {
+            ResetKeyBuffer(ReleasedKeys);
+            foreach (EInput key in PrevPressedKeys.Keys)
+            {
+                SetKeyReleased(key);
+                for (int i = 0; i < EInputSize; i++)
+                {
+                    if (IsKeyPressed((EInput)i))
+                    {
+                        PrevPressedKeys[(EInput)i] = true;
+                    }
+                }
+            }
+
+        }
+        public static bool GetPressedVirtualKey(EInput key)
+        {
             switch(key)
             {
                 case EInput.UP:
-                    return (GetAsyncKeyState((int)VKeys.UP) & released) > 0;
+                    return (GetAsyncKeyState((int)VKeys.UP) & 0x8000) > 0;
                 case EInput.DOWN:
-                    return (GetAsyncKeyState((int)VKeys.DOWN) & released) > 0;
+                    return (GetAsyncKeyState((int)VKeys.DOWN) & 0x8000) > 0;
                 case EInput.LEFT:
-                    return (GetAsyncKeyState((int)VKeys.LEFT) & released) > 0;
+                    return (GetAsyncKeyState((int)VKeys.LEFT) & 0x8000) > 0;
                 case EInput.RIGHT:
-                    return (GetAsyncKeyState((int)VKeys.RIGHT) & released) > 0;
+                    return (GetAsyncKeyState((int)VKeys.RIGHT) & 0x8000) > 0;
                 case EInput.ESCAPE:
-                    return (GetAsyncKeyState((int)VKeys.ESCAPE) & released) > 0;
+                    return (GetAsyncKeyState((int)VKeys.ESCAPE) & 0x8000) > 0;
                 case EInput.ENTER:
-                    return (GetAsyncKeyState((int)VKeys.RETURN) & released) > 0;
+                    return (GetAsyncKeyState((int)VKeys.RETURN) & 0x8000) > 0;
                 default:
                     return false;
             }
         }
-        public static void ClearInputBuffer() 
+        private static void ResetKeyBuffer(Dictionary<EInput, bool> dictionary)
         {
-            consoleInputBuffer.Clear();
+            for (int i = 0; i < EInputSize; i++)
+            {
+                EInput key = (EInput)i;
+                dictionary[key] = false;
+            }
+        }
+
+        //ToDo:Fix rarly missing release key
+        private static void SetKeyReleased(EInput key)
+        {
+            if (!IsKeyPressed(key) && PrevPressedKeys[key])
+            {
+                ReleasedKeys[key] = true;
+                PrevPressedKeys[key] = false;
+            }
         }
     }
 }

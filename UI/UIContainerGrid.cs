@@ -44,7 +44,8 @@ namespace ConsoleGameProject
         protected List<double> colRatio = new List<double>();
 
 
-        public UiContainerGrid(string name,int rowCount, int columnCount, bool isMain = false) : base(name, isMain)
+        public UiContainerGrid(string name,int rowCount, int columnCount, bool isMain = false) 
+            : base(name, isMain)
         {
             this.columnCount = columnCount;
             this.rowCount = rowCount;
@@ -56,10 +57,29 @@ namespace ConsoleGameProject
             {
                 rowRatio.Add(1);
             }
-            NormalizeRatio(rowRatio);
-            NormalizeRatio(colRatio);
+            NormalizeRatio(this.rowRatio);
+            NormalizeRatio(this.colRatio);
         }
-
+        public void SetColRatio(double[] ratios)
+        {
+            if (ratios.Length > colRatio.Count)
+                return;
+            for (int i = 0; i < colRatio.Count; i++)
+            {
+                colRatio[i] = ratios[i];
+            }
+            NormalizeRatio(this.colRatio);
+        }
+        public void SetRowRatio(double[] ratios)
+        {
+            if (ratios.Length > rowRatio.Count)
+                return;
+            for (int i = 0; i < rowRatio.Count; i++)
+            {
+                rowRatio[i] = ratios[i];
+            }
+            NormalizeRatio(this.rowRatio);
+        }
         private void NormalizeRatio(List<double> list)
         {
             double sum = 0;
@@ -74,7 +94,7 @@ namespace ConsoleGameProject
 
         }
 
-        public void AddNewUI(UI newUi)
+        public void AddNewUI(UI newUi,int index)
         {
             if (newUi == null)
             {
@@ -133,10 +153,10 @@ namespace ConsoleGameProject
             }
             //약간 노가다로 만듬
             //사실 사이즈 -1 하고 -2로 양쪽한칸씩 뺀 갯수임
-            RenderManager.DrawHorizontal('-', UIPosAbsolute + new Vec2(1, 0), UISize.X - 2);
-            RenderManager.DrawHorizontal('-', UIPosAbsolute + new Vec2(1, UISize.Y - 1), UISize.X - 2);
-            RenderManager.DrawVertical('|', UIPosAbsolute + new Vec2(0, 1), UISize.Y - 2);
-            RenderManager.DrawVertical('|', UIPosAbsolute + new Vec2(UISize.X - 1, 1), UISize.Y - 2);
+            RenderManager.DrawHorizontal('-', UIPosAbsolute + new Vec2(1, 0), UiSize.X - 2);
+            RenderManager.DrawHorizontal('-', UIPosAbsolute + new Vec2(1, UiSize.Y - 1), UiSize.X - 2);
+            RenderManager.DrawVertical('|', UIPosAbsolute + new Vec2(0, 1), UiSize.Y - 2);
+            RenderManager.DrawVertical('|', UIPosAbsolute + new Vec2(UiSize.X - 1, 1), UiSize.Y - 2);
             /*if(focus == true)
             {
                 RenderManager.ColorHorizontal(ConsoleColor.Blue, UIPosAbsolute + new Vec2(1, 0), UISize.X - 2);
@@ -200,7 +220,7 @@ namespace ConsoleGameProject
             int x = GetColumnIndex(index);
             int y = GetRowIndex(index);
             //하위UI절대크기 인덱스에 해당하는 레이티오와 현제 UI의 사이즈의 곱
-            return new Vec2((int)(UISize.X * colRatio[x]) - 2, (int)(UISize.Y * rowRatio[y]) - 2 );
+            return new Vec2((int)(UiSize.X * colRatio[x]) - 2, (int)(UiSize.Y * rowRatio[y]) - 2 );
         }
 
         public override Vec2 GetAbsoluteUiPositionOfIndex(int index)
@@ -217,7 +237,7 @@ namespace ConsoleGameProject
             {
                 sumRatioBefroeIndexY += rowRatio[i];
             }
-            return new Vec2((int)(sumRatioBefroeIndexX * UISize.X) + 1 + UIPosAbsolute.X, (int)(sumRatioBefroeIndexY * UISize.Y) + 1+ UIPosAbsolute.Y);
+            return new Vec2((int)(sumRatioBefroeIndexX * UiSize.X) + 1 + UIPosAbsolute.X, (int)(sumRatioBefroeIndexY * UiSize.Y) + 1+ UIPosAbsolute.Y);
         }
 
 

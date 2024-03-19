@@ -27,9 +27,6 @@ namespace ConsoleGameProject
             RunAsyncs();
 
             player = new Player("siko", 20, Program.SCREEN_CENTER_OFFSET, new Vec2(1, 1), false);
-            Wall wall1 = new Wall("wall", new Vec2(20, 20), new Vec2(10, 2), false);
-            HuntArea huntarea = new HuntArea("huntarea", new Vec2(100, 33), new Vec2(10, 2));
-            Merchant merchant = new Merchant("merchant", new Vec2(80, 33), new Vec2(1, 1), false);
 
 
             //game loop
@@ -60,34 +57,18 @@ namespace ConsoleGameProject
                 }
             }
         }
-
-        private static void Shop()
-        {
-            UIContainerGridContent MainShopUi = new UIContainerGridContent("MainShop", "Welcom to shop what do you need?", null, 1, 1, true);
-            while (true)
-            {
-                RenderManager.RenderUIContainer(MainShopUi);
-                if (InputManager.IsKeyReleased(EInput.ESCAPE))
-                {
-                    gameState = GameState.ADVENTURE;
-                    break;
-                }
-            }
-        }
-
-        public static void StartFight()
-        {
-            gameState = GameState.FIGHT;
-        }
-
         static void Adventure()
         {
-            RenderManager.RenderAllActorRelativeOffset(AllActors, player.GetPosition(), Program.SCREEN_CENTER_OFFSET);
+            //
+            Wall wall1 = new Wall("wall", new Vec2(20, 20), new Vec2(10, 2), false);
+            HuntArea huntarea = new HuntArea("huntarea", new Vec2(100, 33), new Vec2(10, 2));
+            Merchant merchant = new Merchant("merchant", new Vec2(80, 33), new Vec2(1, 1), false);
             while (true)
             {
-                CharacterInput(player);
+                CharacterAdventureInput(player);
                 RenderManager.RenderAllActorRelativeOffset(AllActors, player.GetPosition(), Program.SCREEN_CENTER_OFFSET);
-                if(gameState != GameState.ADVENTURE)
+                InputManager.UpdateKeys();
+                if (gameState != GameState.ADVENTURE)
                 {
                     break;
                 }
@@ -97,7 +78,40 @@ namespace ConsoleGameProject
         {
             Enemy enemy = new Enemy("KKong", 10);
             enemy.SetOpponent(player);
+            UiContainerGrid MainFightUi = InitFightUi(enemy);
+
+            while (true)
+            {
+                UIInput();
+                RenderManager.RenderUIContainer(MainFightUi);
+                InputManager.UpdateKeys();
+                if (enemy.IsDead())
+                {
+                    RenderManager.RenderUIContainer(MainFightUi);
+                    Thread.Sleep(2000);
+                    gameState = GameState.ADVENTURE;
+                    KillCount++;
+                    break;
+                }
+                if (gameState != GameState.FIGHT)
+                {
+                    break;
+                }
+            }
+        }
+
+        private static UiContainerGrid InitFightUi(Enemy enemy)
+        {
             UiContainerGrid MainFightUi = new UiContainerGrid("MainFightUi", 2, 1, true);
+            MainFightUi.SetRowRatio(new double[]{ 2,1});
+
+            var FightTopUi = new UiContainerGrid("FightTopUi", 1, 2);
+            FightTopUi.SetColRatio(new double[] { 1, 2 });
+
+            var FightStaticUi = new UiContainerGrid("FightStaticUi", 2, 1);
+
+            var StaticPlayer = new UIContainerGridContent("PlayerStatic", () => { return $"{player.GetHp()}"; }, null);
+            var StaticEnemy = new UIContainerGridContent("EnemyStatic", () => { return $"{enemy.GetHp()}"; }, null);
             var FightSceneUi = new UIContainerGridContent("FightSceneUi", """
                                                                       ...                             
                                                                    /**// (##(&      ****/,            
@@ -130,10 +144,9 @@ namespace ConsoleGameProject
      (/.  .*////(#, ///////    /((((&((///*///#%%#    
      #////,,////(##((,.,,,,#(((,,,,,((@(((/////////((#
 """,
-                () => { }, 3, 3
+                () => { }, 1, 1
                 );
             var FightBottomUi = new UiContainerGrid("FightSelectsUi", 1, 3);
-
             var SelectUi = new UiContainerGrid("Select", 2, 2);
             var FightBottom2 = new UiContainerGrid("FightBottom2", 3, 1);
             var FightLog = new UIContainerGridContent("FightLog", UIFightLogManager.GetContent, null, 3, 1);
@@ -141,24 +154,25 @@ namespace ConsoleGameProject
             var FightButton2 = new UIContainerGridContent("SkillButton", "Skillz", null);
             var FightButton3 = new UIContainerGridContent("ItemsButton", "Items", null);
             var FightButton4 = new UIContainerGridContent("Run", "Run", null);
-            var StaticPlayer = new UIContainerGridContent("PlayerStatic", () =>
-            { return $"{player.GetHp()}"; }
-            , null);
-            string.Format("str{0}", new object[5] { 1, 2, 3, 4, 5 });
 
-            MainFightUi.AddNewUI(FightSceneUi);
-            MainFightUi.AddNewUI(FightBottomUi);
-            FightBottomUi.AddNewUI(SelectUi);
-            FightBottomUi.AddNewUI(FightBottom2);
-            FightBottomUi.AddNewUI(FightLog);
-            SelectUi.AddNewUI(FightButton1);
-            SelectUi.AddNewUI(FightButton2);
-            SelectUi.AddNewUI(FightButton3);
-            SelectUi.AddNewUI(FightButton4);
-            FightSceneUi.AddNewUI(StaticPlayer);
+            MainFightUi.AddNewUI(FightTopUi, 0);
+            MainFightUi.AddNewUI(FightBottomUi, 0);
 
-            var StaticEnemy = new UIContainerGridContent("EnemyStatic", () => { return $"{enemy.GetHp()}"; }, null);
-            FightSceneUi.AddNewUI(StaticEnemy);
+            FightTopUi.AddNewUI(FightStaticUi, 0);
+            FightTopUi.AddNewUI(FightSceneUi, 1);
+
+            FightStaticUi.AddNewUI(StaticPlayer, 0);
+            FightStaticUi.AddNewUI(StaticEnemy, 1);
+
+            FightBottomUi.AddNewUI(SelectUi, 0);
+            FightBottomUi.AddNewUI(FightBottom2, 1);
+            FightBottomUi.AddNewUI(FightLog, 2);
+
+            SelectUi.AddNewUI(FightButton1, 0);
+            SelectUi.AddNewUI(FightButton2, 1);
+            SelectUi.AddNewUI(FightButton3, 2);
+            SelectUi.AddNewUI(FightButton4, 3);
+
             FightButton1.AddOnClick(() =>
             {
                 UIFightLogManager.Clear();
@@ -171,44 +185,32 @@ namespace ConsoleGameProject
                 RenderManager.RenderUIContainer(MainFightUi);
                 Thread.Sleep(1000);
             });
-            Task debugHp = Task.Run(() => { player.Damaged(10); });
             UICursor.InitialCursor(MainFightUi);
-
-
-
-            while (true)
-            {
-                UIInput();
-                RenderManager.RenderUIContainer(MainFightUi);
-                if (enemy.IsDead())
-                {
-                    RenderManager.RenderUIContainer(MainFightUi);
-                    Thread.Sleep(2000);
-                    gameState = GameState.ADVENTURE;
-                    KillCount++;
-                    break;
-                }
-            }
-
-
+            return MainFightUi;
         }
 
         static void Win()
         {
             UiContainerGrid MainWinUi = new UiContainerGrid("MainWinUi", 1, 1, true);
-            var UiItemGrid = new UIContainerGridContent("WinUi","You Win!!!",null);
-            MainWinUi.AddNewUI(UiItemGrid);
-            RenderManager.RenderUIContainer(MainWinUi);
-            if(InputManager.IsKeyReleased(EInput.ESCAPE))
+            var UiItemGrid = new UIContainerGridContent("WinUi", "You Win!!!", null);
+            MainWinUi.AddNewUI(UiItemGrid, 0);
+            UICursor.InitialCursor(MainWinUi);
+            while (true)
             {
-                gameState = GameState.ADVENTURE;
+                UIInput();
+                RenderManager.RenderUIContainer(MainWinUi);
+                InputManager.UpdateKeys();
+                if (gameState != GameState.WIN)
+                {
+                    break;
+                }
             }
         }
         static void Pause()
         {
             UiContainerGrid MainPauseUi = new UiContainerGrid("MainPauseUi", 1, 2, true);
             var UiItemGrid = new UiContainerGrid("UiItemGrid", 10, 6);
-            MainPauseUi.AddNewUI(UiItemGrid);
+            MainPauseUi.AddNewUI(UiItemGrid, 0);
 
             UICursor.InitialCursor(MainPauseUi);
             RenderManager.RenderUIContainer(MainPauseUi);
@@ -216,36 +218,91 @@ namespace ConsoleGameProject
             while (true)
             {
                 InventoryComponent inventoryComponent = player.GetInventory();
-                for (int i = 0; i < 6; i++) 
+                for (int i = 0; i < 6; i++)
                 {
                     if (inventoryComponent.Items.Count <= i)
                     {
                         break;
                     }
-                    UiItemGrid.AddNewUI(new UiItem(inventoryComponent.Items[i].GetItemUiString(), inventoryComponent.Items[i].GetItemUiString(),null));
+                    UiItemGrid.AddNewUI(new UiItem(inventoryComponent.Items[i].GetItemUiString(), inventoryComponent.Items[i].GetItemUiString(), null), 1);
                 }
-                RenderManager.RenderUIContainer(MainPauseUi);
+                UIInput();
                 UiItemGrid.Clear();
-
-                //UIInput();
-                if (InputManager.IsKeyReleased(EInput.ENTER))
+                RenderManager.RenderUIContainer(MainPauseUi);
+                InputManager.UpdateKeys();
+                if (gameState != GameState.PAUSE)
                 {
-                    gameState = GameState.ADVENTURE;
+                    break;
+                }
+            }
+        }
+        private static void Shop()
+        {
+            UIContainerGridContent MainShopUi = InitShopUi();
+            while (true)
+            {
+                UIInput();
+                RenderManager.RenderUIContainer(MainShopUi);
+                InputManager.UpdateKeys();
+                if (gameState != GameState.SHOP)
+                {
                     break;
                 }
             }
         }
 
+        public static void StartFight()
+        {
+            gameState = GameState.FIGHT;
+        }
         public static void StartShop()
         {
             gameState = GameState.SHOP;
         }
-
-
         static async void RunAsyncs()
         {
             Task.Run(UiFocusBlinkAsync);
         }
+
+
+
+        //input funcs
+        public static void UIInput()
+        {
+            //input
+            if (InputManager.IsKeyReleased(EInput.UP))
+                UICursor.Move(EDirection.UP);
+            if (InputManager.IsKeyReleased(EInput.DOWN))
+                UICursor.Move(EDirection.DOWN);
+            if (InputManager.IsKeyReleased(EInput.LEFT))
+                UICursor.Move(EDirection.LEFT);
+            if (InputManager.IsKeyReleased(EInput.RIGHT))
+                UICursor.Move(EDirection.RIGHT);
+            if (InputManager.IsKeyReleased(EInput.ENTER))
+                UICursor.Click();
+            if (InputManager.IsKeyReleased(EInput.ESCAPE))
+                UICursor.Escape();
+        }
+        public static void CharacterAdventureInput(Player player)
+        {
+            //input
+            if (InputManager.IsKeyPressed(EInput.UP))
+                player.Move(EDirection.UP);
+            if (InputManager.IsKeyPressed(EInput.DOWN))
+                player.Move(EDirection.DOWN);
+            if (InputManager.IsKeyPressed(EInput.LEFT))
+                player.Move(EDirection.LEFT);
+            if (InputManager.IsKeyPressed(EInput.RIGHT))
+                player.Move(EDirection.RIGHT);
+            if (InputManager.IsKeyReleased(EInput.ENTER))
+                player.Interact();
+            if (InputManager.IsKeyReleased(EInput.ESCAPE))
+                GameManager.gameState = GameState.PAUSE;
+        }
+
+
+
+        //async funcs
         // 깜빡임 지원을 위해
         static Task UiFocusBlinkAsync()
         {
@@ -314,57 +371,16 @@ namespace ConsoleGameProject
         }
 
 
-        public static void UIInput()
+
+
+        //DrawUi
+        private static UIContainerGridContent InitShopUi()
         {
-            //input
-            EInput input = InputManager.GetReleasedInput();
-            switch (input)
-            {
-                case EInput.UP:
-                    UICursor.Move(EDirection.UP);
-                    break;
-                case EInput.DOWN:
-                    UICursor.Move(EDirection.DOWN);
-                    break;
-                case EInput.LEFT:
-                    UICursor.Move(EDirection.LEFT);
-                    break;
-                case EInput.RIGHT:
-                    UICursor.Move(EDirection.RIGHT);
-                    break;
-                case EInput.ENTER:
-                    UICursor.Click();
-                    break;
-                case EInput.ESCAPE:
-                    UICursor.Escape();
-                    break;
-            }
-        }
-        public static void CharacterInput(Player player)
-        {
-            //input
-            EInput input = InputManager.GetPushedInput();
-            switch (input)
-            {
-                case EInput.UP:
-                    player.Move(EDirection.UP);
-                    break;
-                case EInput.DOWN:
-                    player.Move(EDirection.DOWN);
-                    break;
-                case EInput.LEFT:
-                    player.Move(EDirection.LEFT);
-                    break;
-                case EInput.RIGHT:
-                    player.Move(EDirection.RIGHT);
-                    break;
-                case EInput.ENTER:
-                    player.Interact();
-                    break;
-                case EInput.ESCAPE:
-                    GameManager.gameState = GameState.PAUSE;
-                    break;
-            }
+            UIContainerGridContent MainShopUi = new UIContainerGridContent("MainShop", "Welcom to shop what do you need?", null, 1, 1, true);
+            UIContainerGridContent SlectUi = new UIContainerGridContent("MainShop", "Welcom to shop what do you need?", null, 2, 1, true);
+            MainShopUi.AddNewUI(SlectUi, 0);
+            UICursor.InitialCursor(MainShopUi);
+            return MainShopUi;
         }
     }
 }

@@ -13,20 +13,20 @@ namespace ConsoleGameProject
     {
         protected UI? owner;
         protected string name;
-        protected Vec2 UISize;
+        protected Vec2 UiSize;
         protected Vec2 UIPosAbsolute;
         protected int index;
         protected bool focus;
         public UI(string name ,bool isMain = false)
         {
             if(isMain)
-                UISize = new Vec2(Console.WindowWidth, Console.WindowHeight-1);
+                UiSize = new Vec2(Console.WindowWidth, Console.WindowHeight-1);
             this.name = name;
         }
         public UI(string name, Vec2 pos, Vec2 size):this(name)
         {
             this.UIPosAbsolute = pos;
-            this.UISize = size;
+            this.UiSize = size;
             this.name = name;
         }
 
@@ -54,15 +54,20 @@ namespace ConsoleGameProject
         public void InitOwner(UIContainer owner, int currentIndex)
         {
             this.owner = owner;
-            if(owner.UISize == new Vec2())
+            if(owner.UiSize == new Vec2())
                 throw new NullReferenceException();
-            UISize = owner.GetUiSizeOfIndex(currentIndex);
+            UiSize = owner.GetUiSizeOfIndex(currentIndex);
             UIPosAbsolute = owner.GetAbsoluteUiPositionOfIndex(currentIndex);
         }
 
         public Vec2 GetPos()
         {
             return UIPosAbsolute;
+        }
+
+        public void SetRatioSize(double v1, double v2)
+        {
+            UiSize.Set((int)(v1 * UiSize.X), (int)(v2 * UiSize.Y));
         }
     }
 }

@@ -60,6 +60,7 @@ namespace ConsoleGameProject
             {
                 Dead = true;
             }
+            ConsoleExtender.PositionConsoleWindowDemo.ShakeWindow(3, 10, 50);
         }
 
         public bool IsDead()
