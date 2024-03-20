@@ -9,21 +9,29 @@ using System.Threading.Tasks;
 
 namespace ConsoleGameProject
 {
-    public abstract class UI
+    /*
+     * 현재 최상위 UI
+     */
+    public abstract class Ui
     {
-        protected UI? owner;
+        protected Ui? owner;
         protected string name;
         protected Vec2 UiSize;
         protected Vec2 UIPosAbsolute;
         protected int index;
         protected bool focus;
-        public UI(string name ,bool isMain = false)
+        protected bool focusable;
+
+        private event EventHandler onClick;
+        private event EventHandler onFocus;
+        private event EventHandler onLoseFocus;
+        public Ui(string name ,bool isMain = false)
         {
             if(isMain)
                 UiSize = new Vec2(Console.WindowWidth, Console.WindowHeight-1);
             this.name = name;
         }
-        public UI(string name, Vec2 pos, Vec2 size):this(name)
+        public Ui(string name, Vec2 pos, Vec2 size):this(name)
         {
             this.UIPosAbsolute = pos;
             this.UiSize = size;
@@ -39,19 +47,30 @@ namespace ConsoleGameProject
         //    else
         //        return owner.GetAbsolutePosition(index);
         //}
-        public virtual void OnFocus()
+
+        public void OnClick(object s, EventArgs args)
         {
-            focus = true;
+            if (onClick != null)
+            { 
+                onClick.Invoke(s, args);
+            }
         }
-        public virtual void OnLoseFocus()
+        public void AddEvenetOnClick(EventHandler eventHandler)
         {
-            focus = false;
+            onClick += eventHandler;
         }
+
+        public void SetFocus(bool focus)
+        {
+            this.focus = focus;
+        }
+
+
 
 
         public virtual void Draw() { }
 
-        public void InitOwner(UIContainer owner, int currentIndex)
+        public void InitOwner(UiContainer owner, int currentIndex)
         {
             this.owner = owner;
             if(owner.UiSize == new Vec2())

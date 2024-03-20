@@ -13,10 +13,18 @@ namespace ConsoleGameProject
         public ItemConsumable(InventoryComponent ownedInventory, string name) : base(ownedInventory, name)
         {
         }
+        public void OnConsumeClick(object s, EventArgs args)
+        {
+            Consume();
+        }
+
         public void Consume()
         {
-            ownedInventory.Remove(this);
-            ownedInventory.Owner.Heal(healAmount);
+            if (ownedInventory.Owner is  Player pl) 
+            {
+                ownedInventory.Remove(this);
+                pl.Heal(healAmount);
+            }
 
         }
     }

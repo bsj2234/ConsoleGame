@@ -15,12 +15,14 @@ namespace ConsoleGameProject
         protected FightComponent fightComponent;
         protected event Action OnDead;
         protected InventoryComponent inventoryComponent;
-        public Pawn(string name, int hp, Vec2 position, Vec2 size, bool overlap):base(name, position, size, overlap)
+
+        protected ECharacterType chracterType;
+
+        public Pawn(string name, int hp, Vec2 position, Vec2 size, bool overlap, ECharacterType characterType):base(name, position, size, overlap)
         {
             fightComponent = new FightComponent(this, hp, 0);
             inventoryComponent = new InventoryComponent(this);
-
-
+            this.chracterType = characterType;
         }
         public virtual bool Move(EDirection direction)
         {
@@ -58,7 +60,7 @@ namespace ConsoleGameProject
         {
             int damage = 10;
             fightComponent.Attack(other.fightComponent, damage);
-            UIFightLogManager.Append($"{Name} Attacked {other.Name}!!! Damaged {damage}\n");
+            UiFightLogManager.Append($"{Name} Attacked {other.Name}!!! Damaged {damage}\n");
         }
         public bool IsDead()
         {
@@ -98,6 +100,11 @@ namespace ConsoleGameProject
         public FightComponent GetFightComponent()
         {
             return fightComponent;
+        }
+
+        public virtual string GetFightCharacterArt()
+        {
+            return AsciiArts.All[(int)chracterType][0];
         }
     }
 }

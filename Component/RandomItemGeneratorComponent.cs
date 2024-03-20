@@ -9,9 +9,9 @@ namespace ConsoleGameProject
 {
     public class RandomItemGeneratorComponent
     {
-        protected Pawn owner;
+        protected Actor owner;
         protected List<Item> dropTable;
-        public RandomItemGeneratorComponent( Pawn owner )
+        public RandomItemGeneratorComponent( Actor owner )
         { 
             this.owner = owner;
             dropTable = new List<Item>();

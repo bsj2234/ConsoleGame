@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleGameProject
 {
-    public static class UIFightLogManager
+    public static class UiFightLogManager
     {
         private static string content = "";
 

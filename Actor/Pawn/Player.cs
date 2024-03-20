@@ -16,7 +16,7 @@ namespace ConsoleGameProject
         private FightComponent fightComponent;
         private PlayerInteractArea InteractArea;
         public bool Fight { get; set; }
-        public Player(string name, int hp, Vec2 position, Vec2 size, bool overlap):base(name, hp, position, size, overlap)
+        public Player(string name, int hp, Vec2 position, Vec2 size, bool overlap, ECharacterType characterType):base(name, hp, position, size, overlap, characterType)
         {
             fightComponent = new FightComponent(this, hp, 100);
             //사이즈는 앞뒤 양옆 한줄씩 크게 하기 위해서
@@ -73,6 +73,17 @@ namespace ConsoleGameProject
         public void Interact()
         {
             CheckInteract();
+        }
+        public override string GetFightCharacterArt()
+        {
+            if(GameManager.UiFocusedBlink)
+            {
+                return AsciiArts.All[(int)chracterType][2];
+            }
+            else
+            {
+                return AsciiArts.All[(int)chracterType][3];
+            }
         }
     }
 }

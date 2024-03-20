@@ -8,9 +8,9 @@ namespace ConsoleGameProject
 {
     public class InventoryComponent
     {
-        public Pawn Owner;
+        public Actor Owner;
         public List<Item> Items;
-        public InventoryComponent(Pawn owner) 
+        public InventoryComponent(Actor owner) 
         {
             Items = new List<Item>();
             Owner = owner;

@@ -32,7 +32,7 @@ namespace ConsoleGameProject
     //스크롤기능을 지원해야 한다면
     //가변크기일 필요가 있을수 있음
 
-    public class UiContainerGrid: UIContainer
+    public class UiContainerGrid: UiContainer
     {
         //내가 무엇을 가지고 있느냐에 따라 행동이 달라진다
         //컨테이너라면 보더를 그려야 할것이다
@@ -42,7 +42,14 @@ namespace ConsoleGameProject
         protected int rowCount = 0;
         protected List<double> rowRatio = new List<double>();
         protected List<double> colRatio = new List<double>();
+        private UiContainerGrid? CustomUiToFocus = null;
 
+
+        private bool drawBorder = true;
+        public bool DrawBorder
+        {
+            set { drawBorder = value; }
+        }
 
         public UiContainerGrid(string name,int rowCount, int columnCount, bool isMain = false) 
             : base(name, isMain)
@@ -94,7 +101,7 @@ namespace ConsoleGameProject
 
         }
 
-        public void AddNewUI(UI newUi,int index)
+        public void AddNewUI(Ui newUi,int index)
         {
             if (newUi == null)
             {
@@ -105,15 +112,15 @@ namespace ConsoleGameProject
             newUi.InitOwner(this, currentIndex);
             ContentUIList.Add(newUi);
         }
-        public UI GetContent(int x, int y)
+        public Ui GetContent(int x, int y)
         {
             return GetContent(y * columnCount + x);
         }
-        public UI GetContent(Vec2 v)
+        public Ui GetContent(Vec2 v)
         {
             return GetContent(v.X, v.Y);
         }
-        override public UI? GetContent(int index)
+        override public Ui? GetContent(int index)
         {
             if(index < 0 || index >= ContentUIList.Count)
             {
@@ -124,7 +131,7 @@ namespace ConsoleGameProject
                 return ContentUIList[index];
             }
         }
-        public UI GetRelativeDirectionUI(EDirection d, int index)
+        public Ui GetRelativeDirectionUI(EDirection d, int index)
         {
             int temp = index;
             switch (d)
@@ -194,22 +201,19 @@ namespace ConsoleGameProject
         //        return new Vec2(ownerPosition.X + X*itemSizeX, ownerPosition.Y + Y * itemSizeY);
         //    }
         //}
-        public override void OnFocus()
-        {
-            this.focus = true;
-        }
-        public override void OnLoseFocus()
-        {
-            this.focus = false;
-        }
-
         public override void Draw()
         {
             //Vec2 temp = GetAbsolutePosition(index);
-            this.DrawUIBorderLine();
-            foreach(var item in ContentUIList)
+            if(drawBorder == true) 
             {
-                item.Draw();
+                this.DrawUIBorderLine();
+            }
+            foreach (var item in ContentUIList)
+            {
+                if(item != null)
+                {
+                    item.Draw();
+                }
             }
         }
 
@@ -286,9 +290,18 @@ namespace ConsoleGameProject
             return x + y * columnCount;
         }
 
-        internal void Clear()
+        public void Clear()
         {
             ContentUIList.Clear();
+        }
+
+        public UiContainerGrid? GetCustomUiToFocusParent()
+        {
+            return CustomUiToFocus;
+        }
+        public void SetCusomUiToFoucus(UiContainerGrid toFocus)
+        {
+            CustomUiToFocus = toFocus;
         }
     }
 }

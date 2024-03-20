@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ConsoleGameProject
 {
-    public class UIPawnStatus: UiContainerGridContent
+    public class UiPawnStatus: UiContainerGridContent
     {
-        public UIPawnStatus(string name, Func<string> contentFunc, Action? action)
+        public UiPawnStatus(string name, Func<string> contentFunc, Action? action)
             : base(name, contentFunc, null, 1, 1, false)
         {
         }

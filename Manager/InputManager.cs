@@ -95,8 +95,6 @@ namespace ConsoleGameProject
                 dictionary[key] = false;
             }
         }
-
-        //ToDo:Fix rarly missing release key
         private static void SetKeyReleased(EInput key)
         {
             if (!IsKeyPressed(key) && PrevPressedKeys[key])
