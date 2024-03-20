@@ -36,7 +36,7 @@ namespace ConsoleGameProject
 
         public override char? GetRenderChar(int x, int y)
         {
-            return 'n';
+            return null;
         }
 
         public void UpdateInteractableOverlap(Vec2 playerPos)

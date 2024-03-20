@@ -18,7 +18,7 @@ namespace ConsoleGameProject
         public static void Run()
         {
             RunAsyncs();
-
+            MapGenerator.DrawMapOne();
             //Initial item for debug
             player.GetInventory().Add(new ItemConsumable(player.GetInventory(), "Ap1"));
             player.GetInventory().Add(new ItemConsumable(player.GetInventory(), "Ap2"));
@@ -76,7 +76,6 @@ namespace ConsoleGameProject
         static void Fight()
         {
 
-            UiInventoryContainer inventoryUi = new UiInventoryContainer("playerInventory", 2, 3, player.GetInventory());
 
             //Todo Make multiple enemy and make it random
             Enemy enemy = new Enemy("KKong", 10, (ECharacterType)(Random.Shared.Next()% Enum.GetValues<ECharacterType>().Length));
@@ -128,7 +127,9 @@ namespace ConsoleGameProject
             SelectUi.AddNewUI(ItemButton, 2);
             SelectUi.AddNewUI(RunButton, 3);
 
-            FightBottom2.AddNewUI(inventoryUi, 0);
+
+            UiInventoryContainer inventoryUi = new UiInventoryContainer("playerInventory", 2, 3, player.GetInventory());
+
 
             //OnAttackButton
             //attack
@@ -151,6 +152,9 @@ namespace ConsoleGameProject
             //MoveToItemSelect
             ItemButton.AddEvenetOnClick((object s, EventArgs args) =>
             {
+
+                FightBottom2.AddNewUI(inventoryUi, 0);
+                inventoryUi.RefreshItems();
                 UiCursor.FocusTo(FightBottom2);
             });
             //OnRunButton
@@ -191,7 +195,6 @@ namespace ConsoleGameProject
             while (true)
             {
                 UIInput();
-                inventoryUi.RefreshItems();
                 RenderManager.RenderUIContainer(MainFightUi);
                 InputManager.UpdateKeys();
                 if (enemy.IsDead())

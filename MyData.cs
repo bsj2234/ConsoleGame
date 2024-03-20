@@ -7,6 +7,85 @@ using System.Threading.Tasks;
 
 namespace MyData
 {
+    public enum Axis
+    {
+        HORIZONTAL, VERTICAL
+    }
+    public static class MapData
+    {
+
+
+
+        public static readonly string Map =
+"""
+WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                                                                                                                                                                                                      W
+W                    WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW                                                                                                                         W
+W                    WG                              W                       W                                                                                                                         W
+W                    WWWWWWWWWWWWWWWWWWWWWWWWWWW WWWWWWWWWWWWWWWWWWWWWWWWWWW W                                                                                                                         W
+W                    W         WW W                  W                       W                                                                                                                         W
+W                    W  W  WWW WW WWWWW WWWWWWWWWWW WWWWWW WWWWWWWWWWWWWWWWWWW                                                                                                                         W
+W                    W  W  W   WWWW       W                 W         W      W                                                                                                                         W
+W                    W  WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW WWWWWW W                                                                                                                         W
+W                    W                                                       W                                                                                                                         W
+W                    W  WWWWWWWW WWWWWWWWWWWWWWW WWWWWWWWWWWWWWWWWWWWWWWWWWWWW                                                                                                                         W
+W                    W            W          W W                     W  W    W                                                                                                                         W
+W                    WWWWWWWWW WWWWWWWWW  WW   WWWW WWWWWWWWWWWWW WWWW  W  W W                                                                                                                         W
+W                    W   W        W W  W  WW W                          W  W W                                                                                                                         W
+W                    W W   W  W     W  W  WW WWWWWWWWWWWWWWWWWWWWWWWWW  W  W W                                                                                                                         W
+WWWWWWWWWWWWWWWWWWWWWWWWWWWWW WWWWWWWWWW  WW W W   W                 W     W W                                                                                                                         W
+W                    W     W        W  W  WW W W                     W  W  W W                                                                                                                         W
+W                    W WWWWW WWWWWWWW  W  WW W W   WWWWWWWWWWWWWWWWW W  W  W W                                                                                                                         W
+W                    W     W           W  WW W W   W                 W  W  W W                                                                                                                         W
+W                    WWWWW W WWWWWWWW  W   W W W   W  WWWWWWWWWWWWWW    W  W W                                                                                                                         W
+W                    WWWWW W WWWWWWWW WW  WW W W   W                 W  W  W W                                                                                                                         W
+W                    W     W        W  W  WW W W  WWWWWWWWWWWWWWWWWWWWWWWW W W                                                                                                                         W
+W                    W                 W  WW W W                      W    W W                                                                                                                         W
+W                    WWWWWWWWWWWWWWWWWWWWWWWWW WWWWWWWWWWWWWWWWWWWWWWWWWWWWW W                                                                                                                         W
+W                    W                                                       W                                                                                                                         W
+W                    WWWWWWWWWWWWWWWWWWWWWWWWWWW WWWWWWWWWWWWWWWWWWWWWWWWWWWWW                                                                                                                         W
+W                                                                                                                                                                                                      W
+WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+""";
+    }
+
     public struct Vec2
     {
         public int X;
@@ -41,6 +120,14 @@ namespace MyData
         public void AddY(int y)
         {
             Y = Y + (int)y;
+        }
+        public int GetAddedXValue(int x)
+        {
+            return X + x;
+        }
+        public int GetAddedYValue(int y)
+        {
+            return Y + y;
         }
 
         public static Vec2 operator +(Vec2 lhs, Vec2 rhs)
@@ -1063,7 +1150,6 @@ namespace MyData
          -++-----------------------+######-.      
 """
 };
-
         public static string[] DDook =
 {
 """
@@ -1174,7 +1260,6 @@ namespace MyData
             .-....-+##+######+++++--++-           
 """
 };
-
         public static string[] zzz =
 {
 """                                                 
@@ -1280,9 +1365,7 @@ namespace MyData
 +++###########################################+-+ 
 -+##############################################+ 
 """
-}
-;
-
+};
         public static string[] Tokki =
 {
 """
