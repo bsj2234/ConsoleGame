@@ -1,16 +1,11 @@
 ﻿using MyBuffer;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleGameProject
 {
     public class UiInventoryContainer : UiContainerGrid
     {
         protected InventoryComponent inventoryComponent;
-        public UiInventoryContainer(string name, int rowCount, int columCount, InventoryComponent inventory):base(name,rowCount, columCount)
+        public UiInventoryContainer(string name, int rowCount, int columCount, InventoryComponent inventory) : base(name, rowCount, columCount)
         {
             inventoryComponent = inventory;
         }
@@ -18,7 +13,7 @@ namespace ConsoleGameProject
         public void RefreshItems()
         {
             Clear();
-            for (int i = 0; i < rowCount*columnCount; i++)
+            for (int i = 0; i < rowCount * columnCount; i++)
             {
                 if (inventoryComponent.Items.Count <= i)
                 {

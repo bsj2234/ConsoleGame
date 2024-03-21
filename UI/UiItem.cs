@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ConsoleGameProject
+﻿namespace ConsoleGameProject
 {
     public class UiItem : UiContainerGridContent
     {
-        public UiItem(string name, string content, EventHandler? action, int rowCount = 1, int columnCount = 1, bool isMain = false) 
+        public UiItem(string name, string content, EventHandler? action, int rowCount = 1, int columnCount = 1, bool isMain = false)
             : base(name, content, action, rowCount, columnCount, isMain)
         {
             AddEvenetOnClick(UpdateInventoryUi);
@@ -16,7 +10,7 @@ namespace ConsoleGameProject
 
         public void UpdateInventoryUi(object s, EventArgs args)
         {
-            if(owner is UiInventoryContainer u)
+            if (owner is UiInventoryContainer u)
             {
                 u.RefreshItems();
             }

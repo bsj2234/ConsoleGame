@@ -1,9 +1,4 @@
 ﻿using MyData;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleGameProject
 {
@@ -12,7 +7,7 @@ namespace ConsoleGameProject
         public List<IInteractable> Interactables = new List<IInteractable>();
         public PlayerInteractArea(Player player, string name, Vec2 position, Vec2 size, bool overlap = true) : base(name, position, size, overlap)
         {
-            
+
         }
 
         public override bool CheckCollision(Actor other)
@@ -20,7 +15,7 @@ namespace ConsoleGameProject
             bool isOverlap = base.CheckCollision(other);
             if (isOverlap)
             {
-                if(other is IInteractable)
+                if (other is IInteractable)
                 {
                     Interactables.Add(other as IInteractable);
                 }

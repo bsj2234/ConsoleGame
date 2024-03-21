@@ -1,17 +1,17 @@
 ﻿using MyData;
 namespace ConsoleGameProject
 {
-    public abstract class UiContainer:Ui
+    public abstract class UiContainer : Ui
     {
         protected List<Ui> ContentUIList = new List<Ui>();
 
-        public UiContainer(string name, bool isMain = false) :base(name, isMain)
+        public UiContainer(string name, bool isMain = false) : base(name, isMain)
         { }
 
         abstract public int GetRowIndex(int index);
         abstract public int GetColumnIndex(int index);
 
-        
+
         abstract public Vec2 GetUiSizeOfIndex(int index);
         abstract public Vec2 GetAbsoluteUiPositionOfIndex(int index);
         abstract public Ui? GetContent(int index);

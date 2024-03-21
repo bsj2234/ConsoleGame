@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ConsoleGameProject
+﻿namespace ConsoleGameProject
 {
     public class InventoryComponent
     {
         public Actor Owner;
         public List<Item> Items;
-        public InventoryComponent(Actor owner) 
+        public InventoryComponent(Actor owner)
         {
             Items = new List<Item>();
             Owner = owner;
@@ -37,7 +31,7 @@ namespace ConsoleGameProject
             return Items.Contains(item);
         }
 
-        public List<Item> GetList() 
+        public List<Item> GetList()
         {
             return Items;
         }

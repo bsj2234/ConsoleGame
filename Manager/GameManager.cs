@@ -5,12 +5,13 @@ namespace ConsoleGameProject
 {
     public static class GameManager
     {
+        //
         public static List<Actor> AllActors = new List<Actor>();
         public static GameState gameState = GameState.ADVENTURE;
         public static bool UiFocusedBlink = false;
         static int KillCount = 0;
 
-        static Player player = player = new Player("siko", 30, Program.SCREEN_CENTER_OFFSET, new Vec2(1, 1), false, ECharacterType.PIKA);
+        public static Player player = new Player("siko", 30, new Vec2(61, 48), new Vec2(1, 1), false, ECharacterType.PIKA);
         static Merchant merchant = new Merchant("merchant", new Vec2(80, 33), new Vec2(1, 1), false);
 
 
@@ -78,7 +79,7 @@ namespace ConsoleGameProject
 
 
             //Todo Make multiple enemy and make it random
-            Enemy enemy = new Enemy("KKong", 10, (ECharacterType)(Random.Shared.Next()% Enum.GetValues<ECharacterType>().Length));
+            Enemy enemy = new Enemy("KKong", 10, (ECharacterType)(Random.Shared.Next() % Enum.GetValues<ECharacterType>().Length));
             enemy.SetOpponent(player);
 
 
@@ -92,7 +93,7 @@ namespace ConsoleGameProject
             var FightStaticUi = new UiContainerGrid("FightStaticUi", 2, 1);
             var FightSceneUi = new UiContainerGrid("FightSceneUi", 2, 2);
             FightSceneUi.SetRowRatio(new double[] { .5, 1 });
-            var FightEnemyArt = new UiContainerGridContent("FightEnemyArt", enemy.GetFightCharacterArt,null);
+            var FightEnemyArt = new UiContainerGridContent("FightEnemyArt", enemy.GetFightCharacterArt, null);
             FightEnemyArt.DrawBorder = false;
             var FightPlayerArt = new UiContainerGridContent("FightPlayerArt", player.GetFightCharacterArt, null);
             FightPlayerArt.DrawBorder = false;
@@ -165,7 +166,7 @@ namespace ConsoleGameProject
                 UiFightLogManager.Append("Try to run!\n");
                 RenderManager.RenderUIContainer(MainFightUi);
                 Thread.Sleep(1000);
-                if (Random.Shared.Next()%10 < 3 )
+                if (Random.Shared.Next() % 10 < 3)
                 {
                     UiFightLogManager.Append("Succeed!\n");
                     RenderManager.RenderUIContainer(MainFightUi);
@@ -378,6 +379,8 @@ namespace ConsoleGameProject
                 player.Interact();
             if (InputManager.IsKeyReleased(EInput.ESCAPE))
                 GameManager.gameState = GameState.PAUSE;
+            if (InputManager.IsKeyReleased(EInput.T))
+                player.FindPath();
         }
 
 

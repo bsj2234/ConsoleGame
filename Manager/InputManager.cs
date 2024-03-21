@@ -1,11 +1,5 @@
 ﻿using MyData;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleGameProject
 {
@@ -69,7 +63,7 @@ namespace ConsoleGameProject
         }
         public static bool GetPressedVirtualKey(EInput key)
         {
-            switch(key)
+            switch (key)
             {
                 case EInput.UP:
                     return (GetAsyncKeyState((int)VKeys.UP) & 0x8000) > 0;
@@ -83,6 +77,8 @@ namespace ConsoleGameProject
                     return (GetAsyncKeyState((int)VKeys.ESCAPE) & 0x8000) > 0;
                 case EInput.ENTER:
                     return (GetAsyncKeyState((int)VKeys.RETURN) & 0x8000) > 0;
+                case EInput.T:
+                    return (GetAsyncKeyState((int)VKeys.KEY_T) & 0x8000) > 0;
                 default:
                     return false;
             }

@@ -1,22 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using MyBuffer;
+﻿using MyBuffer;
 using MyData;
+using System.Diagnostics;
 
 namespace ConsoleGameProject
 {
-    public class Player:Pawn
+    public class Player : Pawn
     {
         public static Random random = new Random();
         private FightComponent fightComponent;
-        private PlayerInteractArea InteractArea;
+        public PlayerInteractArea InteractArea;
+        private PathFindingComponent pathFindingComponent = new PathFindingComponent();
         public bool Fight { get; set; }
-        public Player(string name, int hp, Vec2 position, Vec2 size, bool overlap, ECharacterType characterType):base(name, hp, position, size, overlap, characterType)
+        public Player(string name, int hp, Vec2 position, Vec2 size, bool overlap, ECharacterType characterType) : base(name, hp, position, size, overlap, characterType)
         {
             fightComponent = new FightComponent(this, hp, 100);
             //사이즈는 앞뒤 양옆 한줄씩 크게 하기 위해서
@@ -28,7 +23,7 @@ namespace ConsoleGameProject
 
             OnOverlap += OverlapWithHuntArae;
 
-            RenderPriority = 1;
+            RenderPriority = 999999999;
         }
 
         private void OverlapWithHuntArae(Actor actor)
@@ -76,7 +71,7 @@ namespace ConsoleGameProject
         }
         public override string GetFightCharacterArt()
         {
-            if(GameManager.UiFocusedBlink)
+            if (GameManager.UiFocusedBlink)
             {
                 return AsciiArts.All[(int)chracterType][2];
             }
@@ -84,6 +79,24 @@ namespace ConsoleGameProject
             {
                 return AsciiArts.All[(int)chracterType][3];
             }
+        }
+
+        public void FindPath()
+        {
+
+            PosAndPath? posAnd = pathFindingComponent.FindPath(in GetPosition(),100);
+            Debug.Assert(posAnd != null, "CannotFindPath");
+            foreach (Vec2 pos in posAnd.GetValueOrDefault().Paths)
+            {
+                var tmp = new Actor(" ", GetPosition() + pos.GetLeftTopCoord(100), new Vec2(1, 1), true);
+                tmp.RenderPriority = 1;
+                tmp.RenderC = '@';
+                RenderManager.CustomRanderActor();
+                Thread.Sleep(30);
+                
+            }
+
+
         }
     }
 }

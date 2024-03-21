@@ -1,10 +1,5 @@
 ﻿using MyData;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleGameProject
 {
@@ -31,17 +26,77 @@ namespace ConsoleGameProject
                 {
                     if (MapOne.mapStr[i * MapOne.mapWidth + k] == 'W')
                     {
-                        new Wall($"Map{i}{k}" ,new Vec2(k,i), new Vec2(1,1), false);
-                    } 
+                        new Wall($"Map{i}{k}", new Vec2(k, i), new Vec2(1, 1), false);
+                    }
+                    if (MapOne.mapStr[i * MapOne.mapWidth + k] == 'G')
+                    {
+                        new Goal($"Map{i}{k}", new Vec2(k, i), new Vec2(1, 1)).RenderC = 'G';
+                    }
                 }
             }
 
+        }
+
+        public static string DrawCurrentColliderMap(Vec2 center, int size)
+        {
+            StringBuilder map = new StringBuilder();
+            //맵크기
+            Vec2 mapSize = new Vec2(size * 2, size);
+
+            //크기할당 가로는 두배로
+            for (int i = 0; i < mapSize.X * mapSize.Y; i++)
+            {
+                map.Append(' ');
+            }
+
+            //모든 액터 돌며 충돌체면 W, 골이면 G 할당
+            foreach(Actor actor in GameManager.AllActors)
+            {
+                int actorHeight = actor.Size.Y;
+                int actorWidth = actor.Size.X;
+                // 플레이어는 패스
+                if (actor is Player)
+                    continue;
+                //Todo CenterCalc Function으로 만들기
+                //범위 모두 벗어나면 패스
+                //액터와 맵의 충돌 검사
+                if (!(actor is Goal) && !actor.CheckCollision(center.GetLeftTopCoord(mapSize), mapSize))
+                {
+                    continue;
+                }
+                //오버랩 패스
+                if (!(actor is Goal) && actor.Overlap == true)
+                {
+                    continue;
+                }
+                for (int y = 0; y < actorHeight; y++)
+                {
+                    for (int x = 0; x < actorWidth; x++)
+                    {
+                        // 액터를 시작위치에 상대적으로
+                        Vec2 pos = actor.GetPosition() - center.GetLeftTopCoord(mapSize);
+                        int index = pos.ToOneDimentional(mapSize.X);
+
+                        //인덱스 초과나 미만시 패스
+                        if (index < 0 || index >= mapSize.X * mapSize.Y)
+                            continue;
+
+                        if (map[index] != 'G')
+                            map[index] = 'W';
+                        //골 설정
+                        if(actor is Goal)
+                            map[index] = 'G';
+                    }
+                }
+            }
+
+            return map.ToString();
         }
     }
     public static class MapOne
     {
         public static string mapStr = MapData.Map;
         public static int mapWidth = mapStr.IndexOf("\r\n") + 2;
-        public static int mapHeight = mapStr.Length / (mapWidth); 
+        public static int mapHeight = mapStr.Length / (mapWidth);
     }
 }

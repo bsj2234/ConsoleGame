@@ -1,11 +1,4 @@
 ﻿using MyData;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleGameProject
 {
@@ -25,13 +18,13 @@ namespace ConsoleGameProject
         private event EventHandler onClick;
         private event EventHandler onFocus;
         private event EventHandler onLoseFocus;
-        public Ui(string name ,bool isMain = false)
+        public Ui(string name, bool isMain = false)
         {
-            if(isMain)
-                UiSize = new Vec2(Console.WindowWidth, Console.WindowHeight-1);
+            if (isMain)
+                UiSize = new Vec2(Console.WindowWidth, Console.WindowHeight - 1);
             this.name = name;
         }
-        public Ui(string name, Vec2 pos, Vec2 size):this(name)
+        public Ui(string name, Vec2 pos, Vec2 size) : this(name)
         {
             this.UIPosAbsolute = pos;
             this.UiSize = size;
@@ -51,7 +44,7 @@ namespace ConsoleGameProject
         public void OnClick(object s, EventArgs args)
         {
             if (onClick != null)
-            { 
+            {
                 onClick.Invoke(s, args);
             }
         }
@@ -73,7 +66,7 @@ namespace ConsoleGameProject
         public void InitOwner(UiContainer owner, int currentIndex)
         {
             this.owner = owner;
-            if(owner.UiSize == new Vec2())
+            if (owner.UiSize == new Vec2())
                 throw new NullReferenceException();
             UiSize = owner.GetUiSizeOfIndex(currentIndex);
             UIPosAbsolute = owner.GetAbsoluteUiPositionOfIndex(currentIndex);

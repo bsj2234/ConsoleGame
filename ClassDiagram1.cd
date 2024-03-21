@@ -1,0 +1,362 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ConsoleGameProject.Merchant">
+    <Position X="9.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAgAAAAAAAAAAEAAAAAIAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Actor\Pawn\NPC\Merchant.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ConsoleGameProject.Actor">
+    <Position X="14.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIBAAAiAAgAAgAAIACAQAAAAAAgCAJAAIAAAAIgA=</HashCode>
+      <FileName>Actor\Pawn\Actor.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ConsoleGameProject.Enemy">
+    <Position X="11.5" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAACAAAAAAAAAAAAAAAAAAAAACAAAAAAAgA=</HashCode>
+      <FileName>Actor\Pawn\Enemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleGameProject.Pawn">
+    <Position X="12.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAQAAAgAIAAAEKAAAIAkAAAgIAAAAEEAAAABAAAAgA=</HashCode>
+      <FileName>Actor\Pawn\Pawn.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleGameProject.Player">
+    <Position X="13.75" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAKIIAAAAAAAAAAAAIAAAAJEAAAQIAAEAAgA=</HashCode>
+      <FileName>Actor\Pawn\Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleGameProject.Wall">
+    <Position X="16" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>Actor\Wall\Wall.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleGameProject.Area">
+    <Position X="19.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>Actor\Area.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleGameProject.HuntArea">
+    <Position X="18.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>Actor\HuntArea.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleGameProject.PlayerInteractArea">
+    <Position X="20.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAAAAAAAAAAAAAAAACAAQAIAAAIAAA=</HashCode>
+      <FileName>Actor\PlayerInteractArea.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleGameProject.Component">
+    <Position X="16.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Component\Component.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleGameProject.FightComponent">
+    <Position X="16.75" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAIAAgAAAAAAgECAAAAAEAAAAKAIAAAAAABKDAAAAgE=</HashCode>
+      <FileName>Component\FightComponent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleGameProject.InventoryComponent">
+    <Position X="42.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAACAAAAACAAAAAAABAAAAAAAAAAAAAAAAABQAAI=</HashCode>
+      <FileName>Component\InventoryComponent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleGameProject.PathFindingComponent">
+    <Position X="25.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Component\PathFindingComponent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleGameProject.RandomItemGeneratorComponent">
+    <Position X="31.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAACAAgAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Component\RandomItemGeneratorComponent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleGameProject.Item">
+    <Position X="8.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAABAIAAAAAAAAAAEACAACAAAAAAAAAA=</HashCode>
+      <FileName>Inventory\Item.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleGameProject.ItemConsumable">
+    <Position X="8.75" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAgAAAAAAAAAAAAAAAAAAACAAAAAAAQAAAA=</HashCode>
+      <FileName>Inventory\ItemConsumable.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleGameProject.ItemEquipment">
+    <Position X="44.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Inventory\ItemEquipment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleGameProject.ItemWeapon">
+    <Position X="18.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Inventory\ItemWeapon.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleGameProject.GameManager">
+    <Position X="39" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIgAQAAQDAIAABAAEAAAAAAAICQAABBIIAgAAAAAAI=</HashCode>
+      <FileName>Manager\GameManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleGameProject.InputManager">
+    <Position X="40.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAIAAAAAAAAAAABAAAAGAAAhAACACgAgAAAA=</HashCode>
+      <FileName>Manager\InputManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleGameProject.MapGenerator">
+    <Position X="22" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACABAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Manager\MapGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleGameProject.MapOne">
+    <Position X="23.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>Manager\MapGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleGameProject.Ui">
+    <Position X="19.5" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAgAAAQAAggAIAAAAAAgCAAAEg0AAAAAAQAghAAA=</HashCode>
+      <FileName>UI\Ui.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleGameProject.UiContainer">
+    <Position X="19.5" Y="17.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAEIAAAAAAAAgQACAAAAAAACI=</HashCode>
+      <FileName>UI\UiContainer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleGameProject.UiContainerGrid">
+    <Position X="19.5" Y="21" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BKAgABAA4BAAAgIQAQAAEIAAAAABgAgQACAAAABAAAI=</HashCode>
+      <FileName>UI\UiContainerGrid.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleGameProject.UiContainerGridContent">
+    <Position X="20.5" Y="27.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAgAAAAAAAAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>UI\UiContainerGridContent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleGameProject.UiCursor">
+    <Position X="35" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAABIAAAEAAAIAAgAAAAAACABAAAAABAEAAAgA=</HashCode>
+      <FileName>UI\UiCursor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleGameProject.UiFightLogManager">
+    <Position X="24.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAQAAACAAAABAAAA=</HashCode>
+      <FileName>UI\UiFightLogManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleGameProject.UiInventoryContainer">
+    <Position X="17" Y="27.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UI\UiInventoryContainer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleGameProject.UiItem">
+    <Position X="19.75" Y="31" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UI\UiItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleGameProject.UiManager">
+    <Position X="26" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAEAAAAAAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UI\UiManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleGameProject.UiPawnStatus">
+    <Position X="22" Y="31" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UI\UiPawnStatus.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleGameProject.Program">
+    <Position X="29.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABAAAAAAACAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyBuffer.RenderManager">
+    <Position X="33.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACACAgBEAAAIAgSARggCAAAAAQAEAAAAAAEACAAEAAI=</HashCode>
+      <FileName>Manager\RenderManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleExtender.PositionConsoleWindowDemo">
+    <Position X="28" Y="2.75" Width="1.5" />
+    <NestedTypes>
+      <Struct Name="ConsoleExtender.PositionConsoleWindowDemo.MONITORINFO" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ConsoleExtender.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Struct Name="ConsoleExtender.PositionConsoleWindowDemo.RECT" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ConsoleExtender.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Struct Name="ConsoleExtender.PositionConsoleWindowDemo.POINT" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ConsoleExtender.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Struct Name="ConsoleExtender.PositionConsoleWindowDemo.WINDOWPLACEMENT" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ConsoleExtender.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Struct Name="ConsoleExtender.PositionConsoleWindowDemo.Rect" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ConsoleExtender.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAQZAAAAAAJAAACAAgAAIUBAAAAEgAAAAAQACCQoAAA=</HashCode>
+      <FileName>ConsoleExtender.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyData.MapData">
+    <Position X="20.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyData.AsciiArts">
+    <Position X="37.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAEAAAAAAAAAAAACBAAAAAAAAAAAAAYAAJAIABAA=</HashCode>
+      <FileName>MyData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="MyData.Vec2">
+    <Position X="28.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAYAZgEAAIAAAAAAAAAAAAAAAAAAYiA=</HashCode>
+      <FileName>MyData.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="MyData.UIPositionInfo">
+    <Position X="26.75" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyData.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Interface Name="ConsoleGameProject.IInteractable">
+    <Position X="24.75" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IInteractable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MyBuffer.IRenderable">
+    <Position X="26.5" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>Manager\RenderManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="MyData.Axis">
+    <Position X="24.75" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>MyData.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MyData.EDirection">
+    <Position X="28.25" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAICAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>MyData.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MyData.EInput">
+    <Position X="30" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgCAAQAAAAQAAAICAAAgAAAAAAAEAAA=</HashCode>
+      <FileName>MyData.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MyData.GameState">
+    <Position X="31.75" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAoAAAAAAAAAAAAAAAAAAAIAAABAA=</HashCode>
+      <FileName>MyData.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MyData.VKeys" Collapsed="true">
+    <Position X="33.75" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>YgTDbDCbI7CC+5rMkarNwAukgsd2sTp7w/he+b9zYTY=</HashCode>
+      <FileName>MyData.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MyData.ECharacterType">
+    <Position X="26.5" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAJAABAAAAAAAAASAIAAAEAAAAAAACAAAAAAAAAAAQ=</HashCode>
+      <FileName>MyData.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="맑은 고딕" Size="9" />
+</ClassDiagram>

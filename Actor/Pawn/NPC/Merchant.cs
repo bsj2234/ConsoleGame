@@ -1,13 +1,8 @@
 ﻿using MyData;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleGameProject
 {
-    public class Merchant:Actor, IInteractable
+    public class Merchant : Actor, IInteractable
     {
         InventoryComponent inventoryComponent;
         RandomItemGeneratorComponent randomItemGeneratorComponent;

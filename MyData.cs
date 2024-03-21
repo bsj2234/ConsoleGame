@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace MyData
 {
@@ -62,7 +57,7 @@ W                    WG                              W                       W  
 W                    WWWWWWWWWWWWWWWWWWWWWWWWWWW WWWWWWWWWWWWWWWWWWWWWWWWWWW W                                                                                                                         W
 W                    W         WW W                  W                       W                                                                                                                         W
 W                    W  W  WWW WW WWWWW WWWWWWWWWWW WWWWWW WWWWWWWWWWWWWWWWWWW                                                                                                                         W
-W                    W  W  W   WWWW       W                 W         W      W                                                                                                                         W
+W                    W  W  W              W                 W         W      W                                                                                                                         W
 W                    W  WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW WWWWWW W                                                                                                                         W
 W                    W                                                       W                                                                                                                         W
 W                    W  WWWWWWWW WWWWWWWWWWWWWWW WWWWWWWWWWWWWWWWWWWWWWWWWWWWW                                                                                                                         W
@@ -77,10 +72,10 @@ W                    W     W           W  WW W W   W                 W  W  W W  
 W                    WWWWW W WWWWWWWW  W   W W W   W  WWWWWWWWWWWWWW    W  W W                                                                                                                         W
 W                    WWWWW W WWWWWWWW WW  WW W W   W                 W  W  W W                                                                                                                         W
 W                    W     W        W  W  WW W W  WWWWWWWWWWWWWWWWWWWWWWWW W W                                                                                                                         W
-W                    W                 W  WW W W                      W    W W                                                                                                                         W
+W                    W                    WW W W                      W    W W                                                                                                                         W
 W                    WWWWWWWWWWWWWWWWWWWWWWWWW WWWWWWWWWWWWWWWWWWWWWWWWWWWWW W                                                                                                                         W
 W                    W                                                       W                                                                                                                         W
-W                    WWWWWWWWWWWWWWWWWWWWWWWWWWW WWWWWWWWWWWWWWWWWWWWWWWWWWWWW                                                                                                                         W
+W                    WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW                                                                                                                         W
 W                                                                                                                                                                                                      W
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 """;
@@ -90,6 +85,7 @@ WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
     {
         public int X;
         public int Y;
+        public static Vec2 Unit = new Vec2(1,1);
 
         public Vec2(int x, int y)
         {
@@ -163,6 +159,51 @@ WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
         {
             return new Vec2((int)(lhs.X * rhs), (int)(lhs.Y * rhs));
         }
+
+        public static Vec2 operator /(Vec2 lhs, Vec2 rhs)
+        {
+            lhs.X /= rhs.X;
+            lhs.Y /= rhs.Y;
+            return lhs;
+        }
+        public static Vec2 operator /(Vec2 lhs, int rhs)
+        {
+            lhs.X /= rhs;
+            lhs.Y /= rhs;
+            return lhs;
+        }
+
+        public Vec2 GetCenter(Vec2 size)
+        {
+            return this - (size / 2);
+        }
+        public Vec2 GetCenter()
+        {
+            return (this / 2);
+        }
+        public int ToOneDimentional(int width)
+        {
+            return this.X % width + this.Y * width;
+        }
+        public static Vec2 ToTwoDimentional(int pos, int width)
+        {
+            return new Vec2(pos % width, pos / width);
+        }
+        public Vec2 GetLeftTopCoord(Vec2 size)
+        {
+            return this - size / 2;
+        }
+
+        public void Add(int x, int y)
+        {
+            X += x;
+            Y += y;
+        }
+
+        internal Vec2 GetLeftTopCoord(int size)
+        {
+            return this - new Vec2(size, size / 2);
+        }
     }
     public enum EDirection
     {
@@ -170,7 +211,7 @@ WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
     }
     public enum EInput
     {
-        UP, DOWN, LEFT, RIGHT, ENTER, ESCAPE, NONE
+        UP, DOWN, LEFT, RIGHT, ENTER, ESCAPE, T,NONE
     }
     public enum GameState
     {

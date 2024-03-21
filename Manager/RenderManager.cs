@@ -1,17 +1,7 @@
-﻿using System.Text;
-using System.Runtime.InteropServices;
-using MyData;
+﻿using ConsoleExtenderNs;
 using ConsoleGameProject;
-using System.Numerics;
-using System.Runtime.InteropServices.JavaScript;
-using MyBuffer;
-using System;
-using System.Reflection.Metadata;
-using System.Runtime.CompilerServices;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Diagnostics;
-using System.Drawing;
-using ConsoleExtender;
+using MyData;
+using System.Text;
 //https://blog.naver.com/PostView.naver?blogId=qw4898&logNo=222331001254&redirect=Dlog&widgetTypeCall=true&topReferer=https%3A%2F%2Fwww.google.com%2F&directAccess=false
 //참고했습니다.
 //여기 winapi 서명 있다 맛있다
@@ -20,6 +10,7 @@ namespace MyBuffer
 {
     interface IRenderable
     {
+        //렌더링될 문자 출력
         public char? GetRenderChar(int x, int y);
     }
     public static class RenderManager
@@ -75,7 +66,7 @@ namespace MyBuffer
             backBuffer = new char[height, width];
             frontBuffer = new char[height, width];
             Console.SetWindowSize(width, height + 1);//콘솔에 출력된 물자들이 밀리는 현상 방지를 위해 height + 1 왜 발생할까
-            PositionConsoleWindowDemo.SetWindowSize();
+            ConsoleExtender.SetWindowSize();
             Console.CursorVisible = false;
         }
         private static bool IsRangeOut(int inX, int inY)
@@ -166,7 +157,7 @@ namespace MyBuffer
                 {
                     char? renderChar = actor.GetRenderChar(i, k);
                     Vec2 sizeOffset = new Vec2(i, k);
-                    if(renderChar != null)
+                    if (renderChar != null)
                     {
                         Draw((char)renderChar, actor.GetPosition() - origin + sizeOffset);
                     }
@@ -203,7 +194,7 @@ namespace MyBuffer
         //백버퍼를 비우는 메서드.
         private static void ScreenClear()
         {
-            FillBuffer(' ');  
+            FillBuffer(' ');
         }
         //백버퍼를 채우는 메서드
         private static void FillBuffer(char c)
@@ -234,6 +225,11 @@ namespace MyBuffer
             Console.SetCursorPosition(0, 0);
             Print();
             ScreenClear();
+        }
+
+        public static void CustomRanderActor()
+        {
+            RenderAllActorRelativeOffset(GameManager.AllActors, GameManager.player.GetPosition(), Program.SCREEN_CENTER_OFFSET);
         }
     }
 }

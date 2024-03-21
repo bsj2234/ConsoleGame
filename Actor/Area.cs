@@ -1,16 +1,10 @@
-﻿using MyBuffer;
-using MyData;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MyData;
 
 namespace ConsoleGameProject
 {
-    public class Area:Actor
+    public class Area : Actor
     {
-        public Area(string name, Vec2 position, Vec2 size, bool overlap = true):base(name, position, size, overlap)
+        public Area(string name, Vec2 position, Vec2 size, bool overlap = true) : base(name, position, size, overlap)
         {
 
         }

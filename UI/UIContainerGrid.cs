@@ -1,14 +1,5 @@
-﻿using MyData;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using MyBuffer;
-using System.Security.Cryptography.X509Certificates;
-using System.Buffers;
-using System.Reflection;
+﻿using MyBuffer;
+using MyData;
 
 namespace ConsoleGameProject
 {
@@ -32,7 +23,7 @@ namespace ConsoleGameProject
     //스크롤기능을 지원해야 한다면
     //가변크기일 필요가 있을수 있음
 
-    public class UiContainerGrid: UiContainer
+    public class UiContainerGrid : UiContainer
     {
         //내가 무엇을 가지고 있느냐에 따라 행동이 달라진다
         //컨테이너라면 보더를 그려야 할것이다
@@ -51,7 +42,7 @@ namespace ConsoleGameProject
             set { drawBorder = value; }
         }
 
-        public UiContainerGrid(string name,int rowCount, int columnCount, bool isMain = false) 
+        public UiContainerGrid(string name, int rowCount, int columnCount, bool isMain = false)
             : base(name, isMain)
         {
             this.columnCount = columnCount;
@@ -94,14 +85,14 @@ namespace ConsoleGameProject
             {
                 sum += d;
             }
-            for(int i = 0;i < list.Count;i++)
+            for (int i = 0; i < list.Count; i++)
             {
                 list[i] /= sum;
             }
 
         }
 
-        public void AddNewUI(Ui newUi,int index)
+        public void AddNewUI(Ui newUi, int index)
         {
             if (newUi == null)
             {
@@ -122,7 +113,7 @@ namespace ConsoleGameProject
         }
         override public Ui? GetContent(int index)
         {
-            if(index < 0 || index >= ContentUIList.Count)
+            if (index < 0 || index >= ContentUIList.Count)
             {
                 return null;
             }
@@ -161,7 +152,7 @@ namespace ConsoleGameProject
         //SO i Need Owner
         private void DrawUIBorderLine()
         {
-            if(focus == true && GameManager.UiFocusedBlink == true) 
+            if (focus == true && GameManager.UiFocusedBlink == true)
             {
                 return;
             }
@@ -204,13 +195,13 @@ namespace ConsoleGameProject
         public override void Draw()
         {
             //Vec2 temp = GetAbsolutePosition(index);
-            if(drawBorder == true) 
+            if (drawBorder == true)
             {
                 this.DrawUIBorderLine();
             }
             foreach (var item in ContentUIList)
             {
-                if(item != null)
+                if (item != null)
                 {
                     item.Draw();
                 }
@@ -231,7 +222,7 @@ namespace ConsoleGameProject
             int x = GetColumnIndex(index);
             int y = GetRowIndex(index);
             //하위UI절대크기 인덱스에 해당하는 레이티오와 현제 UI의 사이즈의 곱
-            return new Vec2((int)(UiSize.X * colRatio[x]) - 2, (int)(UiSize.Y * rowRatio[y]) - 2 );
+            return new Vec2((int)(UiSize.X * colRatio[x]) - 2, (int)(UiSize.Y * rowRatio[y]) - 2);
         }
 
         public override Vec2 GetAbsoluteUiPositionOfIndex(int index)
@@ -248,7 +239,7 @@ namespace ConsoleGameProject
             {
                 sumRatioBefroeIndexY += rowRatio[i];
             }
-            return new Vec2((int)(sumRatioBefroeIndexX * UiSize.X) + 1 + UIPosAbsolute.X, (int)(sumRatioBefroeIndexY * UiSize.Y) + 1+ UIPosAbsolute.Y);
+            return new Vec2((int)(sumRatioBefroeIndexX * UiSize.X) + 1 + UIPosAbsolute.X, (int)(sumRatioBefroeIndexY * UiSize.Y) + 1 + UIPosAbsolute.Y);
         }
 
 
@@ -260,32 +251,32 @@ namespace ConsoleGameProject
             switch (direction)
             {
                 case EDirection.UP:
-                    y --;
+                    y--;
                     break;
                 case EDirection.DOWN:
-                    y ++;
+                    y++;
                     break;
                 case EDirection.LEFT:
-                    x --;
+                    x--;
                     break;
                 case EDirection.RIGHT:
-                    x ++;
+                    x++;
                     break;
                 default:
                     break;
             }
             int newIndex = x + y * columnCount;
-            if (x < 0 || y < 0 || x >= columnCount || y > rowCount )
+            if (x < 0 || y < 0 || x >= columnCount || y > rowCount)
             {
                 return temp;
             }
             if (newIndex >= ContentUIList.Count)
             {
-                return temp; 
+                return temp;
             }
             if (ContentUIList[newIndex] == null)
             {
-                return temp; 
+                return temp;
             }
             return x + y * columnCount;
         }

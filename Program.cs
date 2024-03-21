@@ -1,10 +1,5 @@
 ﻿using MyBuffer;
 using MyData;
-using System.Runtime.InteropServices;
-using System.Diagnostics;
-using ConsoleExtender;
-using System;
-using System.Text;
 
 namespace ConsoleGameProject
 {

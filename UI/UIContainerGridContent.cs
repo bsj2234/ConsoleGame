@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MyBuffer;
+﻿using MyBuffer;
 using MyData;
 
 namespace ConsoleGameProject
 {
-    public class UiContainerGridContent: UiContainerGrid
+    public class UiContainerGridContent : UiContainerGrid
     {
-        public object? Content {get; set; }
+        public object? Content { get; set; }
 
 
         private event Func<string>? onContent;
@@ -29,7 +24,7 @@ namespace ConsoleGameProject
             AddEvenetOnClick(action);
             focus = false;
         }
-        public UiContainerGridContent(string name, string content, EventHandler? action, int rowCount = 1, int columnCount = 1, bool isMain = false) 
+        public UiContainerGridContent(string name, string content, EventHandler? action, int rowCount = 1, int columnCount = 1, bool isMain = false)
             : base(name, rowCount, columnCount, isMain)
         {
             Content = content;
@@ -41,15 +36,15 @@ namespace ConsoleGameProject
         {
             string content = "";
             base.Draw();
-            if(Content != null)
+            if (Content != null)
             {
                 content = Content.ToString().Replace("\r\n", "\n");
             }
-            else if(onContent != null)
+            else if (onContent != null)
             {
                 content = onContent().ToString().Replace("\r\n", "\n");
             }
-            Vec2 ContextPos = new Vec2(UIPosAbsolute.X + 1, UIPosAbsolute.Y +1);
+            Vec2 ContextPos = new Vec2(UIPosAbsolute.X + 1, UIPosAbsolute.Y + 1);
             //줄의 최대길이를 계산해서 너비계산
             //잠시만 이거 취소 이유 버그발생 사라지는버그
             int maxLineLenght = 0;

@@ -1,13 +1,12 @@
-﻿using MyBuffer;
-using MyData;
+﻿using MyData;
 
 namespace ConsoleGameProject
 {
-    
+
     internal class Wall : Actor
     {
 
-        public Wall(string name, Vec2 position, Vec2 size, bool overlap):base(name,position,size,overlap)
+        public Wall(string name, Vec2 position, Vec2 size, bool overlap) : base(name, position, size, overlap)
         {
 
         }

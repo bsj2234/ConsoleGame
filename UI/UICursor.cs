@@ -1,9 +1,4 @@
 ﻿using MyData;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleGameProject
 {
@@ -17,8 +12,8 @@ namespace ConsoleGameProject
 
         public static void Click()
         {
-            
-            currentContainer.GetContent(CurrentIndex).OnClick( null, EventArgs.Empty);
+
+            currentContainer.GetContent(CurrentIndex).OnClick(null, EventArgs.Empty);
             //그림그려져있는건 안으로 안들어가고
             if (currentContainer.GetContent(CurrentIndex) is UiContainerGridContent)
             {
@@ -26,11 +21,11 @@ namespace ConsoleGameProject
             }
             //그리드 컨테이너는 안으로 들어가고
             //다른데로 점프 뛸수도 있고
-            if(currentContainer.GetContent(CurrentIndex) is UiContainerGrid focusedGridContainer)
+            if (currentContainer.GetContent(CurrentIndex) is UiContainerGrid focusedGridContainer)
             {
                 UiContainerGrid? cursorParentTo = focusedGridContainer.GetCustomUiToFocusParent();
 
-                if(cursorParentTo != null ) 
+                if (cursorParentTo != null)
                 {
                     FocusTo(cursorParentTo);
                 }
@@ -51,7 +46,7 @@ namespace ConsoleGameProject
             currentContainer.SetFocus(false);
             CurrentIndex = 0;
             Ui? toFocus = currentContainer.GetContent(CurrentIndex);
-            if(toFocus == null)
+            if (toFocus == null)
             {
                 ToOuter();
             }
@@ -83,14 +78,14 @@ namespace ConsoleGameProject
             }
             currentContainer = currentContainer.GetOwner() as UiContainer;
             currentContainer.GetContent(CurrentIndex).SetFocus(true);
-            
+
         }
 
         public static void Move(EDirection dir)
         {
-            if(currentContainer == null) return;
+            if (currentContainer == null) return;
             currentContainer.GetContent(CurrentIndex).SetFocus(false);
-            
+
             CurrentIndex = currentContainer.GetMovedIndex(CurrentIndex, dir);
             currentContainer.GetContent(CurrentIndex).SetFocus(true);
         }
@@ -131,7 +126,7 @@ namespace ConsoleGameProject
             currentContainer = focusUi;
             CurrentIndex = 0;
             Ui uiToFocus = currentContainer.GetContent(CurrentIndex);
-            if(uiToFocus == null)
+            if (uiToFocus == null)
             {
                 ToOuter();
             }
@@ -145,7 +140,7 @@ namespace ConsoleGameProject
         {
             while (true)
             {
-                if(GameManager.gameState != GameState.ADVENTURE)
+                if (GameManager.gameState != GameState.ADVENTURE)
                 {
                     Escape();
                 }

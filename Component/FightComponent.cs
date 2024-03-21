@@ -1,14 +1,6 @@
-﻿using MyBuffer;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ConsoleGameProject
+﻿namespace ConsoleGameProject
 {
-    public class FightComponent:Component
+    public class FightComponent : Component
     {
         private Pawn owner;
         public Pawn opponentForItem;
@@ -30,7 +22,7 @@ namespace ConsoleGameProject
         private event Action? OnAttacked;
         private event Action? OnAttack;
 
-        public FightComponent(Pawn owner, int maxHp = 100, int maxMp = 0 )
+        public FightComponent(Pawn owner, int maxHp = 100, int maxMp = 0)
         {
             this.owner = owner;
             this.hp = maxHp;
@@ -43,7 +35,7 @@ namespace ConsoleGameProject
 
         }
 
-        public void SetOpponent(Pawn opponentForItem) 
+        public void SetOpponent(Pawn opponentForItem)
         {
             this.opponentForItem = opponentForItem;
         }
@@ -51,11 +43,11 @@ namespace ConsoleGameProject
         public void Damaged(int damage)
         {
             hp -= damage;
-            if(hp <= 0)
+            if (hp <= 0)
             {
                 Dead = true;
             }
-            ConsoleExtender.PositionConsoleWindowDemo.ShakeWindow(3, 10, 50);
+            ConsoleExtenderNs.ConsoleExtender.ShakeWindow(3, 10, 50);
         }
 
         public bool IsDead()
@@ -74,7 +66,7 @@ namespace ConsoleGameProject
             }
         }
 
-        public void Attack(FightComponent other, int damage) 
+        public void Attack(FightComponent other, int damage)
         {
             other.Damaged(damage);
         }
@@ -82,7 +74,7 @@ namespace ConsoleGameProject
         public void Heal(int healAmount)
         {
             hp += healAmount;
-            if(hp > maxHp)
+            if (hp > maxHp)
             {
                 hp = maxHp;
             }

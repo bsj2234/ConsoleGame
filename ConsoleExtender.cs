@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Runtime.InteropServices;
-using System.Drawing;
+﻿using System.Runtime.InteropServices;
 
 //https://stackoverflow.com/questions/6554536/is-it-possible-to-get-set-the-console-font-size
-namespace ConsoleExtender
+namespace ConsoleExtenderNs
 {
-    public static class PositionConsoleWindowDemo
+    public static class ConsoleExtender
     {
         //https://stackoverflow.com/questions/27715004/position-a-small-console-window-to-the-bottom-left-of-the-screen
         // P/Invoke declarations.
@@ -185,8 +180,9 @@ namespace ConsoleExtender
         }
         public static void ShakeScreen(int count)
         {
-            Task ShakeAsync = Task.Run(() => {
-                PositionConsoleWindowDemo.ShakeWindow(3, 20, 50);
+            Task ShakeAsync = Task.Run(() =>
+            {
+                ConsoleExtender.ShakeWindow(3, 20, 50);
             });
         }
 

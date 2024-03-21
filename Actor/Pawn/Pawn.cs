@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MyData;
+﻿using MyData;
 using System.Diagnostics;
-using System.Transactions;
 
 namespace ConsoleGameProject
 {
-    public class Pawn:Actor
+    public class Pawn : Actor
     {
         protected FightComponent fightComponent;
         protected event Action OnDead;
@@ -18,7 +11,7 @@ namespace ConsoleGameProject
 
         protected ECharacterType chracterType;
 
-        public Pawn(string name, int hp, Vec2 position, Vec2 size, bool overlap, ECharacterType characterType):base(name, position, size, overlap)
+        public Pawn(string name, int hp, Vec2 position, Vec2 size, bool overlap, ECharacterType characterType) : base(name, position, size, overlap)
         {
             fightComponent = new FightComponent(this, hp, 0);
             inventoryComponent = new InventoryComponent(this);
@@ -41,11 +34,11 @@ namespace ConsoleGameProject
                 case EDirection.RIGHT:
                     base.GetPosition().X++;
                     break;
-                default: 
+                default:
                     Debug.Assert(false, "unhandled moving dir");
                     return false;
             }
-            if(CheckCollisionAllOtherActor())
+            if (CheckCollisionAllOtherActor())
             {
                 base.GetPosition() = tempPos;
                 return false;
