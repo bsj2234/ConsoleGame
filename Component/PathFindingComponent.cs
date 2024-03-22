@@ -6,6 +6,7 @@ namespace ConsoleGameProject
 {
     public struct PosAndPath
     {
+
         public Vec2 Pos;
         public List<Vec2> Paths;
         public PosAndPath(Vec2 pos, List<Vec2> paths)
@@ -22,6 +23,7 @@ namespace ConsoleGameProject
     }
     public class PathFindingComponent
     {
+        public List<Actor> CheckedActorList = new List<Actor>();
 
         public PathFindingComponent()
         {
@@ -118,6 +120,12 @@ namespace ConsoleGameProject
             //BFS
             while (queue.Count != 0)
             {
+                if(InputManager.IsKeyPressed(EInput.Y))
+                {
+                    DestroyPath();
+                    return null;
+                }
+
                 PosAndPath current = queue.Dequeue();
                 for (int i = 0; i < Enum.GetValues<EDirection>().Length; i++)
                 {
@@ -131,6 +139,15 @@ namespace ConsoleGameProject
                     PosAndPath result = new PosAndPath(pos, pathList);
                     //못가거나 
                     int curindex = pos.ToOneDimentional(mapSize.X);
+                    //넘 길당 나가
+                    if (curindex >= map.Length)
+                    {
+                        foreach (var actor in CheckedActorList)
+                        {
+                            actor.Destroy();
+                        }
+                        return null;
+                    }
                     if (map[curindex] == 'W' || visited[curindex] == true)
                     {
                         continue;
@@ -156,20 +173,26 @@ namespace ConsoleGameProject
                     if (map[curindex] == 'G')
                         return result;
 
-                    int maxPathCount = 1000;
-                    if (pathList.Count == maxPathCount)
-                    {
-                        //넘 길당 나가
-                        return null;
-                    }
+                    int maxPathCount = 100;
                     queue.Enqueue(result);
                     Vec2 newPos = pos - mapSize.GetCenter() + start;
-                    new Actor("temp", newPos, Vec2.Unit, true).RenderC = '*';
+                    Actor checkedActor = new Actor("temp", newPos, Vec2.Unit, true);
+                    checkedActor.RenderC = '*';
+                    CheckedActorList.Add(checkedActor);
                     RenderManager.CustomRanderActor();
-                    Thread.Sleep(20);
+                    //Thread.Sleep(10);
                 }
             }
             return null;
+        }
+
+        public void DestroyPath()
+        {
+            foreach (var actor in CheckedActorList)
+            {
+                actor.Destroy();
+            }
+            CheckedActorList = new List<Actor>();
         }
 
         private static Vec2 MovedPos(EDirection dir, Vec2 pos)

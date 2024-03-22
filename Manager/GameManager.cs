@@ -60,7 +60,8 @@ namespace ConsoleGameProject
             new Wall("wall4", new Vec2(36, 20), new Vec2(4, 10), false);
 
             new Wall("wall", new Vec2(20, 20), new Vec2(20, 2), false);
-            new Wall("wall2", new Vec2(20, 20), new Vec2(4, 10), false);
+
+            new Goal("CustomGoal1", new Vec2(25, 18), new Vec2(1, 1));
 
             HuntArea huntarea = new HuntArea("huntarea", new Vec2(100, 33), new Vec2(10, 2));
             while (true)

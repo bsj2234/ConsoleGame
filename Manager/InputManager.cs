@@ -79,6 +79,8 @@ namespace ConsoleGameProject
                     return (GetAsyncKeyState((int)VKeys.RETURN) & 0x8000) > 0;
                 case EInput.T:
                     return (GetAsyncKeyState((int)VKeys.KEY_T) & 0x8000) > 0;
+                case EInput.Y:
+                    return (GetAsyncKeyState((int)VKeys.KEY_Y) & 0x8000) > 0;
                 default:
                     return false;
             }
@@ -99,6 +101,5 @@ namespace ConsoleGameProject
                 PrevPressedKeys[key] = false;
             }
         }
-
     }
 }

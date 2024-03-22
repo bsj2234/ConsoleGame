@@ -85,16 +85,27 @@ namespace ConsoleGameProject
         {
 
             PosAndPath? posAnd = pathFindingComponent.FindPath(in GetPosition(),100);
-            Debug.Assert(posAnd != null, "CannotFindPath");
+            if(posAnd == null)
+                return;
+            List<Actor> fastPaths = new List<Actor>();
+
             foreach (Vec2 pos in posAnd.GetValueOrDefault().Paths)
             {
-                var tmp = new Actor(" ", GetPosition() + pos.GetLeftTopCoord(100), new Vec2(1, 1), true);
-                tmp.RenderPriority = 1;
-                tmp.RenderC = '@';
+                var fast = new BlinkableActor(" ", GetPosition() + pos.GetLeftTopCoord(100), new Vec2(1, 1), true);
+                fastPaths.Add(fast);
+                fast.RenderPriority = 1;
+                fast.RenderC = '@';
+
                 RenderManager.CustomRanderActor();
                 Thread.Sleep(30);
-                
+
             }
+            pathFindingComponent.DestroyPath();
+            foreach (var actor in fastPaths)
+            {
+                actor.DelayDestroy(3.0);
+            }
+
 
 
         }

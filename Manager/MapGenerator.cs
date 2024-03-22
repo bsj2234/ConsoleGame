@@ -39,7 +39,8 @@ namespace ConsoleGameProject
 
         public static string DrawCurrentColliderMap(Vec2 center, int size)
         {
-            StringBuilder map = new StringBuilder();
+            int a = 10;
+            StringBuilder map = new StringBuilder(a);
             //맵크기
             Vec2 mapSize = new Vec2(size * 2, size);
 
@@ -54,6 +55,12 @@ namespace ConsoleGameProject
             {
                 int actorHeight = actor.Size.Y;
                 int actorWidth = actor.Size.X;
+
+                if (actorWidth > 2)
+                {
+                    Thread.Sleep    (1);
+                }
+
                 // 플레이어는 패스
                 if (actor is Player)
                     continue;
@@ -73,13 +80,17 @@ namespace ConsoleGameProject
                 {
                     for (int x = 0; x < actorWidth; x++)
                     {
+                        Vec2 curSize = new Vec2(x, y);
+
                         // 액터를 시작위치에 상대적으로
-                        Vec2 pos = actor.GetPosition() - center.GetLeftTopCoord(mapSize);
+                        Vec2 pos = actor.GetPosition() - center.GetLeftTopCoord(mapSize) + curSize;
                         int index = pos.ToOneDimentional(mapSize.X);
 
                         //인덱스 초과나 미만시 패스
                         if (index < 0 || index >= mapSize.X * mapSize.Y)
                             continue;
+
+                        
 
                         if (map[index] != 'G')
                             map[index] = 'W';
@@ -100,3 +111,12 @@ namespace ConsoleGameProject
         public static int mapHeight = mapStr.Length / (mapWidth);
     }
 }
+
+/*
+ * 
+ * 대각선 움직임은 어떻게 따로 처리할까
+ * 좌상의 경우 좌상 상좌 둘개의 조합으로 가능
+ * 그럼 이걸 어떻게 쉽게 만들까
+ * 만약 대각 입력바드염ㄴ
+ * 대각에따라 조상 상좌 둘다 실행후 하나라도 가능하면 이동
+ */

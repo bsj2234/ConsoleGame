@@ -1,6 +1,7 @@
 ﻿using ConsoleExtenderNs;
 using ConsoleGameProject;
 using MyData;
+using System.Diagnostics;
 using System.Text;
 //https://blog.naver.com/PostView.naver?blogId=qw4898&logNo=222331001254&redirect=Dlog&widgetTypeCall=true&topReferer=https%3A%2F%2Fwww.google.com%2F&directAccess=false
 //참고했습니다.
@@ -49,6 +50,8 @@ namespace MyBuffer
             {
                 RenderManager.DrawRelative(actor, origin, offset);
             }
+            //이게 여기있는게 맞니?
+            DestroyActors();
             Show();
         }
 
@@ -175,6 +178,7 @@ namespace MyBuffer
                 for (int k = 0; k < actor.Size.Y; k++)
                 {
                     char? renderChar = actor.GetRenderChar(i, k);
+                    //Debug.Assert(!(actor.RenderPriority == -1));
                     Vec2 sizeOffset = new Vec2(i, k);
                     if (renderChar != null)
                     {
@@ -210,7 +214,6 @@ namespace MyBuffer
             StringBuilder result = new StringBuilder();
             for (int y = 0; y < height; y++)
             {
-                bool jump = false;
                 for (int x = 0; x < width; x++)
                 {
                     result.Append(frontBuffer[y, x]);
@@ -230,6 +233,20 @@ namespace MyBuffer
         public static void CustomRanderActor()
         {
             RenderAllActorRelativeOffset(GameManager.AllActors, GameManager.player.GetPosition(), Program.SCREEN_CENTER_OFFSET);
+        }
+
+        private static void DestroyActors()
+        {
+            //리스트로 구현한게 잘못됐다.
+            //일단 복사해놓고 제거하는게...
+            List<Actor> tempForRemove = GameManager.AllActors.ToList();
+            foreach (var actor in tempForRemove)
+            {
+                if(actor.WaitDestroy == true)
+                {
+                    GameManager.AllActors.Remove(actor);
+                }
+            }
         }
     }
 }

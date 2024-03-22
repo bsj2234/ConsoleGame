@@ -10,6 +10,7 @@ namespace ConsoleGameProject
         {
             RenderPriority = 3;
             OnOverlap += DestroyNearWall;
+            RenderC = 'G';
         }
 
         private void DestroyNearWall(Actor other)
@@ -33,6 +34,7 @@ namespace ConsoleGameProject
             }
             OnOverlap -= DestroyNearWall;
             ConsoleExtender.ShakeWindow(8, 15, 20);
+            this.Destroy();
         }
     }
 }

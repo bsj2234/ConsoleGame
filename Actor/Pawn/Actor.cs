@@ -11,6 +11,7 @@ namespace ConsoleGameProject
         public event Action<Actor> OnOverlap;
         public int RenderPriority = 0;
         public char RenderC = 'd';
+        public bool WaitDestroy = false;
         public ref Vec2 GetPosition()
         {
             return ref mPosition;
@@ -234,7 +235,15 @@ namespace ConsoleGameProject
         {
             RenderC = ' ';
             Overlap = true;
-            GameManager.AllActors.Remove(this);
+            WaitDestroy = true;
+            RenderPriority = -1;
         }
+        public async void DelayDestroy(double time)
+        {
+            await Task.Delay((int)time * 1000);
+            Destroy();
+        }
+
+
     }
 }
