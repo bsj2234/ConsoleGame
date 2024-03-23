@@ -87,9 +87,8 @@ namespace ConsoleGameProject
         }
         private static void ResetKeyBuffer(Dictionary<EInput, bool> dictionary)
         {
-            for (int i = 0; i < EInputSize; i++)
+            foreach (var key in dictionary.Keys)
             {
-                EInput key = (EInput)i;
                 dictionary[key] = false;
             }
         }
