@@ -67,7 +67,7 @@ namespace ConsoleGameProject
             while (true)
             {
                 CharacterAdventureInput(player);
-                RenderManager.RenderAllActorRelativeOffset(AllActors, player.GetPosition(), Program.SCREEN_CENTER_OFFSET);
+                RenderManager.CustomRanderActor();
                 InputManager.UpdateKeys();
                 if (gameState != GameState.ADVENTURE)
                 {
