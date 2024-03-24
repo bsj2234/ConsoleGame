@@ -14,8 +14,11 @@ namespace ConsoleGameProject
         public static Player player = new Player("siko", 30, new Vec2(61, 48), new Vec2(1, 1), false, ECharacterType.PIKA);
         static Merchant merchant = new Merchant("merchant", new Vec2(80, 33), new Vec2(1, 1), false);
 
-
-
+        public static bool EscapeByEvent = false;
+        public static void Init()
+        {
+            InputManager.AddReleasedEvent(EInput.ESCAPE,InputEscapeEvenet);
+        }
         public static void Run()
         {
             RunAsyncs();
@@ -216,7 +219,6 @@ namespace ConsoleGameProject
                 }
             }
         }
-
         static void Win()
         {
             UiContainerGrid MainWinUi = new UiContainerGrid("MainWinUi", 1, 1, true);
@@ -275,8 +277,6 @@ namespace ConsoleGameProject
                 }
             }
         }
-
-
         private static void Shop()
         {
             UiContainerGrid MainShopUi = new UiContainerGrid("MainShop", 2, 1, true);
@@ -312,7 +312,6 @@ namespace ConsoleGameProject
                 }
             }
         }
-
         public static void StartFight()
         {
             gameState = GameState.FIGHT;
@@ -325,9 +324,6 @@ namespace ConsoleGameProject
         {
             Task.Run(UiFocusBlinkAsync);
         }
-
-
-
         //input funcs
         public static bool UIInput()
         {
@@ -384,6 +380,11 @@ namespace ConsoleGameProject
                 player.FindPath();
         }
 
+        //Evenets
+        public static void InputEscapeEvenet(object? s, EventArgs args)
+        {
+            EscapeByEvent = true;
+        }
 
 
         //async funcs
@@ -453,9 +454,5 @@ namespace ConsoleGameProject
                 //Console.Beep(329, 200);
             }
         }
-
-
-
-
     }
 }
