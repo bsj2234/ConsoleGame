@@ -13,11 +13,11 @@ namespace ConsoleGameProject
     internal class Program
     {
         public static readonly Vec2 SCREEN_SIZE = new Vec2(220, 60);
+        public static readonly Vec2 SCREEN_CENTER_OFFSET = new Vec2(SCREEN_SIZE.X / 2, SCREEN_SIZE.Y / 2);
         static void Main(string[] args)
         {
             InputManager.Init();
             RenderManager.ScreenInit(SCREEN_SIZE.X, SCREEN_SIZE.Y);
-            GameManager.Init();
             GameManager.Run();
 
         }//endOfMain

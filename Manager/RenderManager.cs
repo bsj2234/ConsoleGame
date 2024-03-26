@@ -228,7 +228,7 @@ namespace MyBuffer
 
         public static void CustomRanderActor()
         {
-            RenderAllActorRelativeOffset(GameManager.AllActors, GameManager.player.GetPosition(), Program.SCREEN_SIZE.GetCenter());
+            RenderAllActorRelativeOffset(GameManager.AllActors, GameManager.player.GetPosition(), Program.SCREEN_CENTER_OFFSET);
         }
 
         private static void DestroyActors()
