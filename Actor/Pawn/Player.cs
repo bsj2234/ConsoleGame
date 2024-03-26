@@ -7,7 +7,6 @@ namespace ConsoleGameProject
     public class Player : Pawn
     {
         public static Random random = new Random();
-        private FightComponent fightComponent;
         public PlayerInteractArea InteractArea;
         private PathFindingComponent pathFindingComponent = new PathFindingComponent();
         public bool Fight { get; set; }
@@ -121,9 +120,6 @@ namespace ConsoleGameProject
             {
                 actor.DelayDestroy(3.0);
             }
-
-
-
         }
     }
 }

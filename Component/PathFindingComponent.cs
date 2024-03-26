@@ -121,8 +121,10 @@ namespace ConsoleGameProject
             //BFS
             while (queue.Count != 0)
             {
-                if(InputManager.IsKeyPressed(EInput.Y))
+                InputManager.UpdateKeys();
+                if(GameManager.EscapeByEvent)
                 {
+                    GameManager.EscapeByEvent = false;
                     DestroyPath();
                     return null;
                 }
