@@ -158,20 +158,23 @@ namespace ConsoleExtenderNs
         public static void ShakeWindow(int count, int offset, int time)
         {
             IntPtr handle = GetConsoleWindow();
+
+            Rect curPos = new Rect();
+            GetWindowRect(handle, ref curPos);
             for (int i = 0; i < count * 2; i++)
             {
                 if (shake)
                 {
-                    SetWindowPos(handle, IntPtr.Zero, InitialWindowSize.Left + offset, InitialWindowSize.Top - offset, InitialWindowSize.Right - InitialWindowSize.Left, InitialWindowSize.Bottom - InitialWindowSize.Top, SWP_NOZORDER | SWP_NOACTIVATE);
+                    SetWindowPos(handle, IntPtr.Zero, curPos.Left + offset, curPos.Top - offset, curPos.Right - curPos.Left, curPos.Bottom - curPos.Top, SWP_NOZORDER | SWP_NOACTIVATE);
                 }
                 else
                 {
-                    SetWindowPos(handle, IntPtr.Zero, InitialWindowSize.Left, InitialWindowSize.Top, InitialWindowSize.Right - InitialWindowSize.Left, InitialWindowSize.Bottom - InitialWindowSize.Top, SWP_NOZORDER | SWP_NOACTIVATE);
+                    SetWindowPos(handle, IntPtr.Zero, curPos.Left, curPos.Top, curPos.Right - curPos.Left, curPos.Bottom - curPos.Top, SWP_NOZORDER | SWP_NOACTIVATE);
                 }
                 shake = !shake;
                 Thread.Sleep(time);
             }
-            ResetWindow();
+            SetWindowPos(handle, IntPtr.Zero, curPos.Left, curPos.Top, curPos.Right - curPos.Left, curPos.Bottom - curPos.Top, SWP_NOZORDER | SWP_NOACTIVATE);
         }
         public static void ResetWindow()
         {

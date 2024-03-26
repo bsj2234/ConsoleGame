@@ -50,7 +50,23 @@ namespace ConsoleGameProject
         {
             bool moved = base.Move(direction);
             InteractArea.UpdateInteractableOverlap(GetPosition());
-            Thread.Sleep(20);
+            int direcCount = 0;
+            if (InputManager.IsKeyPressed(EInput.LEFT))
+                direcCount++;
+            if (InputManager.IsKeyPressed(EInput.RIGHT))
+                direcCount++;
+            if (InputManager.IsKeyPressed(EInput.UP))
+                direcCount++;
+            if (InputManager.IsKeyPressed(EInput.DOWN))
+                direcCount++;
+            if(direcCount >= 2)
+            {
+                Thread.Sleep(10);
+            }
+            else
+            {
+                Thread.Sleep(20);
+            }
             return moved;
         }
 
@@ -84,7 +100,7 @@ namespace ConsoleGameProject
         public void FindPath()
         {
 
-            PosAndPath? posAnd = pathFindingComponent.FindPath(in GetPosition(),100);
+            PosAndPath? posAnd = pathFindingComponent.FindPathBfsWithMap(in GetPosition(),100);
             if(posAnd == null)
                 return;
             List<Actor> fastPaths = new List<Actor>();

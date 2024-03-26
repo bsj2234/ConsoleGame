@@ -1,5 +1,6 @@
 ﻿using MyBuffer;
 using MyData;
+using System.Diagnostics;
 
 namespace ConsoleGameProject
 {
@@ -10,6 +11,7 @@ namespace ConsoleGameProject
         public static GameState gameState = GameState.ADVENTURE;
         public static bool UiFocusedBlink = false;
         static int KillCount = 0;
+        public static double DeltaTime = 0.0;
 
         public static Player player = new Player("siko", 30, new Vec2(61, 48), new Vec2(1, 1), false, ECharacterType.PIKA);
         static Merchant merchant = new Merchant("merchant", new Vec2(80, 33), new Vec2(1, 1), false);
@@ -25,6 +27,8 @@ namespace ConsoleGameProject
             player.GetInventory().Add(new ItemConsumable(player.GetInventory(), "Ap2"));
             player.GetInventory().Add(new ItemConsumable(player.GetInventory(), "Ap3"));
 
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            DeltaTime = stopwatch.Elapsed.TotalSeconds;
             //game loop
             while (true)
             {
@@ -51,6 +55,7 @@ namespace ConsoleGameProject
                         Shop();
                         break;
                 }
+                DeltaTime = stopwatch.Elapsed.TotalSeconds - DeltaTime;
             }
         }
         static void Adventure()
@@ -216,7 +221,6 @@ namespace ConsoleGameProject
                 }
             }
         }
-
         static void Win()
         {
             UiContainerGrid MainWinUi = new UiContainerGrid("MainWinUi", 1, 1, true);
@@ -275,8 +279,6 @@ namespace ConsoleGameProject
                 }
             }
         }
-
-
         private static void Shop()
         {
             UiContainerGrid MainShopUi = new UiContainerGrid("MainShop", 2, 1, true);
@@ -367,6 +369,7 @@ namespace ConsoleGameProject
         }
         public static void CharacterAdventureInput(Player player)
         {
+            //대각 예외
             //input
             if (InputManager.IsKeyPressed(EInput.UP))
                 player.Move(EDirection.UP);

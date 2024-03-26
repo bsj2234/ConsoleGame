@@ -20,24 +20,14 @@ namespace ConsoleGameProject
         public virtual bool Move(EDirection direction)
         {
             Vec2 tempPos = base.GetPosition();
-            switch (direction)
-            {
-                case EDirection.UP:
-                    base.GetPosition().Y--;
-                    break;
-                case EDirection.DOWN:
-                    base.GetPosition().Y++;
-                    break;
-                case EDirection.LEFT:
-                    base.GetPosition().X--;
-                    break;
-                case EDirection.RIGHT:
-                    base.GetPosition().X++;
-                    break;
-                default:
-                    Debug.Assert(false, "unhandled moving dir");
-                    return false;
-            }
+            if (EDirection.UP == direction)
+                base.GetPosition().Y--;
+            if (EDirection.DOWN == direction)
+                base.GetPosition().Y++;
+            if (EDirection.LEFT == direction)
+                base.GetPosition().X--;
+            if (EDirection.RIGHT == direction)
+                base.GetPosition().X++;
             if (CheckCollisionAllOtherActor())
             {
                 base.GetPosition() = tempPos;

@@ -68,7 +68,7 @@ namespace MyBuffer
             height = inHeight;
             backBuffer = new char[height, width];
             frontBuffer = new char[height, width];
-            Console.SetWindowSize(width, height + 1);//콘솔에 출력된 물자들이 밀리는 현상 방지를 위해 height + 1 왜 발생할까
+            Console.SetWindowSize(width, height+2);//콘솔에 출력된 물자들이 밀리는 현상 방지를 위해 height + 1 왜 발생할까// 실행파일은 2여야함
             ConsoleExtender.SetWindowSize();
             Console.CursorVisible = false;
         }
@@ -127,10 +127,6 @@ namespace MyBuffer
                     backBuffer[y, x] = temp[i];
                 }
             }
-        }
-        private static void DrawContinue(string inStr, Vec2 pos)
-        {
-            DrawContinue(inStr, pos.X, pos.Y);
         }
         public static void DrawHorizontal(char c, Vec2 pos, int count)
         {

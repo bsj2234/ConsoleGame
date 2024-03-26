@@ -17,6 +17,7 @@ namespace ConsoleGameProject
 
         readonly public Vec2 GetPos()
         {
+            
             return Pos;
         }
 
@@ -102,7 +103,7 @@ namespace ConsoleGameProject
         }*/
 
         //
-        public PosAndPath? FindPath(in Vec2 start, int range)
+        public PosAndPath? FindPathBfsWithMap(in Vec2 start, int range)
         {
             //충돌검사를 매번 액터전부를 도니까 너무 느림
             //그냥 충돌 맵 만들어서 돌자
@@ -216,7 +217,8 @@ namespace ConsoleGameProject
             return pos;
         }
 
-        public PosAndPath? FindPathBfsWithMap(in Vec2 start)
+
+        /*public PosAndPath? FindPathBfsWithMap(in Vec2 start)
         {
             //결과를 추가하고
             //이동 경로를 추가하고
@@ -297,6 +299,6 @@ namespace ConsoleGameProject
                 }
             }
             return null;
-        }
+        }*/
     }
 }

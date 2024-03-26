@@ -31,7 +31,7 @@
             return Items.Contains(item);
         }
 
-        public List<Item> GetList()
+        public List<Item> GetAll()
         {
             return Items;
         }

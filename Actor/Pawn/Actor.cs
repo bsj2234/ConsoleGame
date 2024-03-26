@@ -12,6 +12,7 @@ namespace ConsoleGameProject
         public int RenderPriority = 0;
         public char RenderC = 'd';
         public bool WaitDestroy = false;
+        public Dictionary<Type, Component> ComponentDictionary = new Dictionary<Type, Component>();
         public ref Vec2 GetPosition()
         {
             return ref mPosition;
@@ -244,6 +245,17 @@ namespace ConsoleGameProject
             Destroy();
         }
 
-
+        public bool HasComponent(Type type)
+        {
+            return ComponentDictionary.ContainsKey(type);
+        }
+        public Component GetComponent(Type type)
+        {
+            if(ComponentDictionary.ContainsKey(type))
+            {
+                return ComponentDictionary[type];
+            }
+            return null;
+        }
     }
 }

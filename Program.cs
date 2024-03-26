@@ -8,8 +8,8 @@ namespace ConsoleGameProject
      * 인풋은 비동기로 배열에 받아
      * 하나씩 뽑아 처리
      * 
-     * 
      */
+
     internal class Program
     {
         public static readonly Vec2 SCREEN_SIZE = new Vec2(220, 60);
