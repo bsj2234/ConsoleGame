@@ -53,8 +53,8 @@ namespace ConsoleGameProject
             //모든 액터 돌며 충돌체면 W, 골이면 G 할당
             foreach(Actor actor in GameManager.AllActors)
             {
-                int actorHeight = actor.Size.Y;
-                int actorWidth = actor.Size.X;
+                int actorHeight = (int)actor.Size.Y;
+                int actorWidth = (int)actor.Size.X;
 
                 if (actorWidth > 2)
                 {

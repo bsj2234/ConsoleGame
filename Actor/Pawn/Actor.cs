@@ -58,17 +58,17 @@ namespace ConsoleGameProject
             {
                 return false;
             }
-            int startX = this.GetPosition().X;
-            int startY = this.GetPosition().Y;
-            int endX = startX + this.Size.X;
-            int endY = startY + this.Size.Y;
-            int otherStartX = other.GetPosition().X;
-            int otherStartY = other.GetPosition().Y;
-            int otherEndX = other.GetPosition().X + other.Size.X;
-            int otherEndY = other.GetPosition().Y + other.Size.Y;
+            double startX = this.GetPosition().X;
+            double startY = this.GetPosition().Y;
+            double endX = startX + this.Size.X;
+            double endY = startY + this.Size.Y;
+            double otherStartX = other.GetPosition().X;
+            double otherStartY = other.GetPosition().Y;
+            double otherEndX = otherStartX + other.Size.X;
+            double otherEndY = otherStartY + other.Size.Y;
             //충돌 검사      서로 침범하는지 검사
-            if (startX < otherEndX && endX > otherStartX
-                && startY < otherEndY && endY > otherStartY)
+            if ((int)startX < (int)otherEndX && (int)endX > (int)otherStartX
+                && (int)startY < (int)otherEndY && (int)endY > (int)otherStartY)
             {
                 return true;
             }
@@ -80,14 +80,14 @@ namespace ConsoleGameProject
 
         public virtual bool CheckCollision(Vec2 pos, Vec2 size)
         {
-            int startX = this.GetPosition().X;
-            int startY = this.GetPosition().Y;
-            int endX = startX + this.Size.X;
-            int endY = startY + this.Size.Y;
-            int otherStartX = pos.X;
-            int otherStartY = pos.Y;
-            int otherEndX = otherStartX + size.X;
-            int otherEndY = otherStartY + size.Y;
+            double startX = this.GetPosition().X;
+            double startY = this.GetPosition().Y;
+            double endX = startX + this.Size.X;
+            double endY = startY + this.Size.Y;
+            double otherStartX = pos.X;
+            double otherStartY = pos.Y;
+            double otherEndX = otherStartX + size.X;
+            double otherEndY = otherStartY + size.Y;
             //충돌 검사      서로 침범하는지 검사
             if (startX < otherEndX && endX > otherStartX
                 && startY < otherEndY && endY > otherStartY)

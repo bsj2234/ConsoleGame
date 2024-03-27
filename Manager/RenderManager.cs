@@ -35,6 +35,10 @@ namespace MyBuffer
             mainUiContainer.Draw();
             Show();
         }
+        public static void DrawUIContainer(UiContainerGrid mainUiContainer)
+        {
+            mainUiContainer.Draw();
+        }
 
         public static void RenderAllActorRelative(List<Actor> AllActors, Vec2 origin)
         {
@@ -42,7 +46,8 @@ namespace MyBuffer
             {
                 RenderManager.DrawRelative(actor, origin);
             }
-            Show();
+            //이게 여기있는게 맞니?
+            DestroyActors();
         }
         public static void RenderAllActorRelativeOffset(List<Actor> AllActors, Vec2 origin, Vec2 offset)
         {
@@ -52,7 +57,6 @@ namespace MyBuffer
             }
             //이게 여기있는게 맞니?
             DestroyActors();
-            Show();
         }
 
 
@@ -90,7 +94,7 @@ namespace MyBuffer
         }
         private static void Draw(char inChar, Vec2 v)
         {
-            Draw(inChar, v.X, v.Y);
+            Draw(inChar, (int)v.X, (int)v.Y);
         }
         //string을 문자배열로 만들어 해당 위치에 인덱스마다 쓰는 메서드, Vec2오버로딩
         //(석진:문자열 받아서 지정한 x,y부터 y만 옆으로 이동
@@ -113,28 +117,13 @@ namespace MyBuffer
                 }
             }
         }
-
-        //string 좌에서 우로 그리고 디음줄로 이어지게
-        private static void DrawContinue(string inStr, int inX, int inY)
-        {
-            char[] temp = inStr.ToCharArray();
-            for (int i = 0; i < temp.Length; i++)
-            {
-                int x = (inX + i) % width;
-                int y = inY + (inX + i) / width;
-                if (!IsRangeOut(x, y))
-                {
-                    backBuffer[y, x] = temp[i];
-                }
-            }
-        }
         public static void DrawHorizontal(char c, Vec2 pos, int count)
         {
             for (int i = 0; i < count; i++)
             {
-                if (!IsRangeOut(pos.X + i, pos.Y))
+                if (!IsRangeOut((int)pos.X + i, (int)pos.Y))
                 {
-                    backBuffer[pos.Y, pos.X + i] = c;
+                    backBuffer[(int)pos.Y, (int)pos.X + i] = c;
                 }
             }
         }
@@ -142,9 +131,9 @@ namespace MyBuffer
         {
             for (int i = 0; i < count; i++)
             {
-                if (!IsRangeOut(pos.X, pos.Y + i))
+                if (!IsRangeOut((int)pos.X, (int)pos.Y + i))
                 {
-                    backBuffer[pos.Y + i, pos.X] = c;
+                    backBuffer[(int)pos.Y + i, (int)pos.X] = c;
                 }
             }
         }
@@ -229,6 +218,7 @@ namespace MyBuffer
         public static void CustomRanderActor()
         {
             RenderAllActorRelativeOffset(GameManager.AllActors, GameManager.player.GetPosition(), Program.SCREEN_CENTER_OFFSET);
+            Show();
         }
 
         private static void DestroyActors()
@@ -243,6 +233,14 @@ namespace MyBuffer
                     GameManager.AllActors.Remove(actor);
                 }
             }
+        }
+
+        internal static void RenderUIAndActor(UiContainerGridContent mainUiContainer)
+        {
+            DrawUIContainer(mainUiContainer);
+            RenderAllActorRelativeOffset(GameManager.AllActors, GameManager.player.GetPosition(), Program.SCREEN_CENTER_OFFSET);
+            Show();
+
         }
     }
 }

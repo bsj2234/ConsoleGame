@@ -37,7 +37,7 @@ namespace ConsoleGameProject
         public void UpdateInteractableOverlap(Vec2 playerPos)
         {
             Interactables.Clear();
-            Vec2 interactCenter = playerPos - Size * .5;
+            Vec2 interactCenter = playerPos - (Size-Vec2.Unit) * .5;
             SetPosition(interactCenter);
             CheckCollisionAllOtherActor();
         }

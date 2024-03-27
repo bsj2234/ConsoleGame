@@ -16,7 +16,7 @@ namespace ConsoleGameProject
             fightComponent = new FightComponent(this, hp, 100);
             //사이즈는 앞뒤 양옆 한줄씩 크게 하기 위해서
             Vec2 interactSize = size + new Vec2(2, 2);
-            Vec2 interactCenter = position - interactSize * .5;
+            Vec2 interactCenter = position - (interactSize-Vec2.Unit) * .5;
             InteractArea = new PlayerInteractArea(this, "InteractArea", interactCenter, interactSize);
             InteractArea.AddIgnoreCollision(this);
             this.AddIgnoreCollision(InteractArea);
@@ -124,6 +124,12 @@ namespace ConsoleGameProject
 
 
 
+        }
+
+        internal string PrintPosition()
+        {
+            Vec2 Pos = GetPosition();
+            return $"X: {Pos.X}\nY: {Pos.Y}";
         }
     }
 }

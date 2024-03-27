@@ -69,10 +69,13 @@ namespace ConsoleGameProject
             new Goal("CustomGoal1", new Vec2(25, 18), new Vec2(1, 1));
 
             HuntArea huntarea = new HuntArea("huntarea", new Vec2(100, 33), new Vec2(10, 2));
+
+            UiContainerGridContent debugMain = new UiContainerGridContent("Debug", player.PrintPosition, null, 1, 1, true);
+
             while (true)
             {
                 CharacterAdventureInput(player);
-                RenderManager.RenderAllActorRelativeOffset(AllActors, player.GetPosition(), Program.SCREEN_CENTER_OFFSET);
+                RenderManager.RenderUIAndActor(debugMain);
                 InputManager.UpdateKeys();
                 if (gameState != GameState.ADVENTURE)
                 {

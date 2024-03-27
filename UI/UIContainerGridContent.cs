@@ -59,7 +59,7 @@ namespace ConsoleGameProject
             }
             //ContextPos.SetX(ContextPos.X - maxLineLenght);
 
-            RenderManager.Draw(content, ContextPos.X, ContextPos.Y);
+            RenderManager.Draw(content, (int)ContextPos.X, (int)ContextPos.Y);
         }
     }
 }

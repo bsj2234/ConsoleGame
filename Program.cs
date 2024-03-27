@@ -17,7 +17,7 @@ namespace ConsoleGameProject
         static void Main(string[] args)
         {
             InputManager.Init();
-            RenderManager.ScreenInit(SCREEN_SIZE.X, SCREEN_SIZE.Y);
+            RenderManager.ScreenInit((int)SCREEN_SIZE.X, (int)SCREEN_SIZE.Y);
             GameManager.Run();
 
         }//endOfMain

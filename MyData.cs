@@ -83,47 +83,47 @@ WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 
     public struct Vec2
     {
-        public int X;
-        public int Y;
+        public double X { get; set; }
+        public double Y { get; set; }
         public static Vec2 Unit = new Vec2(1,1);
 
-        public Vec2(int x, int y)
+        public Vec2(double x, double y)
         {
-            X = x;
-            Y = y;
+            this.X = x;
+            this.Y = y;
         }
 
-        public void Set(int x, int y)
+        public void Set(double x, double y)
         {
-            X = (int)x;
-            Y = (int)y;
+            this.X = x;
+            this.Y = y;
         }
 
-        public void SetX(int x)
+        public void SetX(double x)
         {
-            X = (int)x;
+            this.X = x;
         }
 
-        public void SetY(int y)
+        public void SetY(double y)
         {
-            Y = (int)y;
+            this.Y = y;
         }
-        public void AddX(int x)
+        public void AddX(double x)
         {
-            X = X + (int)x;
+            this.X = this.X + x;
         }
 
-        public void AddY(int y)
+        public void AddY(double y)
         {
-            Y = Y + (int)y;
+            this.Y = this.Y + y;
         }
-        public int GetAddedXValue(int x)
+        public double GetAddedXValue(double x)
         {
-            return X + x;
+            return this.X + x;
         }
-        public int GetAddedYValue(int y)
+        public double GetAddedYValue(double y)
         {
-            return Y + y;
+            return this.Y + y;
         }
 
         public static Vec2 operator +(Vec2 lhs, Vec2 rhs)
@@ -157,7 +157,7 @@ WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
         }
         public static Vec2 operator *(Vec2 lhs, double rhs)
         {
-            return new Vec2((int)(lhs.X * rhs), (int)(lhs.Y * rhs));
+            return new Vec2((lhs.X * rhs), (lhs.Y * rhs));
         }
 
         public static Vec2 operator /(Vec2 lhs, Vec2 rhs)
@@ -181,9 +181,9 @@ WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
         {
             return (this / 2);
         }
-        public int ToOneDimentional(int width)
+        public int ToOneDimentional(double width)
         {
-            return this.X % width + this.Y * width;
+            return (int)(this.X % width + this.Y * width);
         }
         public static Vec2 ToTwoDimentional(int pos, int width)
         {
@@ -194,13 +194,13 @@ WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
             return this - size / 2;
         }
 
-        public void Add(int x, int y)
+        public void Add(double x, double y)
         {
-            X += x;
-            Y += y;
+            this.X += x;
+            this.Y += y;
         }
 
-        internal Vec2 GetLeftTopCoord(int size)
+        internal Vec2 GetLeftTopCoord(double size)
         {
             return this - new Vec2(size, size / 2);
         }

@@ -109,7 +109,7 @@ namespace ConsoleGameProject
         }
         public Ui GetContent(Vec2 v)
         {
-            return GetContent(v.X, v.Y);
+            return GetContent((int)v.X, (int)v.Y);
         }
         override public Ui? GetContent(int index)
         {
@@ -158,10 +158,10 @@ namespace ConsoleGameProject
             }
             //약간 노가다로 만듬
             //사실 사이즈 -1 하고 -2로 양쪽한칸씩 뺀 갯수임
-            RenderManager.DrawHorizontal('-', UIPosAbsolute + new Vec2(1, 0), UiSize.X - 2);
-            RenderManager.DrawHorizontal('-', UIPosAbsolute + new Vec2(1, UiSize.Y - 1), UiSize.X - 2);
-            RenderManager.DrawVertical('|', UIPosAbsolute + new Vec2(0, 1), UiSize.Y - 2);
-            RenderManager.DrawVertical('|', UIPosAbsolute + new Vec2(UiSize.X - 1, 1), UiSize.Y - 2);
+            RenderManager.DrawHorizontal('-', UIPosAbsolute + new Vec2(1, 0), (int)UiSize.X - 2);
+            RenderManager.DrawHorizontal('-', UIPosAbsolute + new Vec2(1, UiSize.Y - 1), (int)UiSize.X - 2);
+            RenderManager.DrawVertical('|', UIPosAbsolute + new Vec2(0, 1), (int)UiSize.Y - 2);
+            RenderManager.DrawVertical('|', UIPosAbsolute + new Vec2(UiSize.X - 1, 1), (int)UiSize.Y - 2);
             /*if(focus == true)
             {
                 RenderManager.ColorHorizontal(ConsoleColor.Blue, UIPosAbsolute + new Vec2(1, 0), UISize.X - 2);
